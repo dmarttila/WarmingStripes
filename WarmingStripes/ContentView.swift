@@ -23,3 +23,8 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+struct YearTempDifference {
+    let year: Int
+    let anomaly: Double
+}
