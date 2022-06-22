@@ -8,6 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    //HadCRUT.5.0.1.0.summary_series.global.annual.csv
+
+
+
+    init() {
+        let model = Model()
+    }
+
     var body: some View {
         VStack {
             Image(systemName: "globe")
@@ -24,7 +33,4 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-struct YearTempDifference {
-    let year: Int
-    let anomaly: Double
-}
+
