@@ -11,7 +11,7 @@ final class Model: ObservableObject{
     init () {
         anomalies = loadData()
     }
-    var anomalies: [TemperatureAnomaly] = []
+    @Published var anomalies: [TemperatureAnomaly] = []
 
     func loadData () ->  [TemperatureAnomaly] {
         let anomalies: [TemperatureAnomaly] = []

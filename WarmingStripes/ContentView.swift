@@ -9,12 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
 
-    //HadCRUT.5.0.1.0.summary_series.global.annual.csv
 
+    @EnvironmentObject var model: Model
 
 
     init() {
-        let model = Model()
+//        let model = Model()
     }
 
     var body: some View {
