@@ -41,7 +41,9 @@ final class Model: ObservableObject{
 
 struct TemperatureAnomaly: Identifiable {
     //TODO: Change to dates rather than int
-    let color = Color.mint
+    var color: Color {
+        anomaly > 0 ? .red : .blue
+    }
     let year: Int
     let anomaly: Double
     var id = UUID()

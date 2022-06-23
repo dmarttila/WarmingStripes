@@ -9,9 +9,9 @@ import SwiftUI
 import Charts
 
 struct ContentView: View {
-
-    @EnvironmentObject var model: Model
-
+// environment object doesn't work in previews
+//    @EnvironmentObject var model: Model
+let model = Model()
 
     init() {
         //        let model = Model()
@@ -28,6 +28,7 @@ struct ContentView: View {
                     x: .value("Shape Type", year.year),
                     y: .value("Total Count", year.anomaly)
                 )
+                .foregroundStyle(year.color)
                 //                    .foregroundStyle(<#T##style: ShapeStyle##ShapeStyle#>)
                 //                    .foregroundStyle(by: .value("Shape Color", shape.color))
             }
