@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 final class Model: ObservableObject{
     @Published var anomalies: [TemperatureAnomaly] = []
@@ -38,8 +39,10 @@ final class Model: ObservableObject{
     }
 }
 
-struct TemperatureAnomaly {
+struct TemperatureAnomaly: Identifiable {
     //TODO: Change to dates rather than int
+    let color = Color.mint
     let year: Int
     let anomaly: Double
+    var id = UUID()
 }
