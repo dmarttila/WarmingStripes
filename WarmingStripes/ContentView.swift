@@ -14,7 +14,7 @@ struct ContentView: View {
 
 
     init() {
-//        let model = Model()
+        //        let model = Model()
     }
 
     var body: some View {
@@ -23,18 +23,17 @@ struct ContentView: View {
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
             Text("Hello, world!")
-            Chart {
-                ForEach(model.anomalies) { year in
-                    BarMark(
-                        x: .value("Shape Type", year.year),
-                        y: .value("Total Count", year.anomaly)
-                    )
-//                    .foregroundStyle(by: .value("Shape Color", shape.color))
-                }
+            Chart (model.anomalies) { year in
+                BarMark(
+                    x: .value("Shape Type", year.year),
+                    y: .value("Total Count", year.anomaly)
+                )
+                //                    .foregroundStyle(<#T##style: ShapeStyle##ShapeStyle#>)
+                //                    .foregroundStyle(by: .value("Shape Color", shape.color))
             }
-            .chartForegroundStyleScale([
-                "Green": .green, "Purple": .purple, "Pink": .pink, "Yellow": .yellow
-            ])
+//            .chartForegroundStyleScale([
+//                "Green": .green, "Purple": .purple, "Pink": .pink, "Yellow": .yellow
+//            ])
         }
     }
 }

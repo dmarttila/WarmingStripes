@@ -22,7 +22,7 @@ final class Model: ObservableObject{
                 for datum in data {
                     let values = datum.components(separatedBy: ",")
                     if let year = Int(values[0]), let tempDiff = Double(values[1]) {
-                        anomalies.append(TemperatureAnomaly(year: year, anomaly: tempDiff))
+                        anomalies.append(TemperatureAnomaly(year: year - 1849, anomaly: tempDiff))
                     }
                 }
             } catch {
