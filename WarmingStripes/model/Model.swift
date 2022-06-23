@@ -10,15 +10,23 @@ import Foundation
 final class Model: ObservableObject{
     init () {
         anomalies = loadData()
+        print(anomalies)
     }
     @Published var anomalies: [TemperatureAnomaly] = []
 
     func loadData () ->  [TemperatureAnomaly] {
-        let anomalies: [TemperatureAnomaly] = []
+        var anomalies: [TemperatureAnomaly] = []
         if let filepath = Bundle.main.path(forResource: "HadCRUT.5.0.1.0.summary_series.global.annual", ofType: "csv") {
             do {
                 let contents = try String(contentsOfFile: filepath)
-                print(contents)
+                let data = contents.components(separatedBy: "\n")
+                for datum in data {
+                    let values = datum.components(separatedBy: ",")
+                    if let year = Int(values[0]), let tempDiff = Double(values[1]) {
+                        anomalies.append(TemperatureAnomaly(year: year, anomaly: tempDiff))
+                    }
+                }
+
             } catch {
                 // contents could not be loaded
             }
@@ -33,7 +41,7 @@ struct TemperatureAnomaly {
     //TODO: Change to dates rather than int
     let year: Int
     let anomaly: Double
-
+}
 //    func loadDougData () {
 //        let str = DougData.dougData
 //        let data = str.components(separatedBy: "\n")
@@ -70,6 +78,6 @@ struct TemperatureAnomaly {
 //        //parameters are valid, create the FastingDay
 //        self.init(date: date, dayType: dayType, weight: weight, eatingStart: start, eatingEnd: end, units: units)
 //    }
-}
+
 
 
