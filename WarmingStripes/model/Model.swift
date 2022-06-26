@@ -54,9 +54,12 @@ struct TemperatureAnomaly: Identifiable {
     var color: Color {
 //        anomaly > 0 ? .red : .blue
         if anomaly > 0 {
-            return Color(red: anomaly/TemperatureAnomaly.maxAnomaly, green: 0, blue: 0)
+//            return Color(red: anomaly/TemperatureAnomaly.maxAnomaly, green: 0, blue: 0)
+            let val = 1 - anomaly/TemperatureAnomaly.maxAnomaly
+            return Color(red: 1, green: val, blue: val)
         }
-        return Color(red:0, green: 0, blue: anomaly/TemperatureAnomaly.minAnomaly)
+        let val = 1 - anomaly/TemperatureAnomaly.minAnomaly
+        return Color(red:val, green: val, blue: 1)
         //let skyBlue = Color(red: 0.4627, green: 0.8392, blue: 1.0)
     }
     let year: Int
