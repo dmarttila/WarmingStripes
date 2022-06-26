@@ -14,6 +14,7 @@ struct WarmingStripesApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView().environmentObject(model)
+                .preferredColorScheme(.dark)
         }
     }
 }
