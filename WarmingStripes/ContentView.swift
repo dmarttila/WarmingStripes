@@ -25,7 +25,7 @@ let model = Model()
             Text("Hello, world!")
             Chart (model.anomalies) { year in
                 BarMark(
-                    x: .value("Shape Type", year.year),
+                    x: .value("date", year.date, unit: .year),
                     y: .value("Total Count", year.anomaly)
                 )
                 .foregroundStyle(year.color)

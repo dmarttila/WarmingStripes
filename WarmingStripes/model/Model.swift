@@ -25,7 +25,8 @@ final class Model: ObservableObject{
                 for datum in data {
                     let values = datum.components(separatedBy: ",")
                     if let year = Int(values[0]), let tempDiff = Double(values[1]) {
-                        anomalies.append(TemperatureAnomaly(year: year - 1849, anomaly: tempDiff))
+                        let date = Date(year: year, month: 1, day: 1)
+                        anomalies.append(TemperatureAnomaly(date: date, anomaly: tempDiff))
                         TemperatureAnomaly.minAnomaly = min(TemperatureAnomaly.minAnomaly, tempDiff)
                         TemperatureAnomaly.maxAnomaly = max(TemperatureAnomaly.maxAnomaly, tempDiff)
                     }
@@ -62,7 +63,7 @@ struct TemperatureAnomaly: Identifiable {
         return Color(red:val, green: val, blue: 1)
         //let skyBlue = Color(red: 0.4627, green: 0.8392, blue: 1.0)
     }
-    let year: Int
+    let date: Date
     let anomaly: Double
     var id = UUID()
 }
