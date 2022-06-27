@@ -13,9 +13,6 @@ final class Model: ObservableObject{
 
     private let fileName = "HadCRUT.5.0.1.0.summary_series.global.annual"
 
-    var maxAnomaly: Double = 0
-    var minAnomaly: Double = 0
-
     func loadData () ->  [TemperatureAnomaly] {
         var anomalies: [TemperatureAnomaly] = []
         if let filepath = Bundle.main.path(forResource: fileName, ofType: "csv") {

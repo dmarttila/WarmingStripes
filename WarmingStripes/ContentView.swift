@@ -19,17 +19,23 @@ import SwiftUI
 import Charts
 
 struct ContentView: View {
+
+    @State private var dateMinimum: Double = 0
+
     // environment object doesn't work in previews
     //    @EnvironmentObject var model: Model
     let model = Model()
     @State var showOtherMarks: Bool = false
+
     init() {
         //        let model = Model()
     }
 
     var body: some View {
         VStack {
-           Toggle("Show other marts", isOn: $showOtherMarks)
+            Slider(value: $dateMinimum, in: 1850...2022)
+            Text("\(Int(dateMinimum))")
+            Toggle("Show other marks", isOn: $showOtherMarks)
             Chart (model.anomalies) { year in
                 BarMark(
                     x: .value("date", year.date, unit: .year),
