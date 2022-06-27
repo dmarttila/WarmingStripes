@@ -24,19 +24,29 @@ struct ContentView: View {
 
     // environment object doesn't work in previews
     //    @EnvironmentObject var model: Model
-    let model = Model()
+//    let model = Model()
     @State var showOtherMarks: Bool = false
-
+    @State var anomalies: [TemperatureAnomaly]
     init() {
         //        let model = Model()
+        anomalies = Model().anomalies
+
     }
+    /*
+     let results = someArray.filter { ($0["dateEnd"] ?? "") > nowString }
+     */
 
     var body: some View {
         VStack {
+            Button("Filter stuff") {
+                anomalies = anomalies.filter {
+                    ($0.anomaly>0)
+                }
+            }
             Slider(value: $dateMinimum, in: 1850...2022)
             Text("\(Int(dateMinimum))")
             Toggle("Show other marks", isOn: $showOtherMarks)
-            Chart (model.anomalies) { year in
+            Chart (anomalies) { year in
                 BarMark(
                     x: .value("date", year.date, unit: .year),
                     y: .value("Total Count", year.anomaly)

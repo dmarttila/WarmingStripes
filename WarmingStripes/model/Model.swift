@@ -8,8 +8,10 @@
 import Foundation
 import SwiftUI
 
-final class Model: ObservableObject{
-    @Published var anomalies: [TemperatureAnomaly] = []
+//final class Model: ObservableObject{
+//    @Published var anomalies: [TemperatureAnomaly] = []
+struct Model{
+    var anomalies: [TemperatureAnomaly] = []
 
     private let fileName = "HadCRUT.5.0.1.0.summary_series.global.annual"
 

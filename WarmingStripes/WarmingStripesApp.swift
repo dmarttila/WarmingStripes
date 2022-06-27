@@ -9,11 +9,11 @@ import SwiftUI
 
 @main
 struct WarmingStripesApp: App {
-    @StateObject var model = Model()
+//    @StateObject var model = Model()
 
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(model)
+            ContentView()//.environmentObject(model)
                 .preferredColorScheme(.dark)
         }
     }
