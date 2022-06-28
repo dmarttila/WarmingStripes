@@ -48,12 +48,22 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            Text(dateFilterMin.asDate.monthDateYear)
-            Slider(value: $dateFilterMin, in: dateMin...dateFilterMax)
-                .frame(width: 500 * dateFilterMax/dateMax)
+            HStack {
+                Text(dateFilterMin.asDate.monthDateYear)
+                Text(" - ")
+                Text(dateFilterMax.asDate.monthDateYear)
+            }
+            GeometryReader { geo in
+                ZStack (alignment: .leading){
+                    Slider(value: $dateFilterMin, in: dateMin...dateFilterMax)
+                        .frame(width: geo.size.width * (dateFilterMax - dateMin) / (dateMax - dateMin))
+                    Slider(value: $dateFilterMax, in: dateFilterMin...dateMax)
+                        .offset(x: geo.size.width - geo.size.width * (dateMax - dateFilterMin) / (dateMax - dateMin) + 5, y: 0)
+                        .frame(width: geo.size.width * (dateMax - dateFilterMin) / (dateMax - dateMin))
+                }
 
-            Text(dateFilterMax.asDate.monthDateYear)
-            Slider(value: $dateFilterMax, in: dateFilterMin...dateMax)
+            }
+            .frame(height: 50)
 
             Toggle("Show other marks", isOn: $showOtherMarks)
             Chart (filteredAnomalies) { year in
