@@ -72,6 +72,7 @@ struct ContentView: View {
                     y: .value("Total Count", year.anomaly)
                 )
                 .foregroundStyle(year.color)
+
                 if showOtherMarks {
                     LineMark(
                         x: .value("date", year.date, unit: .year),
@@ -90,6 +91,12 @@ struct ContentView: View {
                 }
             }
             .chartYScale(domain: TemperatureAnomaly.minAnomaly...TemperatureAnomaly.maxAnomaly)
+//            .chartYAxis {
+//                AxisMarks(values: .stride(by: .month))
+//            }
+            .chartXAxis(.hidden )
+            .chartYAxis(.visible)
+//            .chartForegroundStyleScale(type: )
         }
     }
 }
