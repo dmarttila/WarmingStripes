@@ -27,4 +27,17 @@ extension Date {
         components.second = second
         self = Calendar.current.date(from: components)!
     }
+
+    //Nov 29, 2021
+    var monthDateYear: String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return formatter.string(from: self)
+    }
+}
+
+extension Double {
+    var asDate: Date {
+        Date(timeIntervalSinceReferenceDate: self)
+    }
 }

@@ -19,9 +19,10 @@ import SwiftUI
 import Charts
 
 struct ContentView: View {
-    @State private var dateMinimum: Double = 1850
+//    @State private var dateMinimum: Double = 1850
 
     @State private var dateFilterMin = Date(year: 1850, month: 1, day: 1).timeIntervalSinceReferenceDate
+    @State private var dateFilterMax = Date(year: 2023, month: 1, day: 1).timeIntervalSinceReferenceDate
 
     let dateMin = Date(year: 1850, month: 1, day: 1).timeIntervalSinceReferenceDate
     let dateMax = Date(year: 2023, month: 1, day: 1).timeIntervalSinceReferenceDate
@@ -29,11 +30,14 @@ struct ContentView: View {
     @State var showOtherMarks = false
     let anomalies: [TemperatureAnomaly]
 
+//    var minDisplayDate
+
     var filteredAnomalies: [TemperatureAnomaly] {
 //        let d = Date(year: Int(dateMinimum), month: 1, day: 1)
-        let d = Date(timeIntervalSinceReferenceDate: dateFilterMin)
+        let min = Date(timeIntervalSinceReferenceDate: dateFilterMin)
+        let max = Date(timeIntervalSinceReferenceDate: dateFilterMax)
         return anomalies.filter {
-            ($0.date > d)
+            ($0.date >= min && $0.date <= max)
         }
     }
 
@@ -44,9 +48,13 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            Slider(value: $dateFilterMin, in: dateMin...dateMax, step: 1)
-            Slider(value: $dateMinimum, in: 1850...2022, step: 1)
-            Text("\(Int(dateMinimum))")
+            Text(dateFilterMin.asDate.monthDateYear)
+            Slider(value: $dateFilterMin, in: dateMin...dateFilterMax)
+                .frame(width: 500 * dateFilterMax/dateMax)
+
+            Text(dateFilterMax.asDate.monthDateYear)
+            Slider(value: $dateFilterMax, in: dateFilterMin...dateMax)
+
             Toggle("Show other marks", isOn: $showOtherMarks)
             Chart (filteredAnomalies) { year in
                 BarMark(
