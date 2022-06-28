@@ -2,7 +2,7 @@
 //  DateExtensions.swift
 //  WarmingStripes
 //
-//  Created by Douglas Marttila on 6/25/22.
+//  Created by Doug Marttila on 6/25/22.
 //
 
 import Foundation
