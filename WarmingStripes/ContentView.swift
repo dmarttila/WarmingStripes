@@ -20,13 +20,24 @@ import Charts
 
 struct ContentView: View {
 
-    @State private var dateMinimum: Double = 0
+    @State private var dateMinimum: Double = 1850
+
+    @State private var maxAnomaly: Double = -2
 
     // environment object doesn't work in previews
     //    @EnvironmentObject var model: Model
 //    let model = Model()
     @State var showOtherMarks: Bool = false
     @State var anomalies: [TemperatureAnomaly]
+
+    var filteredAnomalies: [TemperatureAnomaly] {
+        let d = Date(year: Int(dateMinimum), month: 1, day: 1)
+        return anomalies.filter {
+//            ($0.anomaly>maxAnomaly)
+            ($0.date > d)
+        }
+    }
+
     init() {
         //        let model = Model()
         anomalies = Model().anomalies
@@ -38,15 +49,11 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            Button("Filter stuff") {
-                anomalies = anomalies.filter {
-                    ($0.anomaly>0)
-                }
-            }
-            Slider(value: $dateMinimum, in: 1850...2022)
+            Slider(value: $dateMinimum, in: 1850...2022, step: 1)
+            Slider(value: $maxAnomaly, in: -2...2)
             Text("\(Int(dateMinimum))")
             Toggle("Show other marks", isOn: $showOtherMarks)
-            Chart (anomalies) { year in
+            Chart (filteredAnomalies) { year in
                 BarMark(
                     x: .value("date", year.date, unit: .year),
                     y: .value("Total Count", year.anomaly)
