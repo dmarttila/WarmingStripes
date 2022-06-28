@@ -19,16 +19,19 @@ import SwiftUI
 import Charts
 
 struct ContentView: View {
-
     @State private var dateMinimum: Double = 1850
 
-    @State private var maxAnomaly: Double = -2
+    @State private var dateFilterMin = Date(year: 1850, month: 1, day: 1).timeIntervalSinceReferenceDate
 
-    @State var showOtherMarks: Bool = false
-    var anomalies: [TemperatureAnomaly]
+    let dateMin = Date(year: 1850, month: 1, day: 1).timeIntervalSinceReferenceDate
+    let dateMax = Date(year: 2023, month: 1, day: 1).timeIntervalSinceReferenceDate
+
+    @State var showOtherMarks = false
+    let anomalies: [TemperatureAnomaly]
 
     var filteredAnomalies: [TemperatureAnomaly] {
-        let d = Date(year: Int(dateMinimum), month: 1, day: 1)
+//        let d = Date(year: Int(dateMinimum), month: 1, day: 1)
+        let d = Date(timeIntervalSinceReferenceDate: dateFilterMin)
         return anomalies.filter {
             ($0.date > d)
         }
@@ -41,6 +44,7 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
+            Slider(value: $dateFilterMin, in: dateMin...dateMax, step: 1)
             Slider(value: $dateMinimum, in: 1850...2022, step: 1)
             Text("\(Int(dateMinimum))")
             Toggle("Show other marks", isOn: $showOtherMarks)
@@ -67,8 +71,7 @@ struct ContentView: View {
                     .foregroundStyle(year.color)
                 }
             }
-            .chartYScale(domain: TemperatureAnomaly.minAnomaly ... TemperatureAnomaly.maxAnomaly)
-//            .chartYScale(domain: -1 ... 1)
+            .chartYScale(domain: TemperatureAnomaly.minAnomaly...TemperatureAnomaly.maxAnomaly)
         }
     }
 }
