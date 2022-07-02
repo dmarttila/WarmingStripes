@@ -55,6 +55,16 @@ struct ContentView: View {
 //    @State var showAxes = true
     let anomalies: [TemperatureAnomaly]
 
+    var showXAxis: Visibility {
+        if chartState == .barsWithScale || chartState == .labelledStripes {
+            return .visible
+        }
+        return .hidden
+    }
+    var showYAxis: Visibility {
+        chartState == .barsWithScale ? .visible : .hidden
+    }
+
 //    var minDisplayDate
 
     var filteredAnomalies: [TemperatureAnomaly] {
@@ -103,7 +113,7 @@ struct ContentView: View {
             Chart (filteredAnomalies) { year in
                 BarMark(
                     x: .value("date", year.date, unit: .year),
-                    y: .value("Total Count", year.anomaly)
+                    y: .value("Total Count", chartState == .stripes || chartState == .labelledStripes ? TemperatureAnomaly.maxAnomaly : year.anomaly)
                 )
                 .foregroundStyle(year.color)
 
@@ -128,8 +138,8 @@ struct ContentView: View {
 //            .chartYAxis {
 //                AxisMarks(values: .stride(by: .month))
 //            }
-            .chartXAxis(showAxes ? .visible : .hidden)
-            .chartYAxis(showAxes ? .visible : .hidden)
+            .chartXAxis(showXAxis)
+            .chartYAxis(showYAxis)
 //            .chartForegroundStyleScale(type: )
         }
     }
