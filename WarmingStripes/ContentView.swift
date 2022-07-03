@@ -64,6 +64,9 @@ struct ContentView: View {
     var showYAxis: Visibility {
         chartState == .barsWithScale ? .visible : .hidden
     }
+    var axisMinimum: Double {
+        chartState == .stripes || chartState == .labelledStripes ? 0 : TemperatureAnomaly.minAnomaly
+    }
 
 //    var minDisplayDate
 
@@ -112,8 +115,8 @@ struct ContentView: View {
             Toggle("Show axes", isOn: $showAxes)
             Chart (filteredAnomalies) { year in
                 BarMark(
-                    x: .value("date", year.date, unit: .year),
-                    y: .value("Total Count", chartState == .stripes || chartState == .labelledStripes ? TemperatureAnomaly.maxAnomaly : year.anomaly)
+                    x: .value("Date", year.date, unit: .year),
+                    y: .value("Anomaly", chartState == .stripes || chartState == .labelledStripes ? TemperatureAnomaly.maxAnomaly : year.anomaly)
                 )
                 .foregroundStyle(year.color)
 
@@ -134,7 +137,7 @@ struct ContentView: View {
                     .foregroundStyle(year.color)
                 }
             }
-            .chartYScale(domain: TemperatureAnomaly.minAnomaly...TemperatureAnomaly.maxAnomaly)
+            .chartYScale(domain: axisMinimum...TemperatureAnomaly.maxAnomaly)
 //            .chartYAxis {
 //                AxisMarks(values: .stride(by: .month))
 //            }
