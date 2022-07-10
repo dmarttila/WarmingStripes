@@ -52,17 +52,18 @@ struct ContentView: View {
 
     @State var showOtherMarks = false
     @State var showAxes = true
+    @State var chartHeight:CGFloat = 100
 //    @State var showAxes = true
     let anomalies: [TemperatureAnomaly]
 
     var showXAxis: Visibility {
-        if chartState == .barsWithScale || chartState == .labelledStripes {
-            return .visible
-        }
-        return .hidden
+        chartState == .barsWithScale || chartState == .labelledStripes ? .visible : .hidden
     }
+
     var showYAxis: Visibility {
+//        return showXAxis
         chartState == .barsWithScale ? .visible : .hidden
+//        chartState == .barsWithScale || chartState == .labelledStripes ? .visible : .hidden
     }
     var axisMinimum: Double {
         chartState == .stripes || chartState == .labelledStripes ? 0 : TemperatureAnomaly.minAnomaly
@@ -83,17 +84,22 @@ struct ContentView: View {
         anomalies = Model().anomalies
     }
 
+    func getBarWidth (_ w: CGFloat) -> MarkDimension{
+//        return 20
+        let ratio = w / Double(filteredAnomalies.count)
+        return MarkDimension(floatLiteral: ratio + 0.5)
+    }
 
     var body: some View {
         VStack {
-            Picker("Units:", selection: $chartState) {
+            Picker("Units:", selection: $chartState.animation(.easeInOut)) {
                 ForEach(ChartState.allCases) { state in
                     Text(state.rawValue)
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
-    //        .listRowBackground(Color.lightestClr)
-    //        .onChange(of: units, perform: thePickerHasChanged)
+            //        .listRowBackground(Color.lightestClr)
+            //        .onChange(of: units, perform: thePickerHasChanged)
             HStack {
                 Text(dateFilterMin.asDate.monthDateYear)
                 Text(" - ")
@@ -109,41 +115,54 @@ struct ContentView: View {
                 }
 
             }
-            .frame(height: 50)
+            //            .frame(height: 50)
+
+            Button ("Change chart height") {
+                withAnimation {
+                    chartHeight += 10
+                }
+            }
 
             Toggle("Show other marks", isOn: $showOtherMarks)
             Toggle("Show axes", isOn: $showAxes)
-            Chart (filteredAnomalies) { year in
-                BarMark(
-                    x: .value("Date", year.date, unit: .year),
-                    y: .value("Anomaly", chartState == .stripes || chartState == .labelledStripes ? TemperatureAnomaly.maxAnomaly : year.anomaly)
-                )
-                .foregroundStyle(year.color)
+            GeometryReader () { geo in
+                Chart (filteredAnomalies) { year in
+                    BarMark(
+                        x: .value("Date", year.date, unit: .year),
+                        y: .value("Anomaly", chartState == .stripes || chartState == .labelledStripes ? TemperatureAnomaly.maxAnomaly : year.anomaly),
+                        width: getBarWidth( geo.size.width ),
+                        height: 40,
+                        stacking: .standard
 
-                if showOtherMarks {
-                    LineMark(
-                        x: .value("date", year.date, unit: .year),
-                        y: .value("Total Count", year.anomaly)
-                    )
-                    AreaMark(
-                        x: .value("date", year.date, unit: .year),
-                        y: .value("Total Count", year.anomaly)
                     )
                     .foregroundStyle(year.color)
-                    RectangleMark (
-                        x: .value("date", year.date, unit: .year),
-                        y: .value("Total Count", year.anomaly)
-                    )
-                    .foregroundStyle(year.color)
+
+                    if showOtherMarks {
+                        LineMark(
+                            x: .value("date", year.date, unit: .year),
+                            y: .value("Total Count", year.anomaly)
+                        )
+                        AreaMark(
+                            x: .value("date", year.date, unit: .year),
+                            y: .value("Total Count", year.anomaly)
+                        )
+                        .foregroundStyle(year.color)
+                        RectangleMark (
+                            x: .value("date", year.date, unit: .year),
+                            y: .value("Total Count", year.anomaly)
+                        )
+                        .foregroundStyle(year.color)
+                    }
                 }
+                .chartYScale(domain: axisMinimum...TemperatureAnomaly.maxAnomaly)
+                //            .chartYAxis {
+                //                AxisMarks(values: .stride(by: .month))
+                //            }
+                .chartXAxis(showXAxis)
+                .chartYAxis(showYAxis)
+                .frame(height: chartHeight)
+                //            .chartForegroundStyleScale(type: )
             }
-            .chartYScale(domain: axisMinimum...TemperatureAnomaly.maxAnomaly)
-//            .chartYAxis {
-//                AxisMarks(values: .stride(by: .month))
-//            }
-            .chartXAxis(showXAxis)
-            .chartYAxis(showYAxis)
-//            .chartForegroundStyleScale(type: )
         }
     }
 }
