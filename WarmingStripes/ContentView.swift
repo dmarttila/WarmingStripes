@@ -121,14 +121,17 @@ struct ContentView: View {
                         }
                     }
                     .chartYScale(domain: axisMinimum...TemperatureAnomaly.maxAnomaly)
-                    .chartXAxis(showXAxis)
+//                    .chartXAxis(showXAxis)
                     //                    .chartYAxis(showYAxis)
                     .chartYAxis {
                         AxisMarks() { value in
                             AxisValueLabel() {
                                 if let dblVal = value.as(Double.self) {
                                     Text(String(dblVal))
-                                        .foregroundColor(.green )
+                                        .opacity(showYAxis == .hidden ? 0 : 1)
+//                                        .foregroundColor(.green)
+//                                        .opacity(showYAxis ? 0 : 1)
+
                                 }
                             }
                         }
