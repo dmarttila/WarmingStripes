@@ -41,7 +41,7 @@ enum ChartState: String,  CaseIterable, Identifiable{
 
 struct ContentView: View {
 
-//    @State private var dateMinimum: Double = 1850
+    //    @State private var dateMinimum: Double = 1850
 
     @State private var chartState = ChartState.stripes
     @State private var dateFilterMin = Date(year: 1850, month: 1, day: 1).timeIntervalSinceReferenceDate
@@ -50,10 +50,8 @@ struct ContentView: View {
     let dateMin = Date(year: 1850, month: 1, day: 1).timeIntervalSinceReferenceDate
     let dateMax = Date(year: 2023, month: 1, day: 1).timeIntervalSinceReferenceDate
 
-    @State var showOtherMarks = false
-    @State var showAxes = true
     @State var chartHeight:CGFloat = 100
-//    @State var showAxes = true
+    //    @State var showAxes = true
     let anomalies: [TemperatureAnomaly]
 
     var showXAxis: Visibility {
@@ -61,18 +59,15 @@ struct ContentView: View {
     }
 
     var showYAxis: Visibility {
-//        return showXAxis
+        //        return showXAxis
         chartState == .barsWithScale ? .visible : .hidden
-//        chartState == .barsWithScale || chartState == .labelledStripes ? .visible : .hidden
+        //        chartState == .barsWithScale || chartState == .labelledStripes ? .visible : .hidden
     }
     var axisMinimum: Double {
         chartState == .stripes || chartState == .labelledStripes ? 0 : TemperatureAnomaly.minAnomaly
     }
 
-//    var minDisplayDate
-
     var filteredAnomalies: [TemperatureAnomaly] {
-//        let d = Date(year: Int(dateMinimum), month: 1, day: 1)
         let min = Date(timeIntervalSinceReferenceDate: dateFilterMin)
         let max = Date(timeIntervalSinceReferenceDate: dateFilterMax)
         return anomalies.filter {
@@ -85,7 +80,7 @@ struct ContentView: View {
     }
 
     func getBarWidth (_ w: CGFloat) -> MarkDimension{
-//        return 20
+        //        return 20
         let ratio = w / Double(filteredAnomalies.count)
         return MarkDimension(floatLiteral: ratio + 0.5)
     }
@@ -98,70 +93,47 @@ struct ContentView: View {
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
-            //        .listRowBackground(Color.lightestClr)
-            //        .onChange(of: units, perform: thePickerHasChanged)
             HStack {
                 Text(dateFilterMin.asDate.monthDateYear)
                 Text(" - ")
                 Text(dateFilterMax.asDate.monthDateYear)
             }
             GeometryReader { geo in
-                ZStack (alignment: .leading){
-                    Slider(value: $dateFilterMin, in: dateMin...dateFilterMax)
-                        .frame(width: geo.size.width * (dateFilterMax - dateMin) / (dateMax - dateMin))
-                    Slider(value: $dateFilterMax, in: dateFilterMin...dateMax)
-                        .offset(x: geo.size.width - geo.size.width * (dateMax - dateFilterMin) / (dateMax - dateMin) + 5, y: 0)
-                        .frame(width: geo.size.width * (dateMax - dateFilterMin) / (dateMax - dateMin))
-                }
-
-            }
-            //            .frame(height: 50)
-
-            Button ("Change chart height") {
-                withAnimation {
-                    chartHeight += 10
-                }
-            }
-
-            Toggle("Show other marks", isOn: $showOtherMarks)
-            Toggle("Show axes", isOn: $showAxes)
-            GeometryReader () { geo in
-                Chart (filteredAnomalies) { year in
-                    BarMark(
-                        x: .value("Date", year.date, unit: .year),
-                        y: .value("Anomaly", chartState == .stripes || chartState == .labelledStripes ? TemperatureAnomaly.maxAnomaly : year.anomaly),
-                        width: getBarWidth( geo.size.width ),
-                        height: 40,
-                        stacking: .standard
-
-                    )
-                    .foregroundStyle(year.color)
-
-                    if showOtherMarks {
-                        LineMark(
-                            x: .value("date", year.date, unit: .year),
-                            y: .value("Total Count", year.anomaly)
-                        )
-                        AreaMark(
-                            x: .value("date", year.date, unit: .year),
-                            y: .value("Total Count", year.anomaly)
+                VStack {
+                    ZStack (alignment: .leading){
+                        Slider(value: $dateFilterMin, in: dateMin...dateFilterMax)
+                            .frame(width: geo.size.width * (dateFilterMax - dateMin) / (dateMax - dateMin))
+                        Slider(value: $dateFilterMax, in: dateFilterMin...dateMax)
+                            .offset(x: geo.size.width - geo.size.width * (dateMax - dateFilterMin) / (dateMax - dateMin) + 5, y: 0)
+                            .frame(width: geo.size.width * (dateMax - dateFilterMin) / (dateMax - dateMin))
+                    }
+                    //                    .frame(height: 250)
+                    Chart (filteredAnomalies) { year in
+                        BarMark(
+                            x: .value("Date", year.date, unit: .year),
+                            y: .value("Anomaly", chartState == .stripes || chartState == .labelledStripes ? TemperatureAnomaly.maxAnomaly : year.anomaly),
+                            width: getBarWidth(geo.size.width),
+                            stacking: .standard
                         )
                         .foregroundStyle(year.color)
-                        RectangleMark (
-                            x: .value("date", year.date, unit: .year),
-                            y: .value("Total Count", year.anomaly)
-                        )
-                        .foregroundStyle(year.color)
+                        .annotation(position: .overlay, alignment: .center) {
+                            //                            Text("Hi")
+                        }
+                    }
+                    .chartYScale(domain: axisMinimum...TemperatureAnomaly.maxAnomaly)
+                    .chartXAxis(showXAxis)
+                    //                    .chartYAxis(showYAxis)
+                    .chartYAxis {
+                        AxisMarks() { value in
+                            AxisValueLabel() {
+                                if let dblVal = value.as(Double.self) {
+                                    Text(String(dblVal))
+                                        .foregroundColor(.green )
+                                }
+                            }
+                        }
                     }
                 }
-                .chartYScale(domain: axisMinimum...TemperatureAnomaly.maxAnomaly)
-                //            .chartYAxis {
-                //                AxisMarks(values: .stride(by: .month))
-                //            }
-                .chartXAxis(showXAxis)
-                .chartYAxis(showYAxis)
-                .frame(height: chartHeight)
-                //            .chartForegroundStyleScale(type: )
             }
         }
     }
