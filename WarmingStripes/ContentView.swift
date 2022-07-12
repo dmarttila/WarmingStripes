@@ -18,19 +18,6 @@
 import SwiftUI
 import Charts
 
-//public enum WeightUnit: String, CaseIterable, Identifiable, Codable {
-//    case pounds = "Pounds"
-//    case kilograms = "Kilograms"
-//    public var id: WeightUnit { self }
-//    public var abbreviation: String {
-//        if self == .pounds {
-//            return "lb"
-//        } else {
-//            return "kg"
-//        }
-//    }
-//}
-
 enum ChartState: String,  CaseIterable, Identifiable{
     case stripes = "Warming Stripes"
     case labelledStripes = "Labelled Stripes"
@@ -40,9 +27,6 @@ enum ChartState: String,  CaseIterable, Identifiable{
 }
 
 struct ContentView: View {
-
-    //    @State private var dateMinimum: Double = 1850
-
     @State private var chartState = ChartState.stripes
     @State private var dateFilterMin = Date(year: 1850, month: 1, day: 1).timeIntervalSinceReferenceDate
     @State private var dateFilterMax = Date(year: 2023, month: 1, day: 1).timeIntervalSinceReferenceDate
@@ -50,8 +34,6 @@ struct ContentView: View {
     let dateMin = Date(year: 1850, month: 1, day: 1).timeIntervalSinceReferenceDate
     let dateMax = Date(year: 2023, month: 1, day: 1).timeIntervalSinceReferenceDate
 
-    @State var chartHeight:CGFloat = 100
-    //    @State var showAxes = true
     let anomalies: [TemperatureAnomaly]
 
     var showXAxis: Visibility {
@@ -80,13 +62,24 @@ struct ContentView: View {
     }
 
     func getBarWidth (_ w: CGFloat) -> MarkDimension{
-        //        return 20
         let ratio = w / Double(filteredAnomalies.count)
         return MarkDimension(floatLiteral: ratio + 0.5)
     }
 
+    @State private var yAxisHidden = true
+
     var body: some View {
         VStack {
+            HStack {
+                Button ("change opacity") {
+                    withAnimation(.easeInOut(duration: 2)) {
+                        self.yAxisHidden.toggle()
+                    }
+                }
+                Text("Opacity test")
+                    .opacity(yAxisHidden ? 0 : 1)
+                Text("Opacity val \(String(yAxisHidden))")
+            }
             Picker("Units:", selection: $chartState.animation(.easeInOut)) {
                 ForEach(ChartState.allCases) { state in
                     Text(state.rawValue)
@@ -128,7 +121,8 @@ struct ContentView: View {
                             AxisValueLabel() {
                                 if let dblVal = value.as(Double.self) {
                                     Text(String(dblVal))
-                                        .opacity(showYAxis == .hidden ? 0 : 1)
+                                        .opacity(yAxisHidden ? 0 : 1)
+//                                        .opacity(showYAxis == .hidden ? 0 : 1)
 //                                        .foregroundColor(.green)
 //                                        .opacity(showYAxis ? 0 : 1)
 
