@@ -10,8 +10,11 @@
  Better color range
  
  Set the axis scale
- leading for yAxis
- 
+white for axis text
+ remove axes grid lines
+ remove ponted top to lines
+ preferences
+ add credit on chart itselft too
  */
 
 import SwiftUI
@@ -28,7 +31,7 @@ enum ChartState: String,  CaseIterable, Identifiable{
 struct ContentView: View {
     @State private var chartState = ChartState.stripes
     
-    let anomalies: [TemperatureAnomaly]
+    let anomalies = Model().anomalies
     
     var showXAxis: Visibility {
         chartState == .barsWithScale || chartState == .labelledStripes ? .visible : .hidden
@@ -41,13 +44,22 @@ struct ContentView: View {
         chartState == .stripes || chartState == .labelledStripes ? 0 : TemperatureAnomaly.minAnomaly
     }
     
-    init() {
-        anomalies = Model().anomalies
-    }
-    
     func getBarWidth (_ w: CGFloat) -> MarkDimension{
         let ratio = w / Double(anomalies.count)
         return MarkDimension(floatLiteral: ratio + 0.5)
+    }
+    
+    var titleText: String {
+        switch chartState {
+        case .stripes:
+            return ""
+        case .labelledStripes:
+            return "Global temperature change (1850-2021)"
+        case .bars:
+            return "Global temperature have increased by over 1.2°C"
+        case .barsWithScale:
+            return "Global temperature change"
+        }
     }
     
     @State private var yAxisHidden = true
@@ -62,7 +74,7 @@ struct ContentView: View {
             .pickerStyle(SegmentedPickerStyle())
             GeometryReader { geo in
                 VStack (alignment: .leading){
-                    Text("Global temperature change")
+                    Text(titleText)
                         .font(.title2)
                     if chartState == .barsWithScale {
                         Text("Relative to average of 1971-2000 [°C]")
