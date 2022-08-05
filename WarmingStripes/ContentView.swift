@@ -8,10 +8,9 @@
 /*TODO:
  
  Better color range
- Zoom in and out
- Dupe all the other views
+ 
  Set the axis scale
- Get the bars touching and no stroke
+ leading for yAxis
  
  */
 
@@ -28,11 +27,6 @@ enum ChartState: String,  CaseIterable, Identifiable{
 
 struct ContentView: View {
     @State private var chartState = ChartState.stripes
-    @State private var dateFilterMin = Date(year: 1850, month: 1, day: 1).timeIntervalSinceReferenceDate
-    @State private var dateFilterMax = Date(year: 2023, month: 1, day: 1).timeIntervalSinceReferenceDate
-    
-    let dateMin = Date(year: 1850, month: 1, day: 1).timeIntervalSinceReferenceDate
-    let dateMax = Date(year: 2023, month: 1, day: 1).timeIntervalSinceReferenceDate
     
     let anomalies: [TemperatureAnomaly]
     
@@ -41,14 +35,11 @@ struct ContentView: View {
     }
     
     var showYAxis: Visibility {
-        //        return showXAxis
         chartState == .barsWithScale ? .visible : .hidden
-        //        chartState == .barsWithScale || chartState == .labelledStripes ? .visible : .hidden
     }
     var axisMinimum: Double {
         chartState == .stripes || chartState == .labelledStripes ? 0 : TemperatureAnomaly.minAnomaly
     }
-
     
     init() {
         anomalies = Model().anomalies
@@ -63,18 +54,21 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            Picker("Units:", selection: $chartState.animation(.easeInOut)) {
+            Picker("Units:", selection: $chartState) {
                 ForEach(ChartState.allCases) { state in
                     Text(state.rawValue)
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
-            HStack {
-                Text(dateFilterMin.asDate.monthDateYear)
-                Text(" - ")
-                Text(dateFilterMax.asDate.monthDateYear)
-            }
             GeometryReader { geo in
+                VStack (alignment: .leading){
+                    Text("Global temperature change")
+                        .font(.title2)
+                    if chartState == .barsWithScale {
+                        Text("Relative to average of 1971-2000 [°C]")
+                            .font(.subheadline)
+                    }
+                }
                 Chart (anomalies) { year in
                     BarMark(
                         x: .value("Date", year.date, unit: .year),
@@ -87,6 +81,9 @@ struct ContentView: View {
                 .chartYScale(domain: axisMinimum ... TemperatureAnomaly.maxAnomaly)
                 .chartXAxis(showXAxis)
                 .chartYAxis(showYAxis)
+                .chartYAxis {
+                    AxisMarks(position: .leading)
+                }
             }
         }
     }
