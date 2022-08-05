@@ -41,7 +41,7 @@ struct ContentView: View {
         chartState == .barsWithScale ? .visible : .hidden
     }
     var axisMinimum: Double {
-        chartState == .stripes || chartState == .labelledStripes ? 0 : TemperatureAnomaly.minAnomaly
+        chartState == .stripes || chartState == .labelledStripes ? 0 : TemperatureAnomaly.maxAnomaly * -1
     }
     
     func getBarWidth (_ w: CGFloat) -> MarkDimension{
@@ -76,31 +76,39 @@ struct ContentView: View {
                 Text(titleText)
                     .font(.title2)
             }
-            GeometryReader { geo in
-                if chartState == .barsWithScale || chartState == .bars {
-                    VStack (alignment: .leading){
-                        Text(titleText)
-                            .font(.title2)
-                        if chartState == .barsWithScale {
-                            Text("Relative to average of 1971-2000 [°C]")
-                                .font(.subheadline)
+            HStack {
+                if chartState == .bars {
+                    Text("1850")
+                }
+                GeometryReader { geo in
+                    if chartState == .barsWithScale || chartState == .bars {
+                        VStack (alignment: .leading){
+                            Text(titleText)
+                                .font(.title2)
+                            if chartState == .barsWithScale {
+                                Text("Relative to average of 1971-2000 [°C]")
+                                    .font(.subheadline)
+                            }
                         }
                     }
+                    Chart (anomalies) { year in
+                        BarMark(
+                            x: .value("Date", year.date, unit: .year),
+                            y: .value("Anomaly", chartState == .stripes || chartState == .labelledStripes ? TemperatureAnomaly.maxAnomaly : year.anomaly),
+                            width: getBarWidth(geo.size.width),
+                            stacking: .standard
+                        )
+                        .foregroundStyle(year.color)
+                    }
+                    .chartYScale(domain: axisMinimum ... TemperatureAnomaly.maxAnomaly)
+                    .chartXAxis(showXAxis)
+                    .chartYAxis(showYAxis)
+                    .chartYAxis {
+                        AxisMarks(position: .leading)
+                    }
                 }
-                Chart (anomalies) { year in
-                    BarMark(
-                        x: .value("Date", year.date, unit: .year),
-                        y: .value("Anomaly", chartState == .stripes || chartState == .labelledStripes ? TemperatureAnomaly.maxAnomaly : year.anomaly),
-                        width: getBarWidth(geo.size.width),
-                        stacking: .standard
-                    )
-                    .foregroundStyle(year.color)
-                }
-                .chartYScale(domain: axisMinimum ... TemperatureAnomaly.maxAnomaly)
-                .chartXAxis(showXAxis)
-                .chartYAxis(showYAxis)
-                .chartYAxis {
-                    AxisMarks(position: .leading)
+                if chartState == .bars {
+                    Text("2021")
                 }
             }
         }
