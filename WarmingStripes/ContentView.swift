@@ -65,20 +65,26 @@ struct ContentView: View {
     @State private var yAxisHidden = true
     
     var body: some View {
-        VStack {
+        VStack (alignment: .leading){
             Picker("Units:", selection: $chartState) {
                 ForEach(ChartState.allCases) { state in
                     Text(state.rawValue)
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
+            if chartState == .labelledStripes {
+                Text(titleText)
+                    .font(.title2)
+            }
             GeometryReader { geo in
-                VStack (alignment: .leading){
-                    Text(titleText)
-                        .font(.title2)
-                    if chartState == .barsWithScale {
-                        Text("Relative to average of 1971-2000 [°C]")
-                            .font(.subheadline)
+                if chartState == .barsWithScale || chartState == .bars {
+                    VStack (alignment: .leading){
+                        Text(titleText)
+                            .font(.title2)
+                        if chartState == .barsWithScale {
+                            Text("Relative to average of 1971-2000 [°C]")
+                                .font(.subheadline)
+                        }
                     }
                 }
                 Chart (anomalies) { year in
