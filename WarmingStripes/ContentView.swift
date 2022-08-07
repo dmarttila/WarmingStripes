@@ -10,7 +10,7 @@
  Better color range
  
  Set the axis scale
-white for axis text
+ white for axis text
  remove axes grid lines
  remove ponted top to lines
  preferences
@@ -22,7 +22,7 @@ import Charts
 
 enum ChartState: String,  CaseIterable, Identifiable{
     case stripes = "Warming Stripes"
-    case labelledStripes = "Labelled Stripes"
+    case labelledStripes = "Labeled Stripes"
     case bars = "Bars"
     case barsWithScale = "Bars with Scale"
     public var id: ChartState { self }
@@ -68,7 +68,7 @@ struct ContentView: View {
         VStack (alignment: .leading){
             Picker("Units:", selection: $chartState) {
                 ForEach(ChartState.allCases) { state in
-                    Text(state.rawValue)
+                    Text(state.rawValue.uppercased())
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
@@ -104,7 +104,21 @@ struct ContentView: View {
                     .chartXAxis(showXAxis)
                     .chartYAxis(showYAxis)
                     .chartYAxis {
-                        AxisMarks(position: .leading)
+                        AxisMarks(position: .leading) {value in
+//                            AxisGridLine(centered: true, stroke: StrokeStyle(dash: [1, 2, 4]))
+//                                .foregroundStyle(Color.white)
+//                            AxisValueLabel() { // construct Text here
+//                                if let intValue = value.as(Double.self) {
+//                                    Text("\(intValue)")
+//                                        .font(.headline) // style it
+//                                        .foregroundColor(.white)
+//                                }
+//                            }
+                            AxisValueLabel()
+                                .foregroundStyle(.white)
+                        }
+                        
+                        
                     }
                 }
                 if chartState == .bars {

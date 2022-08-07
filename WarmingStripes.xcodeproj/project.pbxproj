@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B40D20F12867ECF600684579 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40D20F02867ECF600684579 /* DateExtensions.swift */; };
+		B48F2D0F28A05BCA000A5986 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48F2D0E28A05BCA000A5986 /* DateExtensions.swift */; };
 		B4B81A832861E5A500F9E2EC /* WarmingStripesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B81A822861E5A500F9E2EC /* WarmingStripesApp.swift */; };
 		B4B81A852861E5A500F9E2EC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B81A842861E5A500F9E2EC /* ContentView.swift */; };
 		B4B81A872861E5A700F9E2EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4B81A862861E5A700F9E2EC /* Assets.xcassets */; };
@@ -17,7 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B40D20F02867ECF600684579 /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
+		B48F2D0E28A05BCA000A5986 /* DateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		B4B81A7F2861E5A500F9E2EC /* WarmingStripes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WarmingStripes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4B81A822861E5A500F9E2EC /* WarmingStripesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmingStripesApp.swift; sourceTree = "<group>"; };
 		B4B81A842861E5A500F9E2EC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -58,6 +58,7 @@
 			isa = PBXGroup;
 			children = (
 				B4B81A822861E5A500F9E2EC /* WarmingStripesApp.swift */,
+				B48F2D0E28A05BCA000A5986 /* DateExtensions.swift */,
 				B4B81A842861E5A500F9E2EC /* ContentView.swift */,
 				B4C25B342863340700EE54FC /* model */,
 				B4B81A902861E73600F9E2EC /* HadCRUT.5.0.1.0.summary_series.global.annual.csv */,
@@ -79,7 +80,6 @@
 			isa = PBXGroup;
 			children = (
 				B4C25B352863341700EE54FC /* Model.swift */,
-				B40D20F02867ECF600684579 /* DateExtensions.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -156,7 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4C25B362863341700EE54FC /* Model.swift in Sources */,
-				B40D20F12867ECF600684579 /* DateExtensions.swift in Sources */,
+				B48F2D0F28A05BCA000A5986 /* DateExtensions.swift in Sources */,
 				B4B81A852861E5A500F9E2EC /* ContentView.swift in Sources */,
 				B4B81A832861E5A500F9E2EC /* WarmingStripesApp.swift in Sources */,
 			);
