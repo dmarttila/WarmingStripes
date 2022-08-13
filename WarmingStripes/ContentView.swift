@@ -67,70 +67,85 @@ struct ContentView: View {
     }
     
     @State private var yAxisHidden = true
+    @State private var showPreferences = false
     
     var body: some View {
-        VStack (alignment: .leading){
-            Picker("Units:", selection: $chartState) {
-                ForEach(ChartState.allCases) { state in
-                    Text(state.rawValue.uppercased())
-                }
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            if chartState == .labelledStripes {
-                Text(titleText)
-                    .font(.title2)
-            }
-            HStack {
-                if chartState == .bars {
-                    Text("1850")
-                }
-                GeometryReader { geo in
-                    if chartState == .barsWithScale || chartState == .bars {
-                        VStack (alignment: .leading){
-                            Text(titleText)
-                                .font(.title2)
-                            if chartState == .barsWithScale {
-                                Text("Relative to average of 1971-2000 [°C]")
-                                    .font(.subheadline)
-                            }
-                        }
+        ZStack (alignment: .bottomTrailing) {
+            VStack (alignment: .leading){
+                Picker("Units:", selection: $chartState) {
+                    ForEach(ChartState.allCases) { state in
+                        Text(state.rawValue.uppercased())
                     }
-                    Chart (anomalies) { year in
-                        BarMark(
-                            x: .value("Date", year.date, unit: .year),
-                            y: .value("Anomaly", chartState == .stripes || chartState == .labelledStripes ? TemperatureAnomaly.maxAnomaly : year.anomaly),
-                            width: getBarWidth(geo.size.width),
-                            stacking: .standard
-                        )
-                        .foregroundStyle(year.color)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                if chartState == .labelledStripes {
+                    Text(titleText)
+                        .font(.title2)
+                }
+                HStack {
+                    if chartState == .bars {
+                        Text("1850")
                     }
-                    .chartYScale(domain: axisMinimum ... TemperatureAnomaly.maxAnomaly)
-                    .chartXAxis(showXAxis)
-                    .chartYAxis(showYAxis)
-                    .chartYAxis {
-                        AxisMarks(position: .leading) {value in
-//                            AxisGridLine(centered: true, stroke: StrokeStyle(dash: [1, 2, 4]))
-//                                .foregroundStyle(Color.white)
-                            AxisValueLabel() { // construct Text here
-//                                Text("Hi")
-                                
-//                                print(value)
-                                if let intValue = value.as(Double.self) {
-                                    Text("\(intValue)")
-//                                        .font(.foo) // style it
-                                        .foregroundColor(.white)
+                    GeometryReader { geo in
+                        if chartState == .barsWithScale || chartState == .bars {
+                            VStack (alignment: .leading){
+                                Text(titleText)
+                                    .font(.title2)
+                                if chartState == .barsWithScale {
+                                    Text("Relative to average of 1971-2000 [°C]")
+                                        .font(.subheadline)
                                 }
                             }
-//                            AxisValueLabel()
-//                                .foregroundStyle(.white)
                         }
-                        
-                        
+                        Chart (anomalies) { year in
+                            BarMark(
+                                x: .value("Date", year.date, unit: .year),
+                                y: .value("Anomaly", chartState == .stripes || chartState == .labelledStripes ? TemperatureAnomaly.maxAnomaly : year.anomaly),
+                                width: getBarWidth(geo.size.width),
+                                stacking: .standard
+                            )
+                            .foregroundStyle(year.color)
+                        }
+                        .chartYScale(domain: axisMinimum ... TemperatureAnomaly.maxAnomaly)
+                        .chartXAxis(showXAxis)
+                        .chartYAxis(showYAxis)
+                        .chartYAxis {
+                            AxisMarks(position: .leading) {value in
+                                //                            AxisGridLine(centered: true, stroke: StrokeStyle(dash: [1, 2, 4]))
+                                //                                .foregroundStyle(Color.white)
+                                AxisValueLabel() { // construct Text here
+                                    //                                Text("Hi")
+                                    
+                                    //                                print(value)
+                                    if let intValue = value.as(Double.self) {
+                                        Text("\(intValue)")
+                                        //                                        .font(.foo) // style it
+                                            .foregroundColor(.white)
+                                    }
+                                }
+                                //                            AxisValueLabel()
+                                //                                .foregroundStyle(.white)
+                            }
+                            
+                            
+                        }
+                    }
+                    if chartState == .bars {
+                        Text("2021")
                     }
                 }
-                if chartState == .bars {
-                    Text("2021")
-                }
+                
+            }
+            Button {
+                showPreferences.toggle()
+            } label: {
+                Image(systemName: "gear")
+            }
+            .buttonStyle(GrowingButtonNoBackground())
+            
+            
+            .sheet(isPresented: showPreferences) {
+                PreferencesView()
             }
         }
     }

@@ -14,6 +14,8 @@
 		B4B81A8A2861E5A700F9E2EC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4B81A892861E5A700F9E2EC /* Preview Assets.xcassets */; };
 		B4B81A912861E73600F9E2EC /* HadCRUT.5.0.1.0.summary_series.global.annual.csv in Resources */ = {isa = PBXBuildFile; fileRef = B4B81A902861E73600F9E2EC /* HadCRUT.5.0.1.0.summary_series.global.annual.csv */; };
 		B4C25B362863341700EE54FC /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C25B352863341700EE54FC /* Model.swift */; };
+		B4E7FE1728A7E58B0032159E /* Preferences in Resources */ = {isa = PBXBuildFile; fileRef = B4E7FE1628A7E58B0032159E /* Preferences */; };
+		B4E7FE1928A7E7390032159E /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E7FE1828A7E7390032159E /* Modifiers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +27,8 @@
 		B4B81A892861E5A700F9E2EC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B4B81A902861E73600F9E2EC /* HadCRUT.5.0.1.0.summary_series.global.annual.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HadCRUT.5.0.1.0.summary_series.global.annual.csv; sourceTree = "<group>"; };
 		B4C25B352863341700EE54FC /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		B4E7FE1628A7E58B0032159E /* Preferences */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Preferences; sourceTree = "<group>"; };
+		B4E7FE1828A7E7390032159E /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 				B4B81A822861E5A500F9E2EC /* WarmingStripesApp.swift */,
 				B48F2D0E28A05BCA000A5986 /* DateExtensions.swift */,
 				B4B81A842861E5A500F9E2EC /* ContentView.swift */,
+				B4E7FE1828A7E7390032159E /* Modifiers.swift */,
+				B4E7FE1628A7E58B0032159E /* Preferences */,
 				B4C25B342863340700EE54FC /* model */,
 				B4B81A902861E73600F9E2EC /* HadCRUT.5.0.1.0.summary_series.global.annual.csv */,
 				B4B81A862861E5A700F9E2EC /* Assets.xcassets */,
@@ -143,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4B81A912861E73600F9E2EC /* HadCRUT.5.0.1.0.summary_series.global.annual.csv in Resources */,
+				B4E7FE1728A7E58B0032159E /* Preferences in Resources */,
 				B4B81A8A2861E5A700F9E2EC /* Preview Assets.xcassets in Resources */,
 				B4B81A872861E5A700F9E2EC /* Assets.xcassets in Resources */,
 			);
@@ -159,6 +166,7 @@
 				B48F2D0F28A05BCA000A5986 /* DateExtensions.swift in Sources */,
 				B4B81A852861E5A500F9E2EC /* ContentView.swift in Sources */,
 				B4B81A832861E5A500F9E2EC /* WarmingStripesApp.swift in Sources */,
+				B4E7FE1928A7E7390032159E /* Modifiers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
