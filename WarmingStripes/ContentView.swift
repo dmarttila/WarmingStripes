@@ -144,7 +144,7 @@ struct ContentView: View {
             .buttonStyle(GrowingButtonNoBackground())
             
             
-            .sheet(isPresented: showPreferences) {
+            .sheet(isPresented: $showPreferences) {
                 PreferencesView()
             }
         }

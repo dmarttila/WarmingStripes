@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B430EAA028A7E9850002B884 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430EA9828A7E9850002B884 /* AboutView.swift */; };
+		B430EAA128A7E9850002B884 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430EA9928A7E9850002B884 /* PrivacyView.swift */; };
+		B430EAA228A7E9850002B884 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430EA9A28A7E9850002B884 /* PreferencesView.swift */; };
+		B430EAA628A7E9860002B884 /* QuestionAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430EA9F28A7E9850002B884 /* QuestionAnswerView.swift */; };
 		B48F2D0F28A05BCA000A5986 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48F2D0E28A05BCA000A5986 /* DateExtensions.swift */; };
 		B4B81A832861E5A500F9E2EC /* WarmingStripesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B81A822861E5A500F9E2EC /* WarmingStripesApp.swift */; };
 		B4B81A852861E5A500F9E2EC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B81A842861E5A500F9E2EC /* ContentView.swift */; };
@@ -14,10 +18,17 @@
 		B4B81A8A2861E5A700F9E2EC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4B81A892861E5A700F9E2EC /* Preview Assets.xcassets */; };
 		B4B81A912861E73600F9E2EC /* HadCRUT.5.0.1.0.summary_series.global.annual.csv in Resources */ = {isa = PBXBuildFile; fileRef = B4B81A902861E73600F9E2EC /* HadCRUT.5.0.1.0.summary_series.global.annual.csv */; };
 		B4C25B362863341700EE54FC /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C25B352863341700EE54FC /* Model.swift */; };
+		B4D7F0D928A7EB8000EF645E /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D7F0D828A7EB8000EF645E /* Preferences.swift */; };
+		B4D7F0DB28A7ECC800EF645E /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D7F0DA28A7ECC800EF645E /* ColorExtensions.swift */; };
+		B4D7F0DD28A7ED5300EF645E /* HapticsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D7F0DC28A7ED5300EF645E /* HapticsProtocol.swift */; };
 		B4E7FE1928A7E7390032159E /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E7FE1828A7E7390032159E /* Modifiers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B430EA9828A7E9850002B884 /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		B430EA9928A7E9850002B884 /* PrivacyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
+		B430EA9A28A7E9850002B884 /* PreferencesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
+		B430EA9F28A7E9850002B884 /* QuestionAnswerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionAnswerView.swift; sourceTree = "<group>"; };
 		B48F2D0E28A05BCA000A5986 /* DateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		B4B81A7F2861E5A500F9E2EC /* WarmingStripes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WarmingStripes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4B81A822861E5A500F9E2EC /* WarmingStripesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmingStripesApp.swift; sourceTree = "<group>"; };
@@ -26,6 +37,9 @@
 		B4B81A892861E5A700F9E2EC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B4B81A902861E73600F9E2EC /* HadCRUT.5.0.1.0.summary_series.global.annual.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HadCRUT.5.0.1.0.summary_series.global.annual.csv; sourceTree = "<group>"; };
 		B4C25B352863341700EE54FC /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		B4D7F0D828A7EB8000EF645E /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		B4D7F0DA28A7ECC800EF645E /* ColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
+		B4D7F0DC28A7ED5300EF645E /* HapticsProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HapticsProtocol.swift; sourceTree = "<group>"; };
 		B4E7FE1828A7E7390032159E /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -40,6 +54,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B430EA9728A7E9850002B884 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				B430EA9828A7E9850002B884 /* AboutView.swift */,
+				B430EA9928A7E9850002B884 /* PrivacyView.swift */,
+				B430EA9A28A7E9850002B884 /* PreferencesView.swift */,
+				B430EA9F28A7E9850002B884 /* QuestionAnswerView.swift */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
 		B4B81A762861E5A500F9E2EC = {
 			isa = PBXGroup;
 			children = (
@@ -62,7 +87,10 @@
 				B4B81A822861E5A500F9E2EC /* WarmingStripesApp.swift */,
 				B48F2D0E28A05BCA000A5986 /* DateExtensions.swift */,
 				B4B81A842861E5A500F9E2EC /* ContentView.swift */,
+				B4D7F0DC28A7ED5300EF645E /* HapticsProtocol.swift */,
+				B4D7F0DA28A7ECC800EF645E /* ColorExtensions.swift */,
 				B4E7FE1828A7E7390032159E /* Modifiers.swift */,
+				B430EA9728A7E9850002B884 /* Preferences */,
 				B4C25B342863340700EE54FC /* model */,
 				B4B81A902861E73600F9E2EC /* HadCRUT.5.0.1.0.summary_series.global.annual.csv */,
 				B4B81A862861E5A700F9E2EC /* Assets.xcassets */,
@@ -83,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				B4C25B352863341700EE54FC /* Model.swift */,
+				B4D7F0D828A7EB8000EF645E /* Preferences.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -159,10 +188,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4C25B362863341700EE54FC /* Model.swift in Sources */,
+				B430EAA628A7E9860002B884 /* QuestionAnswerView.swift in Sources */,
 				B48F2D0F28A05BCA000A5986 /* DateExtensions.swift in Sources */,
 				B4B81A852861E5A500F9E2EC /* ContentView.swift in Sources */,
 				B4B81A832861E5A500F9E2EC /* WarmingStripesApp.swift in Sources */,
+				B430EAA028A7E9850002B884 /* AboutView.swift in Sources */,
+				B430EAA228A7E9850002B884 /* PreferencesView.swift in Sources */,
+				B4D7F0D928A7EB8000EF645E /* Preferences.swift in Sources */,
+				B4D7F0DD28A7ED5300EF645E /* HapticsProtocol.swift in Sources */,
+				B430EAA128A7E9850002B884 /* PrivacyView.swift in Sources */,
 				B4E7FE1928A7E7390032159E /* Modifiers.swift in Sources */,
+				B4D7F0DB28A7ECC800EF645E /* ColorExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
