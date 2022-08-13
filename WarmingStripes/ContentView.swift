@@ -9,12 +9,16 @@
  
  Better color range
  
- Set the axis scale
+ For axis show 0.6, 0.3, 0.0, -0.3, -0.6
  white for axis text
  remove axes grid lines
  remove ponted top to lines
  preferences
  add credit on chart itselft too
+ I'm using the wrong csv
+ show fehrenheit too
+ Title should align to the left edge of the chart not the axis
+ icon
  */
 
 import SwiftUI
@@ -107,15 +111,18 @@ struct ContentView: View {
                         AxisMarks(position: .leading) {value in
 //                            AxisGridLine(centered: true, stroke: StrokeStyle(dash: [1, 2, 4]))
 //                                .foregroundStyle(Color.white)
-//                            AxisValueLabel() { // construct Text here
-//                                if let intValue = value.as(Double.self) {
-//                                    Text("\(intValue)")
-//                                        .font(.headline) // style it
-//                                        .foregroundColor(.white)
-//                                }
-//                            }
-                            AxisValueLabel()
-                                .foregroundStyle(.white)
+                            AxisValueLabel() { // construct Text here
+//                                Text("Hi")
+                                
+//                                print(value)
+                                if let intValue = value.as(Double.self) {
+                                    Text("\(intValue)")
+//                                        .font(.foo) // style it
+                                        .foregroundColor(.white)
+                                }
+                            }
+//                            AxisValueLabel()
+//                                .foregroundStyle(.white)
                         }
                         
                         
