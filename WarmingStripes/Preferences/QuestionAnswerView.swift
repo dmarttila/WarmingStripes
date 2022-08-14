@@ -21,10 +21,10 @@ struct QuestionAnswerView: View {
 
 
 struct QuestionAnswer: Identifiable {
-    let question: String
-    let answer: String
+    let question: LocalizedStringKey
+    let answer: LocalizedStringKey
     let id: UUID
-    init (id: UUID = UUID(), question: String, answer: String) {
+    init (id: UUID = UUID(), question: LocalizedStringKey, answer: LocalizedStringKey) {
         self.id = id
         self.question = question
         self.answer = answer
@@ -32,8 +32,8 @@ struct QuestionAnswer: Identifiable {
 }
 
 struct QuestionAnswerView_Previews: PreviewProvider {
-    static let q = "Is weekly fasting healthy?"
-    static let a = "You got me. I'm not a nutritionist. Searching online, it seems like it is. All I know is, since I started: I've lost a ton of weight; I eat less; I have fewer aches and pains; and I have more energy. But maybe I'll drop dead tomorrow. Also, probably not great for kids."
+    static let q: LocalizedStringKey = "Is weekly fasting healthy?"
+    static let a: LocalizedStringKey = "[Ed Hawkins](http://www.met.reading.ac.uk/~ed/home/index.php)"
     static let qa = QuestionAnswer(question: q, answer: a)
     static var previews: some View {
         QuestionAnswerView(qa: qa)

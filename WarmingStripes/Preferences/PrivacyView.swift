@@ -21,15 +21,11 @@ struct PrivacyView: View {
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                     
-                    Text("All information entered in \(Preferences.appTitle) is only stored on your device. It is not transmitted anywhere. If you backup your device to iCloud, the data will be copied there, but is still only accessible to you.")
+                    Text("All information entered in \(Preferences.appTitle) is only stored on your device. (The only data that is stored is the temperature unit preference.) It is not transmitted anywhere. If you backup your device to iCloud, the data will be copied there, but is still only accessible to you.")
                         .modifier(AnswerStyle())
                     
                     Text("No data entered in this application is used for analytics, tracking, or similar activity.")
                         .modifier(AnswerStyle())
-                    
-                    Link("Fasty's privacy policy", destination: URL(string: "https://www.forestandthetrees.com/privacy-policy-for-fasty-mcfastface/")!)
-                    Spacer()
-                        .frame(height: 10)
                     
                     Text("Data stored in iCloud is governed by:")
                         .modifier(AnswerStyle())

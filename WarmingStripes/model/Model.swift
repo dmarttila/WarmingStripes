@@ -11,8 +11,9 @@ import SwiftUI
 
 struct Model{
     var anomalies: [TemperatureAnomaly] = []
-
-    private let fileName = "HadCRUT.5.0.1.0.summary_series.global.annual"
+//    HadCRUT.5.0.1.0.analysis.summary_series.global.annual
+    private let fileName = "HadCRUT.5.0.1.0.analysis.summary_series.global.annual"
+    //"HadCRUT.5.0.1.0.summary_series.global.annual_non_infilled"
 
     private func loadData () ->  [TemperatureAnomaly] {
         var anomalies: [TemperatureAnomaly] = []

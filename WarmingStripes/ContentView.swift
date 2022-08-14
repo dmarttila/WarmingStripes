@@ -19,6 +19,8 @@
  show fehrenheit too
  Title should align to the left edge of the chart not the axis
  icon
+ Save temperature prefs
+ Add a privacy policy
  */
 
 import SwiftUI

@@ -6,14 +6,13 @@
 //
 
 import SwiftUI
-import UniformTypeIdentifiers
 
 struct PreferencesView: View, Haptics {
     @Environment(\.presentationMode) var presentationMode
     
-    @State var units = WeightUnit.pounds
+    @State var units = TemperatureUnit.celsius
     
-    func thePickerHasChanged (value: WeightUnit) {
+    func thePickerHasChanged (value: TemperatureUnit) {
         hapticSelectionChange()
 //        fastingDays.preferences.units = units
     }
@@ -39,7 +38,7 @@ struct PreferencesView: View, Haptics {
                     }
                     Section (header: Text("Units")) {
                         Picker("Units:", selection: $units) {
-                            ForEach(WeightUnit.allCases) { unit in
+                            ForEach(TemperatureUnit.allCases) { unit in
                                 Text(unit.rawValue)
                             }
                         }

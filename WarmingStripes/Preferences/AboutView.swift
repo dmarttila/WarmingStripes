@@ -10,27 +10,27 @@ struct AboutAppQA {
     let qas = [
         QuestionAnswer (
             question: "What does the app do?",
-            answer: "It tracks your weight, the days you fast, and when you eat on non-fasting days."
+            answer: "Shows how global temperatures have risen over the last 70 years."
         ),
         
         QuestionAnswer (
-            question: "How often do you fast?",
-            answer: "Once a week."
+            question: "Who came up with the idea?",
+            answer: "[Ed Hawkins](http://www.met.reading.ac.uk/~ed/home/index.php). Please [chcek out his website](https://showyourstripes.info/l/globe). It has a lot more data than this app."
         ),
         QuestionAnswer (
-            question: "Isn't fasting awful?",
-            answer: "You get used to it. And I've lost 50lbs."
+            question: "So you just stole his idea?",
+            answer: "Pretty much. I wanted to learn [the new charting framework for iOS](https://developer.apple.com/documentation/charts). Plus the app's free, I gave credit, and [all the code is open source](https://github.com/dmarttila/WarmingStripes). But, yes, Ed Hawkins deserves all the credit. You can support his environemntal work [here](https://showyourstripes.info/support)."
         ),
         QuestionAnswer (
-            question: "Do you eat whatever you want on non-fasting days?",
-            answer: "I usually have a small lunch and eat whatever I want for dinner."
+            question: "Where is the data from?",
+            answer: "HadCRUT.5 data were obtained from [the Met Office Hadley Centre observations datasets]( http://www.metoffice.gov.uk/hadobs/hadcrut5) on August 14, 2022 and are © British Crown Copyright, Met Office 2022, provided under an [Open Government License](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/)."
         )
     ]
 }
 
 struct AboutView: View {
     let qas = AboutAppQA().qas
-    let cr = Preferences.appTitle + " " + Preferences.version + "\nDoug Marttila " + Date().getCopyright(startYear: 2021)
+    let cr = Preferences.appTitle + " " + Preferences.version + "\nDoug Marttila " + Date().getCopyright(startYear: 2022)
     
     var body: some View {
         ZStack {
@@ -43,32 +43,6 @@ struct AboutView: View {
                         .foregroundColor(.secondDarkestClr)
                     ForEach (qas) {
                         QuestionAnswerView(qa: $0)
-                    }
-                    VStack (alignment: .leading, spacing: 6){
-                        Text("Who designed the fasting icons?")
-                            .modifier(QuestionStyle())
-                        Link("Pelin Kahraman, The Noun Project.", destination: URL(string: "https://thenounproject.com/pelodrome/")!)
-                    }
-                    VStack (alignment: .leading, spacing: 6){
-                        Text("Is there a support page for Fasty?")
-                            .modifier(QuestionStyle())
-                        Link("Fasty Support", destination: URL(string: "https://www.forestandthetrees.com/fasty-mcfastface/")!)
-                    }
-                    VStack (alignment: .leading, spacing: 6){
-                        Text("What's up with the app name?")
-                            .modifier(QuestionStyle())
-                        Text("Naming apps is hard.")
-                            .modifier(AnswerStyle())
-                        Link("And Boaty McBoatface is funny.", destination: URL(string: "https://en.wikipedia.org/wiki/Boaty_McBoatface")!)
-                    }
-                    
-                    //for some unknown reason, on iOS14, when you scroll up the content shows up on top of the title unless there is some extra text. Works fine for iOS15. This text doesn't need to be repeated (it's in privacy) but whatever
-                    if #available(iOS 15.0, *) {}
-                    else {
-                    Spacer()
-                        .frame(height:10)
-                    Text("No data entered in this application is used for analytics, tracking, or similar activity.")
-                        .modifier(AnswerStyle())
                     }
                 }
                 .padding()
