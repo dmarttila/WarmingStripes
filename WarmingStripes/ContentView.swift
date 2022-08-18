@@ -35,7 +35,7 @@ enum ChartState: String,  CaseIterable, Identifiable{
 }
 
 struct ContentView: View {
-    @State private var chartState = ChartState.stripes
+    @State private var chartState = ChartState.barsWithScale
     
     let anomalies = Model().anomalies
     
@@ -73,12 +73,12 @@ struct ContentView: View {
     
     private func yAxisLabel(_ temp: Double) -> String {
         abs(temp) > 0.6 ? "" : temp.decimalFormat
-//        if abs(temp) > 0.6 || temp  {
-//            // Do not show the "0" label on the Y axis
-//            return ""
-//        } else {
-//            return temp.decimalFormat
-//        }
+        //        if abs(temp) > 0.6 || temp  {
+        //            // Do not show the "0" label on the Y axis
+        //            return ""
+        //        } else {
+        //            return temp.decimalFormat
+        //        }
     }
     
     var body: some View {
@@ -113,46 +113,50 @@ struct ContentView: View {
                             BarMark(
                                 x: .value("Date", year.date, unit: .year),
                                 y: .value("Anomaly", chartState == .stripes || chartState == .labelledStripes ? TemperatureAnomaly.maxAnomaly : year.anomaly),
-                                width: getBarWidth(geo.size.width),
-                                stacking: .standard
+                                width: getBarWidth(geo.size.width)
                             )
                             .foregroundStyle(year.color)
                         }
                         .chartYScale(domain: axisMinimum ... TemperatureAnomaly.maxAnomaly)
                         .chartXAxis(showXAxis)
+                        
                         .chartYAxis(showYAxis)
                         
-//                        AxisMarks(values: .stride(by: xAxisStride, count: xAxisStrideCount)) { date in
-//                                AxisValueLabel(format: xAxisLabelFormatStyle(for: date.as(Date.self) ?? Date()))
-//                            }
+                        .chartXAxis {
+                            AxisMarks() {
+                                AxisValueLabel()
+                                    .foregroundStyle(.white)
+                            }
+                        }
                         
-//                        chartYAxis {
-//                            AxisMarks(position: .leading, values: .stride(by: yAxisStride)) { value in
-//                                AxisGridLine()
-//                                AxisValueLabel(yAxisLabel(for: value.as(Double.self) ?? 0))
-//                            }
-//                        }
+                        //                        AxisMarks(values: .stride(by: xAxisStride, count: xAxisStrideCount)) { date in
+                        //                                AxisValueLabel(format: xAxisLabelFormatStyle(for: date.as(Date.self) ?? Date()))
+                        //                            }
+                        
+                        //                        chartYAxis {
+                        //                            AxisMarks(position: .leading, values: .stride(by: yAxisStride)) { value in
+                        //                                AxisGridLine()
+                        //                                AxisValueLabel(yAxisLabel(for: value.as(Double.self) ?? 0))
+                        //                            }
+                        //                        }
                         
                         .chartYAxis {
                             AxisMarks(position: .leading, values: .stride(by: 0.3)) {value in
-//                                AxisGridLine(centered: true, stroke: StrokeStyle(dash: [1, 2, 4]))
-//                                    .foregroundStyle(Color.white)
+                                //                                AxisGridLine(centered: true, stroke: StrokeStyle(dash: [1, 2, 4]))
+                                //                                    .foregroundStyle(Color.white)
                                 
-//                                AxisValueLabel(yAxisLabel(value.as(Double.self) ?? 0))
-//                                    .foregroundColor(.white)
-                                AxisValueLabel() { // construct Text here
-                                    //                                Text("Hi")
-
-                                    //                                print(value)
-                                    if let intValue = value.as(Double.self) {
-                                        Text(yAxisLabel(intValue))
-                                        
-                                        //                                        .font(.foo) // style it
-//                                            .foregroundColor(.white)
+                                //                                AxisValueLabel(yAxisLabel(value.as(Double.self) ?? 0))
+                                //                                    .foregroundColor(.white)
+                                AxisValueLabel() {
+                                    if let doubleValue = value.as(Double.self) {
+                                        Text(yAxisLabel(doubleValue))
+                                            .font(.caption)
+                                            .foregroundColor(.white)
                                     }
                                 }
-//                                                            AxisValueLabel()
-//                                                                .foregroundStyle(.white)
+                                
+                                AxisTick(stroke: StrokeStyle(lineWidth: 1))
+                                      .foregroundStyle(Color.white)
                             }
                             
                             
