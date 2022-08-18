@@ -71,6 +71,16 @@ struct ContentView: View {
     @State private var yAxisHidden = true
     @State private var showPreferences = false
     
+    private func yAxisLabel(_ temp: Double) -> String {
+        abs(temp) > 0.6 ? "" : temp.decimalFormat
+//        if abs(temp) > 0.6 || temp  {
+//            // Do not show the "0" label on the Y axis
+//            return ""
+//        } else {
+//            return temp.decimalFormat
+//        }
+    }
+    
     var body: some View {
         ZStack (alignment: .bottomTrailing) {
             VStack (alignment: .leading){
@@ -111,22 +121,38 @@ struct ContentView: View {
                         .chartYScale(domain: axisMinimum ... TemperatureAnomaly.maxAnomaly)
                         .chartXAxis(showXAxis)
                         .chartYAxis(showYAxis)
+                        
+//                        AxisMarks(values: .stride(by: xAxisStride, count: xAxisStrideCount)) { date in
+//                                AxisValueLabel(format: xAxisLabelFormatStyle(for: date.as(Date.self) ?? Date()))
+//                            }
+                        
+//                        chartYAxis {
+//                            AxisMarks(position: .leading, values: .stride(by: yAxisStride)) { value in
+//                                AxisGridLine()
+//                                AxisValueLabel(yAxisLabel(for: value.as(Double.self) ?? 0))
+//                            }
+//                        }
+                        
                         .chartYAxis {
-                            AxisMarks(position: .leading) {value in
-                                //                            AxisGridLine(centered: true, stroke: StrokeStyle(dash: [1, 2, 4]))
-                                //                                .foregroundStyle(Color.white)
+                            AxisMarks(position: .leading, values: .stride(by: 0.3)) {value in
+//                                AxisGridLine(centered: true, stroke: StrokeStyle(dash: [1, 2, 4]))
+//                                    .foregroundStyle(Color.white)
+                                
+//                                AxisValueLabel(yAxisLabel(value.as(Double.self) ?? 0))
+//                                    .foregroundColor(.white)
                                 AxisValueLabel() { // construct Text here
                                     //                                Text("Hi")
-                                    
+
                                     //                                print(value)
                                     if let intValue = value.as(Double.self) {
-                                        Text("\(intValue)")
+                                        Text(yAxisLabel(intValue))
+                                        
                                         //                                        .font(.foo) // style it
-                                            .foregroundColor(.white)
+//                                            .foregroundColor(.white)
                                     }
                                 }
-                                //                            AxisValueLabel()
-                                //                                .foregroundStyle(.white)
+//                                                            AxisValueLabel()
+//                                                                .foregroundStyle(.white)
                             }
                             
                             

@@ -11,6 +11,7 @@
 		B430EAA128A7E9850002B884 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430EA9928A7E9850002B884 /* PrivacyView.swift */; };
 		B430EAA228A7E9850002B884 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430EA9A28A7E9850002B884 /* PreferencesView.swift */; };
 		B430EAA628A7E9860002B884 /* QuestionAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430EA9F28A7E9850002B884 /* QuestionAnswerView.swift */; };
+		B44D10C028ADD3500009B1D3 /* DoubleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44D10BF28ADD3500009B1D3 /* DoubleExtensions.swift */; };
 		B45F2D5D28A98C0F0064D3C3 /* HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv in Resources */ = {isa = PBXBuildFile; fileRef = B45F2D5C28A98C0F0064D3C3 /* HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv */; };
 		B45F2D6128A98D040064D3C3 /* HadCRUT.5.0.1.0.summary_series.global.annual_non_infilled.csv in Resources */ = {isa = PBXBuildFile; fileRef = B45F2D6028A98D040064D3C3 /* HadCRUT.5.0.1.0.summary_series.global.annual_non_infilled.csv */; };
 		B45F2D6428A98DF90064D3C3 /* HadCRUT.5.0.1.0.analysis.component_series.global.annual.csv in Resources */ = {isa = PBXBuildFile; fileRef = B45F2D6228A98DF80064D3C3 /* HadCRUT.5.0.1.0.analysis.component_series.global.annual.csv */; };
@@ -33,6 +34,7 @@
 		B430EA9928A7E9850002B884 /* PrivacyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
 		B430EA9A28A7E9850002B884 /* PreferencesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		B430EA9F28A7E9850002B884 /* QuestionAnswerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionAnswerView.swift; sourceTree = "<group>"; };
+		B44D10BF28ADD3500009B1D3 /* DoubleExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleExtensions.swift; sourceTree = "<group>"; };
 		B45F2D5C28A98C0F0064D3C3 /* HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv; sourceTree = "<group>"; };
 		B45F2D6028A98D040064D3C3 /* HadCRUT.5.0.1.0.summary_series.global.annual_non_infilled.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HadCRUT.5.0.1.0.summary_series.global.annual_non_infilled.csv; sourceTree = "<group>"; };
 		B45F2D6228A98DF80064D3C3 /* HadCRUT.5.0.1.0.analysis.component_series.global.annual.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HadCRUT.5.0.1.0.analysis.component_series.global.annual.csv; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 				B48F2D0E28A05BCA000A5986 /* DateExtensions.swift */,
 				B4B81A842861E5A500F9E2EC /* ContentView.swift */,
 				B4D7F0DC28A7ED5300EF645E /* HapticsProtocol.swift */,
+				B44D10BF28ADD3500009B1D3 /* DoubleExtensions.swift */,
 				B4D7F0DA28A7ECC800EF645E /* ColorExtensions.swift */,
 				B4E7FE1828A7E7390032159E /* Modifiers.swift */,
 				B430EA9728A7E9850002B884 /* Preferences */,
@@ -212,6 +215,7 @@
 				B430EAA228A7E9850002B884 /* PreferencesView.swift in Sources */,
 				B4D7F0D928A7EB8000EF645E /* Preferences.swift in Sources */,
 				B4D7F0DD28A7ED5300EF645E /* HapticsProtocol.swift in Sources */,
+				B44D10C028ADD3500009B1D3 /* DoubleExtensions.swift in Sources */,
 				B430EAA128A7E9850002B884 /* PrivacyView.swift in Sources */,
 				B4E7FE1928A7E7390032159E /* Modifiers.swift in Sources */,
 				B4D7F0DB28A7ECC800EF645E /* ColorExtensions.swift in Sources */,
