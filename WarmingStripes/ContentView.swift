@@ -123,8 +123,21 @@ struct ContentView: View {
                         .chartYAxis(showYAxis)
                         
                         .chartXAxis {
-                            AxisMarks() {
-                                AxisValueLabel()
+                            AxisMarks() {value in
+                                AxisValueLabel(centered: false)
+//                                AxisValueLabel(format: <#T##FormatStyle#>, centered: <#T##Bool?#>, anchor: <#T##UnitPoint?#>, multiLabelAlignment: <#T##Alignment?#>, collisionResolution: <#T##AxisValueLabelCollisionResolution#>, offsetsMarks: <#T##Bool?#>, orientation: <#T##AxisValueLabelOrientation#>, horizontalSpacing: <#T##CGFloat?#>, verticalSpacing: <#T##CGFloat?#>)
+                                    
+//                                print(value)
+//                                if let doubleValue = value.as(Double.self) {
+//                                    Text(yAxisLabel(doubleValue))
+//                                        .font(.caption)
+//                                        .foregroundColor(.white)
+//                                }
+//                                    .foregroundStyle(.white)
+                                AxisGridLine(centered: true, stroke: StrokeStyle(dash: [1, 2, 4]))
+                                    .foregroundStyle(Color.indigo)
+                                AxisTick(centered: true, length: 20, stroke: StrokeStyle(lineWidth: 1))
+//                                AxisTick(stroke: StrokeStyle(lineWidth: 1))
                                     .foregroundStyle(.white)
                             }
                         }
@@ -156,7 +169,7 @@ struct ContentView: View {
                                 }
                                 
                                 AxisTick(stroke: StrokeStyle(lineWidth: 1))
-                                      .foregroundStyle(Color.white)
+                                      .foregroundStyle(.white)
                             }
                             
                             
