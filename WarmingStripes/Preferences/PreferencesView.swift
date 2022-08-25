@@ -7,19 +7,65 @@
 
 import SwiftUI
 
+class PreferencesModel {
+    @Published var preferences = Preferences() {
+        didSet {
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(preferences) {
+                UserDefaults.standard.set(encoded, forKey: "Preferences")
+            }
+        }
+    }
+    init () {
+        if let preferences = UserDefaults.standard.data(forKey: "Preferences") {
+            let decoder = JSONDecoder()
+            if let preferences = try? decoder.decode(Preferences.self, from: preferences) {
+                self.preferences = preferences
+                
+            }
+        }
+    }
+}
+
+
+
+struct Preferences: Codable {
+    var units: TemperatureUnit = .celsius
+    public static var appTitle = "Warming Stripes"
+    public static var version = "1.0.0"
+}
+
+public enum TemperatureUnit: String, CaseIterable, Identifiable, Codable {
+    case celsius = "Celsius"
+    case fahrenheit = "Fahrenheit"
+    public var id: TemperatureUnit { self }
+    public var abbreviation: String {
+        if self == .celsius {
+            return "°C"
+        } else {
+            return "°F"
+        }
+    }
+    public static func cToF (_ c: Double) -> Double {
+        c * 9/5 + 32
+    }
+}
+
 struct PreferencesView: View, Haptics {
     @Environment(\.presentationMode) var presentationMode
     
-    @State var units = TemperatureUnit.celsius
+//    @State var units = TemperatureUnit.celsius
     
-    func thePickerHasChanged (value: TemperatureUnit) {
-        hapticSelectionChange()
-//        fastingDays.preferences.units = units
-    }
+   @State var preferences = PreferencesModel()
     
-    func loaded () {
-//        units = fastingDays.preferences.units
-    }
+//    func thePickerHasChanged (value: TemperatureUnit) {
+//        hapticSelectionChange()
+////        fastingDays.preferences.units = units
+//    }
+    
+//    func loaded () {
+//        units = preferences.units
+//    }
     
     var body: some View {
         NavigationView {
@@ -37,14 +83,14 @@ struct PreferencesView: View, Haptics {
                         
                     }
                     Section (header: Text("Units")) {
-                        Picker("Units:", selection: $units) {
+                        Picker("Units:", selection: $preferences.preferences.units) {
                             ForEach(TemperatureUnit.allCases) { unit in
                                 Text(unit.rawValue)
                             }
                         }
                         .pickerStyle(SegmentedPickerStyle())
                         .listRowBackground(Color.lightestClr)
-                        .onChange(of: units, perform: thePickerHasChanged)
+//                        .onChange(of: $preferences.preferences.units, perform: thePickerHasChanged)
                     }
                 }
             }
@@ -57,7 +103,7 @@ struct PreferencesView: View, Haptics {
                     }
                 }
             }
-            .onAppear(perform: loaded)
+//            .onAppear(perform: loaded)
         }
     }
     

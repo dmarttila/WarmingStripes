@@ -13,14 +13,12 @@
  white for axis text
  remove axes grid lines
  remove ponted top to lines
- preferences
- add credit on chart itselft too
  I'm using the wrong csv
- show fehrenheit too
  Title should align to the left edge of the chart not the axis
- icon
+ app icon
  Save temperature prefs
- Add a privacy policy
+ temperature units
+ 
  */
 
 import SwiftUI
