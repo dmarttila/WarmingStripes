@@ -7,26 +7,6 @@
 
 import SwiftUI
 
-class PreferencesModel {
-    @Published var preferences = Preferences() {
-        didSet {
-            let encoder = JSONEncoder()
-            if let encoded = try? encoder.encode(preferences) {
-                UserDefaults.standard.set(encoded, forKey: "Preferences")
-            }
-        }
-    }
-    init () {
-        if let preferences = UserDefaults.standard.data(forKey: "Preferences") {
-            let decoder = JSONDecoder()
-            if let preferences = try? decoder.decode(Preferences.self, from: preferences) {
-                self.preferences = preferences
-                
-            }
-        }
-    }
-}
-
 
 
 struct Preferences: Codable {
@@ -54,14 +34,17 @@ public enum TemperatureUnit: String, CaseIterable, Identifiable, Codable {
 struct PreferencesView: View, Haptics {
     @Environment(\.presentationMode) var presentationMode
     
+    @EnvironmentObject var model: Model
+    
 //    @State var units = TemperatureUnit.celsius
     
-   @State var preferences = PreferencesModel()
+//   @State var preferences = PreferencesModel()
     
-//    func thePickerHasChanged (value: TemperatureUnit) {
-//        hapticSelectionChange()
-////        fastingDays.preferences.units = units
-//    }
+    func thePickerHasChanged (value: TemperatureUnit) {
+        hapticSelectionChange()
+//        fastingDays.preferences.units = units
+        model.preferences.units = value
+    }
     
 //    func loaded () {
 //        units = preferences.units
@@ -83,14 +66,14 @@ struct PreferencesView: View, Haptics {
                         
                     }
                     Section (header: Text("Units")) {
-                        Picker("Units:", selection: $preferences.preferences.units) {
+                        Picker("Units:", selection: $model.preferences.units) {
                             ForEach(TemperatureUnit.allCases) { unit in
                                 Text(unit.rawValue)
                             }
                         }
                         .pickerStyle(SegmentedPickerStyle())
                         .listRowBackground(Color.lightestClr)
-//                        .onChange(of: $preferences.preferences.units, perform: thePickerHasChanged)
+                        .onChange(of: model.preferences.units, perform: thePickerHasChanged)
                     }
                 }
             }

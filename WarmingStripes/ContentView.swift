@@ -19,6 +19,9 @@
  Save temperature prefs
  temperature units
  
+ 
+ Low PRIORITY
+ save chart state e.g., bars
  */
 
 import SwiftUI
@@ -34,25 +37,24 @@ enum ChartState: String,  CaseIterable, Identifiable{
 
 struct ContentView: View {
     @State private var chartState = ChartState.barsWithScale
+    @EnvironmentObject var model: Model
     
-    let anomalies = Model().anomalies
+//    let anomalies = Model().anomalies
     
     var showXAxis: Visibility {
         chartState == .barsWithScale || chartState == .labelledStripes ? .visible : .hidden
     }
-    
     var showYAxis: Visibility {
         chartState == .barsWithScale ? .visible : .hidden
     }
     var axisMinimum: Double {
         chartState == .stripes || chartState == .labelledStripes ? 0 : TemperatureAnomaly.maxAnomaly * -1
     }
-    
-    func getBarWidth (_ w: CGFloat) -> MarkDimension{
-        let ratio = w / Double(anomalies.count)
+    //there is a small space between the bars by default. This fixes that
+    func getBarWidth (_ w: CGFloat) -> MarkDimension {
+        let ratio = w / Double($model.anomalies.count)
         return MarkDimension(floatLiteral: ratio + 0.5)
     }
-    
     var titleText: String {
         switch chartState {
         case .stripes:
@@ -69,16 +71,20 @@ struct ContentView: View {
     @State private var yAxisHidden = true
     @State private var showPreferences = false
     
+    //this hides the top and bottom y axis labels (otherwise 0.9 and -0.9 would show up)
     private func yAxisLabel(_ temp: Double) -> String {
         abs(temp) > 0.6 ? "" : temp.decimalFormat
-        //        if abs(temp) > 0.6 || temp  {
-        //            // Do not show the "0" label on the Y axis
-        //            return ""
-        //        } else {
-        //            return temp.decimalFormat
-        //        }
     }
     
+    
+//    @StateObject var model = Model()
+
+//    var body: some Scene {
+//        WindowGroup {
+//            ContentView()
+//        }
+//    }
+//
     var body: some View {
         ZStack (alignment: .bottomTrailing) {
             VStack (alignment: .leading){
@@ -107,7 +113,7 @@ struct ContentView: View {
                                 }
                             }
                         }
-                        Chart (anomalies) { year in
+                        Chart (model.anomalies) { year in
                             BarMark(
                                 x: .value("Date", year.date, unit: .year),
                                 y: .value("Anomaly", chartState == .stripes || chartState == .labelledStripes ? TemperatureAnomaly.maxAnomaly : year.anomaly),
@@ -188,7 +194,8 @@ struct ContentView: View {
             
             
             .sheet(isPresented: $showPreferences) {
-                PreferencesView()
+                PreferencesView().environmentObject(model)
+                    
             }
         }
     }

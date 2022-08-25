@@ -9,12 +9,32 @@ import Foundation
 import SwiftUI
 
 
-struct Model{
+
+
+class Model: ObservableObject{
+    @Published var preferences = Preferences() {
+        didSet {
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(preferences) {
+                UserDefaults.standard.set(encoded, forKey: "Preferences")
+            }
+        }
+    }
+    init () {
+        if let preferences = UserDefaults.standard.data(forKey: "Preferences") {
+            let decoder = JSONDecoder()
+            if let preferences = try? decoder.decode(Preferences.self, from: preferences) {
+                self.preferences = preferences
+            }
+        }
+        anomalies = loadData()
+    }
+    
     var anomalies: [TemperatureAnomaly] = []
-//    HadCRUT.5.0.1.0.analysis.summary_series.global.annual
+    //    HadCRUT.5.0.1.0.analysis.summary_series.global.annual
     private let fileName = "HadCRUT.5.0.1.0.analysis.summary_series.global.annual"
     //"HadCRUT.5.0.1.0.summary_series.global.annual_non_infilled"
-
+    
     private func loadData () ->  [TemperatureAnomaly] {
         var anomalies: [TemperatureAnomaly] = []
         if let filepath = Bundle.main.path(forResource: fileName, ofType: "csv") {
@@ -38,16 +58,14 @@ struct Model{
         }
         return anomalies
     }
-
-    init () {
-        anomalies = loadData()
-    }
+    
+    
 }
 
 struct TemperatureAnomaly: Identifiable {
     static var maxAnomaly: Double = 0
     static var minAnomaly: Double = 0
-
+    
     var color: Color {
         if anomaly > 0 {
             let val = 1 - anomaly/TemperatureAnomaly.maxAnomaly
