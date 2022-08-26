@@ -14,6 +14,7 @@ import SwiftUI
 class Model: ObservableObject{
     @Published var preferences = Preferences() {
         didSet {
+            loadData()
             let encoder = JSONEncoder()
             if let encoded = try? encoder.encode(preferences) {
                 UserDefaults.standard.set(encoded, forKey: "Preferences")
@@ -27,7 +28,7 @@ class Model: ObservableObject{
                 self.preferences = preferences
             }
         }
-        anomalies = loadData()
+        loadData()
     }
     
     var anomalies: [TemperatureAnomaly] = []
@@ -35,15 +36,20 @@ class Model: ObservableObject{
     private let fileName = "HadCRUT.5.0.1.0.analysis.summary_series.global.annual"
     //"HadCRUT.5.0.1.0.summary_series.global.annual_non_infilled"
     
-    private func loadData () ->  [TemperatureAnomaly] {
+    private func loadData () {
         var anomalies: [TemperatureAnomaly] = []
+        TemperatureAnomaly.minAnomaly = 0
+        TemperatureAnomaly.maxAnomaly = 0
         if let filepath = Bundle.main.path(forResource: fileName, ofType: "csv") {
             do {
                 let contents = try String(contentsOfFile: filepath)
                 let data = contents.components(separatedBy: "\n")
                 for datum in data {
                     let values = datum.components(separatedBy: ",")
-                    if let year = Int(values[0]), let tempDiff = Double(values[1]) {
+                    if let year = Int(values[0]), var tempDiff = Double(values[1]) {
+                        if preferences.units == .fahrenheit {
+                            tempDiff = TemperatureUnit.cToF(tempDiff)
+                        }
                         let date = Date(year: year, month: 1, day: 1)
                         anomalies.append(TemperatureAnomaly(date: date, anomaly: tempDiff))
                         TemperatureAnomaly.minAnomaly = min(TemperatureAnomaly.minAnomaly, tempDiff)
@@ -56,7 +62,7 @@ class Model: ObservableObject{
         } else {
             // file not found!
         }
-        return anomalies
+        self.anomalies = anomalies
     }
     
     
