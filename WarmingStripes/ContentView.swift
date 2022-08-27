@@ -91,7 +91,7 @@ struct ContentView: View, Haptics {
             VStack (alignment: .leading){
                 Picker("Chart state:", selection: $model.preferences.chartState) {
                     ForEach(ChartState.allCases) { state in
-                        Text(state.rawValue.uppercased())
+                        Text(state.rawValue)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
