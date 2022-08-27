@@ -51,6 +51,8 @@ struct ContentView: View, Haptics {
         let ratio = w / Double($model.anomalies.count)
         return MarkDimension(floatLiteral: ratio + 0.5)
     }
+    
+//    let a = model.preferences.units.abbreviation
     var titleText: String {
         switch chartState {
         case .stripes:
@@ -58,7 +60,7 @@ struct ContentView: View, Haptics {
         case .labelledStripes:
             return "Global temperature change (1850-2021)"
         case .bars:
-            return "Global temperature have increased by over 1.2°C"
+            return "Global temperature have increased by over \(TemperatureAnomaly.changedMoreThan)\(model.preferences.units.abbreviation)"
         case .barsWithScale:
             return "Global temperature change"
         }
@@ -181,7 +183,6 @@ struct ContentView: View, Haptics {
                     if chartState == .bars {
                         Text("2021")
                     }
-                    Text((TemperatureAnomaly.maxAnomaly - TemperatureAnomaly.minAnomaly).decimalFormat)
                 }
             }
             Button {

@@ -39,6 +39,31 @@ public enum TemperatureUnit: String, CaseIterable, Identifiable, Codable {
     }
 }
 
+struct TemperatureAnomaly: Identifiable {
+    static var maxAnomaly: Double = 0
+    static var minAnomaly: Double = 0
+    static var delta: Double {
+        maxAnomaly - minAnomaly
+    }
+    static var changedMoreThan: String {
+        (floor(delta * 10) / 10).decimalFormat
+    }
+    
+    let date: Date
+    let anomaly: Double
+    
+    var id = UUID()
+    
+    var color: Color {
+        if anomaly > 0 {
+            let val = 1 - anomaly/TemperatureAnomaly.maxAnomaly
+            return Color(red: 1, green: val, blue: val)
+        }
+        let val = 1 - anomaly/TemperatureAnomaly.minAnomaly
+        return Color(red:val, green: val, blue: 1)
+    }
+}
+
 class Model: ObservableObject{
     @Published var preferences = Preferences() {
         didSet {
@@ -91,27 +116,5 @@ class Model: ObservableObject{
             // file not found!
         }
         self.anomalies = anomalies
-    }
-}
-
-struct TemperatureAnomaly: Identifiable {
-    static var maxAnomaly: Double = 0
-    static var minAnomaly: Double = 0
-    static var delta: String {
-        floor(maxAnomaly - minAnomaly).decimalFormat
-    }
-    
-    let date: Date
-    let anomaly: Double
-    
-    var id = UUID()
-    
-    var color: Color {
-        if anomaly > 0 {
-            let val = 1 - anomaly/TemperatureAnomaly.maxAnomaly
-            return Color(red: 1, green: val, blue: val)
-        }
-        let val = 1 - anomaly/TemperatureAnomaly.minAnomaly
-        return Color(red:val, green: val, blue: 1)
     }
 }
