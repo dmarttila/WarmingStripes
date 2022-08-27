@@ -1,55 +1,21 @@
 //
 //  PreferencesView.swift
-//  IntermittentFasting
+//  WarmingStripes
 //
-//  Created by Doug Marttila on 9/22/21.
+//  Created by Doug Marttila on 8/21/2022.
 //
 
 import SwiftUI
-
-
-
-struct Preferences: Codable {
-    var units: TemperatureUnit = .celsius
-//    var chartState: ChartState = .stripes
-    public static var appTitle = "Warming Stripes"
-    public static var version = "1.0.0"
-}
-
-public enum TemperatureUnit: String, CaseIterable, Identifiable, Codable {
-    case celsius = "Celsius"
-    case fahrenheit = "Fahrenheit"
-    public var id: TemperatureUnit { self }
-    public var abbreviation: String {
-        if self == .celsius {
-            return "°C"
-        } else {
-            return "°F"
-        }
-    }
-    public static func cToF (_ c: Double) -> Double {
-        c * 9/5
-    }
-}
 
 struct PreferencesView: View, Haptics {
     @Environment(\.presentationMode) var presentationMode
     
     @EnvironmentObject var model: Model
     
-//    @State var units = TemperatureUnit.celsius
-    
-//   @State var preferences = PreferencesModel()
-    
     func thePickerHasChanged (value: TemperatureUnit) {
         hapticSelectionChange()
-//        fastingDays.preferences.units = units
         model.preferences.units = value
     }
-    
-//    func loaded () {
-//        units = preferences.units
-//    }
     
     var body: some View {
         NavigationView {
@@ -87,7 +53,6 @@ struct PreferencesView: View, Haptics {
                     }
                 }
             }
-//            .onAppear(perform: loaded)
         }
     }
     

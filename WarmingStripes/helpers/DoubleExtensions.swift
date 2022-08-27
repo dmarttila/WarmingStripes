@@ -12,6 +12,6 @@ extension Double {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 1
-        return formatter.string(from: NSNumber(value: self)) ?? "Unknown"
+        return formatter.string(from: NSNumber(value: self)) ?? ""
     }
 }

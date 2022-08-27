@@ -19,27 +19,22 @@
  Save temperature prefs
  temperature units
  
- 
- Low PRIORITY
- save chart state e.g., bars
- 
  I'm using the wrong csv
  how did 1.2 become the raise in temps?
+ 
+ remove fasty colors
  */
 
 import SwiftUI
 import Charts
 
-enum ChartState: String,  CaseIterable, Identifiable{
-    case stripes = "Warming Stripes"
-    case labelledStripes = "Labeled Stripes"
-    case bars = "Bars"
-    case barsWithScale = "Bars with Scale"
-    public var id: ChartState { self }
-}
 
-struct ContentView: View {
-    @State private var chartState = ChartState.barsWithScale
+
+struct ContentView: View, Haptics {
+    private var chartState: ChartState {
+        model.preferences.chartState
+    }
+    
     @EnvironmentObject var model: Model
     
     var showXAxis: Visibility {
@@ -76,6 +71,11 @@ struct ContentView: View {
         return model.preferences.units == .celsius
     }
     
+    func thePickerHasChanged (value: ChartState) {
+        hapticSelectionChange()
+        model.preferences.chartState = value
+    }
+    
     //this hides the top and bottom y axis labels (otherwise 0.9 and -0.9 would show up)
     private func yAxisLabel(_ temp: Double) -> String {
         if isC {
@@ -87,12 +87,14 @@ struct ContentView: View {
     var body: some View {
         ZStack (alignment: .bottomTrailing) {
             VStack (alignment: .leading){
-                Picker("Units:", selection: $chartState) {
+                Picker("Chart state:", selection: $model.preferences.chartState) {
                     ForEach(ChartState.allCases) { state in
                         Text(state.rawValue.uppercased())
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
+                .onChange(of: model.preferences.chartState, perform: thePickerHasChanged)
+                
                 if chartState == .labelledStripes {
                     Text(titleText)
                         .font(.title2)
