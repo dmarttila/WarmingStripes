@@ -11,6 +11,7 @@ import SwiftUI
 
 struct Preferences: Codable {
     var units: TemperatureUnit = .celsius
+//    var chartState: ChartState = .stripes
     public static var appTitle = "Warming Stripes"
     public static var version = "1.0.0"
 }

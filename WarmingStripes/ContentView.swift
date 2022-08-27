@@ -13,7 +13,7 @@
  white for axis text
  remove axes grid lines
  remove ponted top to lines
- I'm using the wrong csv
+
  Title should align to the left edge of the chart not the axis
  app icon
  Save temperature prefs
@@ -22,6 +22,9 @@
  
  Low PRIORITY
  save chart state e.g., bars
+ 
+ I'm using the wrong csv
+ how did 1.2 become the raise in temps?
  */
 
 import SwiftUI
@@ -38,8 +41,6 @@ enum ChartState: String,  CaseIterable, Identifiable{
 struct ContentView: View {
     @State private var chartState = ChartState.barsWithScale
     @EnvironmentObject var model: Model
-    
-//    let anomalies = Model().anomalies
     
     var showXAxis: Visibility {
         chartState == .barsWithScale || chartState == .labelledStripes ? .visible : .hidden
@@ -71,20 +72,18 @@ struct ContentView: View {
     @State private var yAxisHidden = true
     @State private var showPreferences = false
     
-    //this hides the top and bottom y axis labels (otherwise 0.9 and -0.9 would show up)
-    private func yAxisLabel(_ temp: Double) -> String {
-        abs(temp) > 0.6 ? "" : temp.decimalFormat
+    private var isC: Bool {
+        return model.preferences.units == .celsius
     }
     
+    //this hides the top and bottom y axis labels (otherwise 0.9 and -0.9 would show up)
+    private func yAxisLabel(_ temp: Double) -> String {
+        if isC {
+            return abs(temp) > 0.6 ? "" : temp.decimalFormat
+        }
+        return temp.decimalFormat
+    }
     
-//    @StateObject var model = Model()
-
-//    var body: some Scene {
-//        WindowGroup {
-//            ContentView()
-//        }
-//    }
-//
     var body: some View {
         ZStack (alignment: .bottomTrailing) {
             VStack (alignment: .leading){
@@ -108,7 +107,7 @@ struct ContentView: View {
                                 Text(titleText)
                                     .font(.title2)
                                 if chartState == .barsWithScale {
-                                    Text("Relative to average of 1971-2000 [°C]")
+                                    Text("Relative to average of 1971-2000 [°\(isC ? "C" : "F")]")
                                         .font(.subheadline)
                                 }
                             }
@@ -158,7 +157,7 @@ struct ContentView: View {
                         //                        }
                         
                         .chartYAxis {
-                            AxisMarks(position: .leading, values: .stride(by: 0.3)) {value in
+                            AxisMarks(position: .leading, values: .stride(by: isC ? 0.3 : 0.5)) {value in
                                 //                                AxisGridLine(centered: true, stroke: StrokeStyle(dash: [1, 2, 4]))
                                 //                                    .foregroundStyle(Color.white)
                                 
@@ -175,15 +174,13 @@ struct ContentView: View {
                                 AxisTick(stroke: StrokeStyle(lineWidth: 1))
                                       .foregroundStyle(.white)
                             }
-                            
-                            
                         }
                     }
                     if chartState == .bars {
                         Text("2021")
                     }
+                    Text((TemperatureAnomaly.maxAnomaly - TemperatureAnomaly.minAnomaly).decimalFormat)
                 }
-                
             }
             Button {
                 showPreferences.toggle()
@@ -191,7 +188,6 @@ struct ContentView: View {
                 Image(systemName: "gear")
             }
             .buttonStyle(GrowingButtonNoBackground())
-            
             
             .sheet(isPresented: $showPreferences) {
                 PreferencesView().environmentObject(model)
