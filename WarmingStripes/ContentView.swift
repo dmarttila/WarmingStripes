@@ -7,6 +7,8 @@
 
 /*TODO:
  
+ maybe bar width should be based on chart geo proxy?
+ 
  Better color range
  
  For axis show 0.6, 0.3, 0.0, -0.3, -0.6
@@ -14,15 +16,14 @@
  remove axes grid lines
  remove ponted top to lines
 
- Title should align to the left edge of the chart not the axis
  app icon
- Save temperature prefs
- temperature units
  
  I'm using the wrong csv
  how did 1.2 become the raise in temps?
  
  remove fasty colors
+ 
+ remove intermittent fasting everywhere
  */
 
 import SwiftUI
@@ -52,7 +53,6 @@ struct ContentView: View, Haptics {
         return MarkDimension(floatLiteral: ratio + 0.5)
     }
     
-//    let a = model.preferences.units.abbreviation
     var titleText: String {
         switch chartState {
         case .stripes:
@@ -106,16 +106,6 @@ struct ContentView: View, Haptics {
                         Text("1850")
                     }
                     GeometryReader { geo in
-                        if chartState == .barsWithScale || chartState == .bars {
-                            VStack (alignment: .leading){
-                                Text(titleText)
-                                    .font(.title2)
-                                if chartState == .barsWithScale {
-                                    Text("Relative to average of 1971-2000 [°\(isC ? "C" : "F")]")
-                                        .font(.subheadline)
-                                }
-                            }
-                        }
                         Chart (model.anomalies) { year in
                             BarMark(
                                 x: .value("Date", year.date, unit: .year),
@@ -124,6 +114,23 @@ struct ContentView: View, Haptics {
                             )
                             .foregroundStyle(year.color)
                         }
+                        .chartOverlay { proxy in
+                            GeometryReader { proxyGeo in
+                                if chartState == .barsWithScale || chartState == .bars {
+                                    VStack (alignment: .leading){
+                                        Text(titleText)
+                                            .font(.title2)
+                                        if chartState == .barsWithScale {
+                                            Text("Relative to average of 1971-2000 [°\(isC ? "C" : "F")]")
+                                                .font(.subheadline)
+                                        }
+                                    }
+                                    .offset(x: proxyGeo[proxy.plotAreaFrame].origin.x)
+                                }
+                            }
+                        }
+                        
+                                
                         .chartYScale(domain: axisMinimum ... TemperatureAnomaly.maxAnomaly)
                         .chartXAxis(showXAxis)
                         

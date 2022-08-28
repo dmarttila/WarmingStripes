@@ -46,7 +46,7 @@ struct TemperatureAnomaly: Identifiable {
         maxAnomaly - minAnomaly
     }
     static var changedMoreThan: String {
-        (floor(delta * 10) / 10).decimalFormat
+        delta.floorDecimalFormat
     }
     
     let date: Date
