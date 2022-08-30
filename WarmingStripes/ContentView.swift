@@ -29,8 +29,6 @@
 import SwiftUI
 import Charts
 
-
-
 struct ContentView: View, Haptics {
     private var chartState: ChartState {
         model.preferences.chartState
@@ -125,17 +123,15 @@ struct ContentView: View, Haptics {
                                                 .font(.subheadline)
                                         }
                                     }
-                                    .offset(x: proxyGeo[proxy.plotAreaFrame].origin.x)
+                                    //aligns the title with the yAxis
+                                    .offset(x: proxyGeo[proxy.plotAreaFrame].origin.x + 5)
                                 }
                             }
                         }
-                        
                                 
                         .chartYScale(domain: axisMinimum ... TemperatureAnomaly.maxAnomaly)
                         .chartXAxis(showXAxis)
-                        
                         .chartYAxis(showYAxis)
-                        
                         .chartXAxis {
                             AxisMarks() {value in
                                 AxisValueLabel(centered: false)
@@ -148,8 +144,8 @@ struct ContentView: View, Haptics {
 //                                        .foregroundColor(.white)
 //                                }
 //                                    .foregroundStyle(.white)
-                                AxisGridLine(centered: true, stroke: StrokeStyle(dash: [1, 2, 4]))
-                                    .foregroundStyle(Color.indigo)
+//                                AxisGridLine(centered: true, stroke: StrokeStyle(dash: [1, 2, 4]))
+//                                    .foregroundStyle(Color.indigo)
                                 AxisTick(centered: true, length: 20, stroke: StrokeStyle(lineWidth: 1))
 //                                AxisTick(stroke: StrokeStyle(lineWidth: 1))
                                     .foregroundStyle(.white)
