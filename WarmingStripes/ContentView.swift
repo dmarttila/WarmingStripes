@@ -179,6 +179,11 @@ struct ContentView: View, Haptics {
                                       .foregroundStyle(.white)
                             }
                         }
+                        .chartPlotStyle { plotArea in
+                            plotArea
+                                .background(.blue)
+                                .border(.green)
+                        }
                     }
                     if chartState == .bars {
                         Text("2021")
