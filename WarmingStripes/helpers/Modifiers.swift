@@ -22,7 +22,6 @@ struct AnswerStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.body)
-            .foregroundColor(.darkestClr)
             .multilineTextAlignment(.leading)
             .lineLimit(nil)
             .fixedSize(horizontal: false, vertical: true)
@@ -33,7 +32,6 @@ struct QuestionStyle: ViewModifier {
     let font = Font.body.italic()
     func body(content: Content) -> some View {
         content
-            .foregroundColor(.secondDarkestClr)
             .multilineTextAlignment(.leading)
             .lineLimit(nil)
             .fixedSize(horizontal: false, vertical: true)

@@ -34,13 +34,10 @@ struct AboutView: View {
     
     var body: some View {
         ZStack {
-            Color.lightestClr
-                .ignoresSafeArea()
             ScrollView {
                 VStack (alignment: .leading, spacing: 20){
                     Text(cr)
                         .font(.headline)
-                        .foregroundColor(.secondDarkestClr)
                     ForEach (qas) {
                         QuestionAnswerView(qa: $0)
                     }

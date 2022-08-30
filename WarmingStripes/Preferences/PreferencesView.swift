@@ -25,11 +25,9 @@ struct PreferencesView: View, Haptics {
                         NavigationLink(destination: AboutView()) {
                             Text(Preferences.appTitle)
                         }
-                        .listRowBackground(Color.lightestClr)
                         NavigationLink(destination: PrivacyView()) {
                             Text("Privacy")
                         }
-                        .listRowBackground(Color.lightestClr)
                         
                     }
                     Section (header: Text("Units")) {
@@ -39,12 +37,10 @@ struct PreferencesView: View, Haptics {
                             }
                         }
                         .pickerStyle(SegmentedPickerStyle())
-                        .listRowBackground(Color.lightestClr)
                         .onChange(of: model.preferences.units, perform: thePickerHasChanged)
                     }
                 }
             }
-            .foregroundColor(.darkestClr)
             .navigationTitle("Preferences")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {

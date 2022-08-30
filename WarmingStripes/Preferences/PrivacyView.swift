@@ -10,14 +10,11 @@ import SwiftUI
 struct PrivacyView: View {
     var body: some View {
         ZStack {
-            Color.lightestClr
-                .ignoresSafeArea()
             ScrollView {
                 VStack (alignment: .leading, spacing: 10){
                     
                     Text("TL;DR: your data is not tracked.")
                         .font(.headline)
-                        .foregroundColor(.darkestClr)
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                     

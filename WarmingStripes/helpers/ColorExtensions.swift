@@ -21,13 +21,5 @@ extension Color {
             opacity: alpha
         )
     }
-    static let darkestClr = Color("darkestClr")
-    static let lightestClr = Color("lightestClr")
-    static let secondLightestClr = Color("secondLightestClr")
-    static let secondDarkestClr = Color("secondDarkestClr")
-    static let middleClr = Color("middleClr")
-    static let lightLowSaturationClr = Color("lightLowSaturationClr")
-    static let datePickerBgClr = Color("datePickerBgClr")
-    static let accentClr = Color(hex: 0x347F4F)
     
 }
