@@ -14,12 +14,9 @@
  For axis show 0.6, 0.3, 0.0, -0.3, -0.6
  white for axis text
  remove axes grid lines
- remove ponted top to lines
  
  I'm using the wrong csv
  how did 1.2 become the raise in temps?
- 
- remove fasty colors
  
  remove intermittent fasting everywhere
  */
@@ -76,9 +73,9 @@ struct ContentView: View, Haptics {
     
     //this hides the top and bottom y axis labels (otherwise 0.9 and -0.9 would show up)
     private func yAxisLabel(_ temp: Double) -> String {
-        if isC {
-            return abs(temp) > 0.6 ? "" : temp.decimalFormat
-        }
+//        if isC {
+//            return abs(temp) > 0.6 ? "" : temp.decimalFormat
+//        }
         return temp.decimalFormat
     }
     
