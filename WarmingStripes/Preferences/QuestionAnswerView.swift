@@ -28,7 +28,7 @@ struct QuestionAnswer: Identifiable {
         self.id = id
         self.question = question
         self.answer = answer
-    }
+    }   
 }
 
 struct QuestionAnswerView_Previews: PreviewProvider {

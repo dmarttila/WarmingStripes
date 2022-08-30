@@ -15,8 +15,6 @@
  white for axis text
  remove axes grid lines
  remove ponted top to lines
-
- app icon
  
  I'm using the wrong csv
  how did 1.2 become the raise in temps?
