@@ -107,8 +107,10 @@ struct ContentView: View, Haptics {
                                 x: .value("Date", year.date, unit: .year),
                                 y: .value("Anomaly", chartState == .stripes || chartState == .labelledStripes ? TemperatureAnomaly.maxAnomaly : year.anomaly),
                                 width: getBarWidth(geo.size.width)
+                                
                             )
                             .foregroundStyle(year.color)
+                            .cornerRadius(0)
                         }
                         .chartOverlay { proxy in
                             GeometryReader { proxyGeo in
