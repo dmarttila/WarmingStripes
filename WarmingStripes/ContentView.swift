@@ -108,6 +108,11 @@ struct ContentView: View, Haptics {
                             )
                             .foregroundStyle(year.color)
                             .cornerRadius(0)
+                            RuleMark(
+                                xStart: .value("Start Date", Date(year: 1870, month: 1, day: 1)),
+                                xEnd: .value("End Date", Date(year: 2020, month: 1, day: 1)),
+                                y: .value("Pollen Source", 0.5)
+                            )
                         }
                         .chartOverlay { proxy in
                             GeometryReader { proxyGeo in
@@ -182,8 +187,13 @@ struct ContentView: View, Haptics {
                         .chartPlotStyle { plotArea in
                             plotArea
                                 .background(.blue)
-                                .border(.green)
+                                .border(Color.blue, width: 2)
+//                                .border(<#T##content: ShapeStyle##ShapeStyle#>)
+//                                .stroke(.mint, lineWidth: 10)
+//                                .border(.green)
+//                                .border(width: 5, edges: [.top, .leading], color: .yellow)
                         }
+                        
                     }
                     if chartState == .bars {
                         Text("2021")
