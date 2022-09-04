@@ -134,9 +134,19 @@ struct ContentView: View, Haptics {
                                     .offset(x: proxyGeo[proxy.plotAreaFrame].origin.x)
                                     .padding(5)
                                 }
+                                //if showYAxis == .visible {
+                                let textOffsetX = (proxy.position(forX: Date(year: 1950, month: 1, day: 1)) ?? 0) + proxyGeo[proxy.plotAreaFrame].origin.x
+                                
+                                //let startPositionX = proxy.position(forX: Date(year: 1950, month: 1, day: 1)) ?? 0
+                                    Text("1950")
+//                                let startPositionX = proxy.position(forX: dateInterval.start) ?? 0
+                                        .offset(x: textOffsetX)
+                                             //   geo[proxy.plotAreaFrame].maxY
+                                            //proxy.value(atX: relativeXPosition) as Date?
+                               // }
                             }
                         }
-                                
+                        
                         .chartYScale(domain: axisMinimum ... TemperatureAnomaly.maxAnomaly)
                         
                         //hide/show the axes
@@ -144,40 +154,40 @@ struct ContentView: View, Haptics {
                         .chartYAxis(showYAxis)
                         .chartXAxis {
                             AxisMarks() {value in
-                                AxisValueLabel(centered: true)
+                                AxisValueLabel(centered: false)
                                 
-//                                AxisValueLabel() {
-//                                    if let doubleValue = value.as(Double.self) {
-//                                        Text(yAxisLabel(doubleValue))
-//                                            .font(.caption)
-//                                            .foregroundColor(.white)
-//                                    }
-//                                }
+                                //                                AxisValueLabel() {
+                                //                                    if let doubleValue = value.as(Double.self) {
+                                //                                        Text(yAxisLabel(doubleValue))
+                                //                                            .font(.caption)
+                                //                                            .foregroundColor(.white)
+                                //                                    }
+                                //                                }
                                 
-//                                AxisValueLabel() {
-//                                    if let doubleValue = value.as(Int.self) {
-//                                        Text(yAxisLabel(doubleValue))
-//                                            .font(.caption)
-//                                            .foregroundColor(.white)
-//                                    }
-//                                }
+                                //                                AxisValueLabel() {
+                                //                                    if let doubleValue = value.as(Int.self) {
+                                //                                        Text(yAxisLabel(doubleValue))
+                                //                                            .font(.caption)
+                                //                                            .foregroundColor(.white)
+                                //                                    }
+                                //                                }
                                 
-//                                AxisValueLabel(format: <#T##FormatStyle#>, centered: <#T##Bool?#>, anchor: <#T##UnitPoint?#>, multiLabelAlignment: <#T##Alignment?#>, collisionResolution: <#T##AxisValueLabelCollisionResolution#>, offsetsMarks: <#T##Bool?#>, orientation: <#T##AxisValueLabelOrientation#>, horizontalSpacing: <#T##CGFloat?#>, verticalSpacing: <#T##CGFloat?#>)
-                                    
-//                                print(value)
-//                                if let doubleValue = value.as(Double.self) {
-//                                    Text(yAxisLabel(doubleValue))
-//                                        .font(.caption)
-//                                        .foregroundColor(.white)
-//                                }
-//                                    .foregroundStyle(.white)
-//                                AxisGridLine(centered: true, stroke: StrokeStyle(dash: [1, 2, 4]))
-//                                    .foregroundStyle(Color.indigo)
-//                                AxisTick(centered: true, length: 20, stroke: StrokeStyle(lineWidth: 1))
-//                                AxisTick(stroke: StrokeStyle(lineWidth: 1))
-//                                    .foregroundStyle(.white)
+                                //                                AxisValueLabel(format: <#T##FormatStyle#>, centered: <#T##Bool?#>, anchor: <#T##UnitPoint?#>, multiLabelAlignment: <#T##Alignment?#>, collisionResolution: <#T##AxisValueLabelCollisionResolution#>, offsetsMarks: <#T##Bool?#>, orientation: <#T##AxisValueLabelOrientation#>, horizontalSpacing: <#T##CGFloat?#>, verticalSpacing: <#T##CGFloat?#>)
+                                
+                                //                                print(value)
+                                //                                if let doubleValue = value.as(Double.self) {
+                                //                                    Text(yAxisLabel(doubleValue))
+                                //                                        .font(.caption)
+                                //                                        .foregroundColor(.white)
+                                //                                }
+                                //                                    .foregroundStyle(.white)
+                                //                                AxisGridLine(centered: true, stroke: StrokeStyle(dash: [1, 2, 4]))
+                                //                                    .foregroundStyle(Color.indigo)
+                                //                                AxisTick(centered: true, length: 20, stroke: StrokeStyle(lineWidth: 1))
+                                //                                AxisTick(stroke: StrokeStyle(lineWidth: 1))
+                                //                                    .foregroundStyle(.white)
                                 AxisTick(stroke: StrokeStyle(lineWidth: 1))
-                                      .foregroundStyle(.white)
+                                    .foregroundStyle(.white)
                             }
                         }
                         
@@ -200,37 +210,28 @@ struct ContentView: View, Haptics {
                                 //                                AxisValueLabel(yAxisLabel(value.as(Double.self) ?? 0))
                                 //                                    .foregroundColor(.white)
                                 if let doubleValue = value.as(Double.self), abs(doubleValue) < 0.8 {
-                                AxisValueLabel() {
-//                                    if let doubleValue = value.as(Double.self) {
-                                    Text(doubleValue.decimalFormat)
+                                    AxisValueLabel() {
+                                        //                                    if let doubleValue = value.as(Double.self) {
+                                        Text(doubleValue.decimalFormat)
                                             .font(.caption)
                                             .foregroundColor(.white)
-//                                    }
-                                }
+                                        //                                    }
+                                    }
                                     AxisTick(stroke: StrokeStyle(lineWidth: 1.5))
                                         .foregroundStyle(.white)
                                 }
                             }
                         }
                         
-                        /*
-                         //this hides the top and bottom y axis labels (otherwise 0.9 and -0.9 would show up)
-                         private func yAxisLabel(_ temp: Double) -> String {
-                     //        if isC {
-                     //            return abs(temp) > 0.6 ? "" : temp.decimalFormat
-                     //        }
-                             return temp.decimalFormat
-                         }
-                         */
-//                        .chartPlotStyle { plotArea in
-//                            plotArea
-////                                .background(.blue)
-//                                .border(Color.blue, width: 2)
-////                                .border(<#T##content: ShapeStyle##ShapeStyle#>)
-////                                .stroke(.mint, lineWidth: 10)
-////                                .border(.green)
-////                                .border(width: 5, edges: [.top, .leading], color: .yellow)
-//                        }
+                        //                        .chartPlotStyle { plotArea in
+                        //                            plotArea
+                        ////                                .background(.blue)
+                        //                                .border(Color.blue, width: 2)
+                        ////                                .border(<#T##content: ShapeStyle##ShapeStyle#>)
+                        ////                                .stroke(.mint, lineWidth: 10)
+                        ////                                .border(.green)
+                        ////                                .border(width: 5, edges: [.top, .leading], color: .yellow)
+                        //                        }
                         
                     }
                     if chartState == .bars {
@@ -247,7 +248,7 @@ struct ContentView: View, Haptics {
             
             .sheet(isPresented: $showPreferences) {
                 PreferencesView().environmentObject(model)
-                    
+                
             }
         }
     }
