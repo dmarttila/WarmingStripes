@@ -71,14 +71,6 @@ struct ContentView: View, Haptics {
         model.preferences.chartState = value
     }
     
-    //this hides the top and bottom y axis labels (otherwise 0.9 and -0.9 would show up)
-    private func yAxisLabel(_ temp: Double) -> String {
-//        if isC {
-//            return abs(temp) > 0.6 ? "" : temp.decimalFormat
-//        }
-        return temp.decimalFormat
-    }
-    
     var body: some View {
         ZStack (alignment: .bottomTrailing) {
             VStack (alignment: .leading){
@@ -104,15 +96,28 @@ struct ContentView: View, Haptics {
                                 x: .value("Date", year.date, unit: .year),
                                 y: .value("Anomaly", chartState == .stripes || chartState == .labelledStripes ? TemperatureAnomaly.maxAnomaly : year.anomaly),
                                 width: getBarWidth(geo.size.width)
-                                
                             )
                             .foregroundStyle(year.color)
+                            //without corner radius == 0, looks a bit like a picket fence
                             .cornerRadius(0)
-                            RuleMark(
-                                xStart: .value("Start Date", Date(year: 1870, month: 1, day: 1)),
-                                xEnd: .value("End Date", Date(year: 2020, month: 1, day: 1)),
-                                y: .value("Pollen Source", 0.5)
-                            )
+                            //xAxis
+                            if showXAxis == .visible {
+                                RuleMark(
+                                    xStart: .value("start date", Date(year: 1850, month: 1, day: 1)),
+                                    xEnd: .value("end date", Date(year: 2022, month: 1, day: 1)),
+                                    y: .value("x axis", axisMinimum)
+                                )
+                                .foregroundStyle(.white)
+                            }
+                            //yAxis
+                            if showYAxis == .visible {
+                                RuleMark(
+                                    x: .value("y axis", Date(year: 1850, month: 1, day: 1)),
+                                    yStart: .value("lowest temperature", -0.6),
+                                    yEnd: .value("highest temperature", 0.6)
+                                )
+                                .foregroundStyle(.white)
+                            }
                         }
                         .chartOverlay { proxy in
                             GeometryReader { proxyGeo in
@@ -126,17 +131,37 @@ struct ContentView: View, Haptics {
                                         }
                                     }
                                     //aligns the title with the yAxis
-                                    .offset(x: proxyGeo[proxy.plotAreaFrame].origin.x + 5)
+                                    .offset(x: proxyGeo[proxy.plotAreaFrame].origin.x)
+                                    .padding(5)
                                 }
                             }
                         }
                                 
                         .chartYScale(domain: axisMinimum ... TemperatureAnomaly.maxAnomaly)
+                        
+                        //hide/show the axes
                         .chartXAxis(showXAxis)
                         .chartYAxis(showYAxis)
                         .chartXAxis {
                             AxisMarks() {value in
-                                AxisValueLabel(centered: false)
+                                AxisValueLabel(centered: true)
+                                
+//                                AxisValueLabel() {
+//                                    if let doubleValue = value.as(Double.self) {
+//                                        Text(yAxisLabel(doubleValue))
+//                                            .font(.caption)
+//                                            .foregroundColor(.white)
+//                                    }
+//                                }
+                                
+//                                AxisValueLabel() {
+//                                    if let doubleValue = value.as(Int.self) {
+//                                        Text(yAxisLabel(doubleValue))
+//                                            .font(.caption)
+//                                            .foregroundColor(.white)
+//                                    }
+//                                }
+                                
 //                                AxisValueLabel(format: <#T##FormatStyle#>, centered: <#T##Bool?#>, anchor: <#T##UnitPoint?#>, multiLabelAlignment: <#T##Alignment?#>, collisionResolution: <#T##AxisValueLabelCollisionResolution#>, offsetsMarks: <#T##Bool?#>, orientation: <#T##AxisValueLabelOrientation#>, horizontalSpacing: <#T##CGFloat?#>, verticalSpacing: <#T##CGFloat?#>)
                                     
 //                                print(value)
@@ -148,9 +173,11 @@ struct ContentView: View, Haptics {
 //                                    .foregroundStyle(.white)
 //                                AxisGridLine(centered: true, stroke: StrokeStyle(dash: [1, 2, 4]))
 //                                    .foregroundStyle(Color.indigo)
-                                AxisTick(centered: true, length: 20, stroke: StrokeStyle(lineWidth: 1))
+//                                AxisTick(centered: true, length: 20, stroke: StrokeStyle(lineWidth: 1))
 //                                AxisTick(stroke: StrokeStyle(lineWidth: 1))
-                                    .foregroundStyle(.white)
+//                                    .foregroundStyle(.white)
+                                AxisTick(stroke: StrokeStyle(lineWidth: 1))
+                                      .foregroundStyle(.white)
                             }
                         }
                         
@@ -172,27 +199,38 @@ struct ContentView: View, Haptics {
                                 
                                 //                                AxisValueLabel(yAxisLabel(value.as(Double.self) ?? 0))
                                 //                                    .foregroundColor(.white)
+                                if let doubleValue = value.as(Double.self), abs(doubleValue) < 0.8 {
                                 AxisValueLabel() {
-                                    if let doubleValue = value.as(Double.self) {
-                                        Text(yAxisLabel(doubleValue))
+//                                    if let doubleValue = value.as(Double.self) {
+                                    Text(doubleValue.decimalFormat)
                                             .font(.caption)
                                             .foregroundColor(.white)
-                                    }
+//                                    }
                                 }
-                                
-                                AxisTick(stroke: StrokeStyle(lineWidth: 1))
-                                      .foregroundStyle(.white)
+                                    AxisTick(stroke: StrokeStyle(lineWidth: 1.5))
+                                        .foregroundStyle(.white)
+                                }
                             }
                         }
-                        .chartPlotStyle { plotArea in
-                            plotArea
-                                .background(.blue)
-                                .border(Color.blue, width: 2)
-//                                .border(<#T##content: ShapeStyle##ShapeStyle#>)
-//                                .stroke(.mint, lineWidth: 10)
-//                                .border(.green)
-//                                .border(width: 5, edges: [.top, .leading], color: .yellow)
-                        }
+                        
+                        /*
+                         //this hides the top and bottom y axis labels (otherwise 0.9 and -0.9 would show up)
+                         private func yAxisLabel(_ temp: Double) -> String {
+                     //        if isC {
+                     //            return abs(temp) > 0.6 ? "" : temp.decimalFormat
+                     //        }
+                             return temp.decimalFormat
+                         }
+                         */
+//                        .chartPlotStyle { plotArea in
+//                            plotArea
+////                                .background(.blue)
+//                                .border(Color.blue, width: 2)
+////                                .border(<#T##content: ShapeStyle##ShapeStyle#>)
+////                                .stroke(.mint, lineWidth: 10)
+////                                .border(.green)
+////                                .border(width: 5, edges: [.top, .leading], color: .yellow)
+//                        }
                         
                     }
                     if chartState == .bars {
