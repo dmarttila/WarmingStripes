@@ -59,6 +59,14 @@ struct ContentView: View, Haptics {
         }
     }
     
+//    let textOffsetX = (proxy.position(forX: Date(year: 1950, month: 1, day: 1)) ?? 0) + proxyGeo[proxy.plotAreaFrame].origin.x
+    func getYearXLoc (year: Int, proxy: ChartProxy, geo: GeometryProxy) -> CGFloat {
+        let date = Date(year: year, month: 1, day: 1)
+        let datePosition = proxy.position(forX: date) ?? 0
+        let xAxisDisplayWidth = geo[proxy.plotAreaFrame].origin.x
+        return datePosition + xAxisDisplayWidth
+    }
+    
     @State private var yAxisHidden = true
     @State private var showPreferences = false
     
@@ -134,16 +142,20 @@ struct ContentView: View, Haptics {
                                     .offset(x: proxyGeo[proxy.plotAreaFrame].origin.x)
                                     .padding(5)
                                 }
-                                //if showYAxis == .visible {
-                                let textOffsetX = (proxy.position(forX: Date(year: 1950, month: 1, day: 1)) ?? 0) + proxyGeo[proxy.plotAreaFrame].origin.x
-                                
-                                //let startPositionX = proxy.position(forX: Date(year: 1950, month: 1, day: 1)) ?? 0
-                                    Text("1950")
-//                                let startPositionX = proxy.position(forX: dateInterval.start) ?? 0
-                                        .offset(x: textOffsetX)
-                                             //   geo[proxy.plotAreaFrame].maxY
-                                            //proxy.value(atX: relativeXPosition) as Date?
-                               // }
+                                let axisYLoc = proxyGeo.size.height - 20
+//                                for year in stride(from: 1850, to: 2000, by: 50) {
+//                                    Text(year)
+//                                        .offset(x: getYearXLoc(year: year, proxy: proxy, geo: proxyGeo), y: axisYLoc)
+//                                }
+                                ForEach( Array(stride(from: 1850, to: 2001, by: 50)), id: \.self) { year in
+                                    Text(String(year))
+                                        .offset(x: getYearXLoc(year: year, proxy: proxy, geo: proxyGeo), y: axisYLoc)
+                                        .alignmentGuide(.trailing) { d in d[.trailing] }
+                                }
+                                let year = 2021
+                                Text(String(year))
+                                    .offset(x: getYearXLoc(year: year, proxy: proxy, geo: proxyGeo), y: axisYLoc)
+                                    
                             }
                         }
                         
@@ -155,60 +167,16 @@ struct ContentView: View, Haptics {
                         .chartXAxis {
                             AxisMarks() {value in
                                 AxisValueLabel(centered: false)
-                                
-                                //                                AxisValueLabel() {
-                                //                                    if let doubleValue = value.as(Double.self) {
-                                //                                        Text(yAxisLabel(doubleValue))
-                                //                                            .font(.caption)
-                                //                                            .foregroundColor(.white)
-                                //                                    }
-                                //                                }
-                                
-                                //                                AxisValueLabel() {
-                                //                                    if let doubleValue = value.as(Int.self) {
-                                //                                        Text(yAxisLabel(doubleValue))
-                                //                                            .font(.caption)
-                                //                                            .foregroundColor(.white)
-                                //                                    }
-                                //                                }
-                                
-                                //                                AxisValueLabel(format: <#T##FormatStyle#>, centered: <#T##Bool?#>, anchor: <#T##UnitPoint?#>, multiLabelAlignment: <#T##Alignment?#>, collisionResolution: <#T##AxisValueLabelCollisionResolution#>, offsetsMarks: <#T##Bool?#>, orientation: <#T##AxisValueLabelOrientation#>, horizontalSpacing: <#T##CGFloat?#>, verticalSpacing: <#T##CGFloat?#>)
-                                
-                                //                                print(value)
-                                //                                if let doubleValue = value.as(Double.self) {
-                                //                                    Text(yAxisLabel(doubleValue))
-                                //                                        .font(.caption)
-                                //                                        .foregroundColor(.white)
-                                //                                }
-                                //                                    .foregroundStyle(.white)
-                                //                                AxisGridLine(centered: true, stroke: StrokeStyle(dash: [1, 2, 4]))
-                                //                                    .foregroundStyle(Color.indigo)
-                                //                                AxisTick(centered: true, length: 20, stroke: StrokeStyle(lineWidth: 1))
-                                //                                AxisTick(stroke: StrokeStyle(lineWidth: 1))
-                                //                                    .foregroundStyle(.white)
+                              
                                 AxisTick(stroke: StrokeStyle(lineWidth: 1))
                                     .foregroundStyle(.white)
                             }
                         }
-                        
-                        //                        AxisMarks(values: .stride(by: xAxisStride, count: xAxisStrideCount)) { date in
-                        //                                AxisValueLabel(format: xAxisLabelFormatStyle(for: date.as(Date.self) ?? Date()))
-                        //                            }
-                        
-                        //                        chartYAxis {
-                        //                            AxisMarks(position: .leading, values: .stride(by: yAxisStride)) { value in
-                        //                                AxisGridLine()
-                        //                                AxisValueLabel(yAxisLabel(for: value.as(Double.self) ?? 0))
-                        //                            }
-                        //                        }
+
                         
                         .chartYAxis {
                             AxisMarks(position: .leading, values: .stride(by: isC ? 0.3 : 0.5)) {value in
-                                //                                AxisGridLine(centered: true, stroke: StrokeStyle(dash: [1, 2, 4]))
-                                //                                    .foregroundStyle(Color.white)
-                                
-                                //                                AxisValueLabel(yAxisLabel(value.as(Double.self) ?? 0))
-                                //                                    .foregroundColor(.white)
+
                                 if let doubleValue = value.as(Double.self), abs(doubleValue) < 0.8 {
                                     AxisValueLabel() {
                                         //                                    if let doubleValue = value.as(Double.self) {
@@ -222,17 +190,7 @@ struct ContentView: View, Haptics {
                                 }
                             }
                         }
-                        
-                        //                        .chartPlotStyle { plotArea in
-                        //                            plotArea
-                        ////                                .background(.blue)
-                        //                                .border(Color.blue, width: 2)
-                        ////                                .border(<#T##content: ShapeStyle##ShapeStyle#>)
-                        ////                                .stroke(.mint, lineWidth: 10)
-                        ////                                .border(.green)
-                        ////                                .border(width: 5, edges: [.top, .leading], color: .yellow)
-                        //                        }
-                        
+
                     }
                     if chartState == .bars {
                         Text("2021")
