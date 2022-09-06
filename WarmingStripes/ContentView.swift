@@ -142,14 +142,17 @@ struct ContentView: View, Haptics {
                                     .offset(x: proxyGeo[proxy.plotAreaFrame].origin.x)
                                     .padding(5)
                                 }
+                                //TODO: the 20 should be based on the chart proxy
                                 let axisYLoc = proxyGeo.size.height - 20
 //                                for year in stride(from: 1850, to: 2000, by: 50) {
 //                                    Text(year)
 //                                        .offset(x: getYearXLoc(year: year, proxy: proxy, geo: proxyGeo), y: axisYLoc)
 //                                }
-                                ForEach( Array(stride(from: 1850, to: 2001, by: 50)), id: \.self) { year in
+                                //DOUG TODO: How to center text on the x offset?
+                                ForEach( Array(stride(from: 1850, through: 2000, by: 50)), id: \.self) { year in
+                                    let axisXloc = getYearXLoc(year: year, proxy: proxy, geo: proxyGeo)
                                     Text(String(year))
-                                        .offset(x: getYearXLoc(year: year, proxy: proxy, geo: proxyGeo), y: axisYLoc)
+                                        .offset(x: axisXloc, y: axisYLoc)
                                         .alignmentGuide(.trailing) { d in d[.trailing] }
                                 }
                                 let year = 2021
