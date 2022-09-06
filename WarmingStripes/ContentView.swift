@@ -19,6 +19,8 @@
  how did 1.2 become the raise in temps?
  
  remove intermittent fasting everywhere
+ 
+ remove Growing button no background style
  */
 
 import SwiftUI
@@ -59,7 +61,7 @@ struct ContentView: View, Haptics {
         }
     }
     
-//    let textOffsetX = (proxy.position(forX: Date(year: 1950, month: 1, day: 1)) ?? 0) + proxyGeo[proxy.plotAreaFrame].origin.x
+    //this calculation works, but it feels like there's a better way to do this. However, ChartProxy documention is a bit light so far
     func getYearXLoc (year: Int, proxy: ChartProxy, geo: GeometryProxy) -> CGFloat {
         let date = Date(year: year, month: 1, day: 1)
         let datePosition = proxy.position(forX: date) ?? 0
@@ -109,6 +111,7 @@ struct ContentView: View, Haptics {
                             //without corner radius == 0, looks a bit like a picket fence
                             .cornerRadius(0)
                             //xAxis
+                            //afaict, you can't style the chart axes to replicate the warming stripes axes, so need to draw them
                             if showXAxis == .visible {
                                 RuleMark(
                                     xStart: .value("start date", Date(year: 1850, month: 1, day: 1)),
@@ -149,7 +152,8 @@ struct ContentView: View, Haptics {
 //                                        .offset(x: getYearXLoc(year: year, proxy: proxy, geo: proxyGeo), y: axisYLoc)
 //                                }
                                 //DOUG TODO: How to center text on the x offset?
-                                ForEach( Array(stride(from: 1850, through: 2000, by: 50)), id: \.self) { year in
+                                let years = [1850, 1900, 1950, 2000, 2021]
+                                ForEach(years, id: \.self) { year in
                                     let axisXloc = getYearXLoc(year: year, proxy: proxy, geo: proxyGeo)
                                     Text(String(year))
                                         .offset(x: axisXloc, y: axisYLoc)
@@ -175,25 +179,20 @@ struct ContentView: View, Haptics {
                                     .foregroundStyle(.white)
                             }
                         }
-
-                        
                         .chartYAxis {
                             AxisMarks(position: .leading, values: .stride(by: isC ? 0.3 : 0.5)) {value in
 
                                 if let doubleValue = value.as(Double.self), abs(doubleValue) < 0.8 {
                                     AxisValueLabel() {
-                                        //                                    if let doubleValue = value.as(Double.self) {
                                         Text(doubleValue.decimalFormat)
                                             .font(.caption)
                                             .foregroundColor(.white)
-                                        //                                    }
                                     }
                                     AxisTick(stroke: StrokeStyle(lineWidth: 1.5))
                                         .foregroundStyle(.white)
                                 }
                             }
                         }
-
                     }
                     if chartState == .bars {
                         Text("2021")
