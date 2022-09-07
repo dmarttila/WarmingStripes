@@ -119,6 +119,7 @@ struct ContentView: View, Haptics {
                                     y: .value("x axis", axisMinimum)
                                 )
                                 .foregroundStyle(.white)
+                                .offset(y: -25)
                             }
                             //yAxis
                             if showYAxis == .visible {
@@ -151,37 +152,38 @@ struct ContentView: View, Haptics {
 //                                    Text(year)
 //                                        .offset(x: getYearXLoc(year: year, proxy: proxy, geo: proxyGeo), y: axisYLoc)
 //                                }
-                                //DOUG TODO: How to center text on the x offset?
                                 let years = [1850, 1900, 1950, 2000, 2021]
                                 ForEach(years, id: \.self) { year in
+                                    let textFrameWidth: CGFloat = 300
                                     let axisXloc = getYearXLoc(year: year, proxy: proxy, geo: proxyGeo)
                                     Text(String(year))
-                                        .offset(x: axisXloc, y: axisYLoc)
-                                        .alignmentGuide(.trailing) { d in d[.trailing] }
+                                        .font(.caption)
+                                        .foregroundColor(.white)
+                                        .frame(width: textFrameWidth)
+                                        .offset(x: axisXloc - textFrameWidth/2, y: axisYLoc)
+                                    Rectangle()
+                                        .fill(.white)
+                                        .frame(width: 1, height: 5)
+                                        .offset(x: axisXloc, y: axisYLoc - 5)
                                 }
-                                let year = 2021
-                                Text(String(year))
-                                    .offset(x: getYearXLoc(year: year, proxy: proxy, geo: proxyGeo), y: axisYLoc)
-                                    
                             }
                         }
                         
                         .chartYScale(domain: axisMinimum ... TemperatureAnomaly.maxAnomaly)
                         
                         //hide/show the axes
-                        .chartXAxis(showXAxis)
+                        .chartXAxis(.hidden)
                         .chartYAxis(showYAxis)
-                        .chartXAxis {
-                            AxisMarks() {value in
-                                AxisValueLabel(centered: false)
-                              
-                                AxisTick(stroke: StrokeStyle(lineWidth: 1))
-                                    .foregroundStyle(.white)
-                            }
-                        }
+//                        .chartXAxis {
+//                            AxisMarks() {value in
+//                                AxisValueLabel(centered: false)
+//
+//                                AxisTick(stroke: StrokeStyle(lineWidth: 1))
+//                                    .foregroundStyle(.white)
+//                            }
+//                        }
                         .chartYAxis {
                             AxisMarks(position: .leading, values: .stride(by: isC ? 0.3 : 0.5)) {value in
-
                                 if let doubleValue = value.as(Double.self), abs(doubleValue) < 0.8 {
                                     AxisValueLabel() {
                                         Text(doubleValue.decimalFormat)
