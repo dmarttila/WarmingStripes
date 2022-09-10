@@ -115,10 +115,11 @@ struct ContentView: View, Haptics {
                             if showXAxis == .visible {
                                 RuleMark(
                                     xStart: .value("start date", Date(year: 1850, month: 1, day: 1)),
-                                    xEnd: .value("end date", Date(year: 2022, month: 1, day: 1)),
+                                    xEnd: .value("end date", Date(year: 2021, month: 1, day: 1)),
                                     y: .value("x axis", axisMinimum)
                                 )
                                 .foregroundStyle(.white)
+                                .lineStyle(StrokeStyle(lineWidth: 1))
                                 .offset(y: -25)
                             }
                             //yAxis
@@ -129,6 +130,7 @@ struct ContentView: View, Haptics {
                                     yEnd: .value("highest temperature", 0.6)
                                 )
                                 .foregroundStyle(.white)
+                                .lineStyle(StrokeStyle(lineWidth: 1))
                             }
                         }
                         .chartOverlay { proxy in
@@ -148,10 +150,6 @@ struct ContentView: View, Haptics {
                                 }
                                 //TODO: the 20 should be based on the chart proxy
                                 let axisYLoc = proxyGeo.size.height - 20
-//                                for year in stride(from: 1850, to: 2000, by: 50) {
-//                                    Text(year)
-//                                        .offset(x: getYearXLoc(year: year, proxy: proxy, geo: proxyGeo), y: axisYLoc)
-//                                }
                                 let years = [1850, 1900, 1950, 2000, 2021]
                                 ForEach(years, id: \.self) { year in
                                     let textFrameWidth: CGFloat = 300
