@@ -44,12 +44,7 @@ struct ContentView: View, Haptics {
     var isBarsWithScale: Bool {
         chartState == .barsWithScale
     }
-//    var showXAxis: Visibility {
-//        chartState == .barsWithScale || chartState == .labelledStripes ? .visible : .hidden
-//    }
-    var showYAxis: Visibility {
-        chartState == .barsWithScale ? .visible : .hidden
-    }
+    
     var axisMinimum: Double {
         chartState == .stripes || chartState == .labelledStripes ? 0 : TemperatureAnomaly.maxAnomaly * -1
     }
@@ -80,7 +75,6 @@ struct ContentView: View, Haptics {
         return datePosition + xAxisDisplayWidth
     }
     
-//    @State private var yAxisHidden = true
     @State private var showPreferences = false
     
     private var isC: Bool {
@@ -119,7 +113,7 @@ struct ContentView: View, Haptics {
                                 width: getBarWidth(geo.size.width)
                             )
                             .foregroundStyle(year.color)
-                            //without corner radius == 0, looks a bit like a picket fence
+                            //without corner radius == 0, looks like a picket fence
                             .cornerRadius(0)
                             //xAxis
                             //afaict, you can't style the chart axes to replicate the warming stripes axes, so need to draw them
@@ -134,7 +128,7 @@ struct ContentView: View, Haptics {
                                 .offset(y: -25)
                             }
                             //yAxis
-                            if showYAxis == .visible {
+                            if isBarsWithScale {
                                 RuleMark(
                                     x: .value("y axis", Date(year: 1850, month: 1, day: 1)),
                                     yStart: .value("lowest temperature", -0.6),
@@ -144,6 +138,7 @@ struct ContentView: View, Haptics {
                                 .lineStyle(StrokeStyle(lineWidth: 1))
                             }
                         }
+                        //x-axis
                         .chartOverlay { proxy in
                             GeometryReader { proxyGeo in
                                 if chartState == .barsWithScale || chartState == .bars {
@@ -162,7 +157,12 @@ struct ContentView: View, Haptics {
                                 if isBarsWithScale || chartState == .labelledStripes {
                                     //TODO: the 20 should be based on the chart proxy
                                     let axisYLoc = proxyGeo.size.height - 20
-//                                    let arr = Array(stride(from: 1860, through: 2010, by: 30))
+                                    if chartState == .labelledStripes {
+                                        Rectangle()
+                                            .fill(.black)
+                                            .frame(width: geo.size.width + 2, height: 50)
+                                            .offset(x: -1, y: axisYLoc - 5)
+                                    }
                                     let years = isBarsWithScale ? [1850, 1900, 1950, 2000, 2021] : Array(stride(from: 1860, through: 2010, by: 30))
                                     ForEach(years, id: \.self) { year in
                                         let textFrameWidth: CGFloat = 300
@@ -179,16 +179,15 @@ struct ContentView: View, Haptics {
                                                 .offset(x: axisXloc, y: axisYLoc - 5)
                                         }
                                     }
+                                    
                                 }
                             }
                         }
-                        
-                        .chartYScale(domain: axisMinimum ... TemperatureAnomaly.maxAnomaly)
-                        
+                        .chartYScale(domain: axisMinimum...TemperatureAnomaly.maxAnomaly)
                         //xAxis is drawn above
                         .chartXAxis(.hidden)
                         //hide/show the axes
-                        .chartYAxis(showYAxis)
+                        .chartYAxis(isBarsWithScale ? .visible : .hidden)
                         .chartYAxis {
                             AxisMarks(position: .leading, values: .stride(by: isC ? 0.3 : 0.5)) {value in
                                 if let doubleValue = value.as(Double.self), abs(doubleValue) < 0.8 {
