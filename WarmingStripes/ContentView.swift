@@ -12,8 +12,8 @@
  Better color range
  
  For axis show 0.6, 0.3, 0.0, -0.3, -0.6
- white for axis text
- remove axes grid lines
+ 
+ make all the ranges work for Fehrenheit too
  
  I'm using the wrong csv
  how did 1.2 become the raise in temps?
@@ -21,6 +21,14 @@
  remove intermittent fasting everywhere
  
  remove Growing button no background style
+ 
+ cahnge copyright to MIT and whatever warming stripes is
+ 
+ make prefs button move based on type of chart chosen
+ 
+ prefs icon to match
+ 
+ get the url of the data from the site
  */
 
 import SwiftUI
@@ -33,9 +41,12 @@ struct ContentView: View, Haptics {
     
     @EnvironmentObject var model: Model
     
-    var showXAxis: Visibility {
-        chartState == .barsWithScale || chartState == .labelledStripes ? .visible : .hidden
+    var isBarsWithScale: Bool {
+        chartState == .barsWithScale
     }
+//    var showXAxis: Visibility {
+//        chartState == .barsWithScale || chartState == .labelledStripes ? .visible : .hidden
+//    }
     var showYAxis: Visibility {
         chartState == .barsWithScale ? .visible : .hidden
     }
@@ -69,7 +80,7 @@ struct ContentView: View, Haptics {
         return datePosition + xAxisDisplayWidth
     }
     
-    @State private var yAxisHidden = true
+//    @State private var yAxisHidden = true
     @State private var showPreferences = false
     
     private var isC: Bool {
@@ -112,7 +123,7 @@ struct ContentView: View, Haptics {
                             .cornerRadius(0)
                             //xAxis
                             //afaict, you can't style the chart axes to replicate the warming stripes axes, so need to draw them
-                            if showXAxis == .visible {
+                            if isBarsWithScale {
                                 RuleMark(
                                     xStart: .value("start date", Date(year: 1850, month: 1, day: 1)),
                                     xEnd: .value("end date", Date(year: 2021, month: 1, day: 1)),
@@ -148,38 +159,36 @@ struct ContentView: View, Haptics {
                                     .offset(x: proxyGeo[proxy.plotAreaFrame].origin.x)
                                     .padding(5)
                                 }
-                                //TODO: the 20 should be based on the chart proxy
-                                let axisYLoc = proxyGeo.size.height - 20
-                                let years = [1850, 1900, 1950, 2000, 2021]
-                                ForEach(years, id: \.self) { year in
-                                    let textFrameWidth: CGFloat = 300
-                                    let axisXloc = getYearXLoc(year: year, proxy: proxy, geo: proxyGeo)
-                                    Text(String(year))
-                                        .font(.caption)
-                                        .foregroundColor(.white)
-                                        .frame(width: textFrameWidth)
-                                        .offset(x: axisXloc - textFrameWidth/2, y: axisYLoc)
-                                    Rectangle()
-                                        .fill(.white)
-                                        .frame(width: 1, height: 5)
-                                        .offset(x: axisXloc, y: axisYLoc - 5)
+                                if isBarsWithScale || chartState == .labelledStripes {
+                                    //TODO: the 20 should be based on the chart proxy
+                                    let axisYLoc = proxyGeo.size.height - 20
+//                                    let arr = Array(stride(from: 1860, through: 2010, by: 30))
+                                    let years = isBarsWithScale ? [1850, 1900, 1950, 2000, 2021] : Array(stride(from: 1860, through: 2010, by: 30))
+                                    ForEach(years, id: \.self) { year in
+                                        let textFrameWidth: CGFloat = 300
+                                        let axisXloc = getYearXLoc(year: year, proxy: proxy, geo: proxyGeo)
+                                        Text(String(year))
+                                            .font(.caption)
+                                            .foregroundColor(.white)
+                                            .frame(width: textFrameWidth)
+                                            .offset(x: axisXloc - textFrameWidth/2, y: axisYLoc)
+                                        if isBarsWithScale {
+                                            Rectangle()
+                                                .fill(.white)
+                                                .frame(width: 1, height: 5)
+                                                .offset(x: axisXloc, y: axisYLoc - 5)
+                                        }
+                                    }
                                 }
                             }
                         }
                         
                         .chartYScale(domain: axisMinimum ... TemperatureAnomaly.maxAnomaly)
                         
-                        //hide/show the axes
+                        //xAxis is drawn above
                         .chartXAxis(.hidden)
+                        //hide/show the axes
                         .chartYAxis(showYAxis)
-//                        .chartXAxis {
-//                            AxisMarks() {value in
-//                                AxisValueLabel(centered: false)
-//
-//                                AxisTick(stroke: StrokeStyle(lineWidth: 1))
-//                                    .foregroundStyle(.white)
-//                            }
-//                        }
                         .chartYAxis {
                             AxisMarks(position: .leading, values: .stride(by: isC ? 0.3 : 0.5)) {value in
                                 if let doubleValue = value.as(Double.self), abs(doubleValue) < 0.8 {
@@ -202,10 +211,22 @@ struct ContentView: View, Haptics {
             Button {
                 showPreferences.toggle()
             } label: {
-                Image(systemName: "gear")
+                ZStack {
+                    let lightBlue = Color(hex: 0x00BCD4)
+                    let smallSize: CGFloat = 30
+                    Circle()
+                        .fill(lightBlue)
+                        .frame(width: 58, height: 58)
+                    Circle()
+                        .fill(.white)
+                        .frame(width: smallSize - 2, height: smallSize - 2)
+                    Image(systemName: "line.3.horizontal.circle.fill")
+                        .resizable()
+                        .foregroundColor(lightBlue)
+                        .frame(width: smallSize, height: smallSize)
+                }
             }
-            .buttonStyle(GrowingButtonNoBackground())
-            
+            .offset(y: -30)
             .sheet(isPresented: $showPreferences) {
                 PreferencesView().environmentObject(model)
                 

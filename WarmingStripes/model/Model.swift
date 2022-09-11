@@ -8,14 +8,14 @@
 import Foundation
 import SwiftUI
 
-struct Preferences: Codable {
+public struct Preferences: Codable {
     var units: TemperatureUnit = .celsius
     var chartState: ChartState = .stripes
-    public static var appTitle = "Warming Stripes"
-    public static var version = "1.0.0"
+    static var appTitle = "Warming Stripes"
+    static var version = "1.0.0"
 }
 
-public enum ChartState: String,  CaseIterable, Identifiable, Codable{
+public enum ChartState: String,  CaseIterable, Identifiable, Codable {
     case stripes = "Warming Stripes"
     case labelledStripes = "Labeled Stripes"
     case bars = "Bars"
