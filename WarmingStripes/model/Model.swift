@@ -34,8 +34,8 @@ public enum TemperatureUnit: String, CaseIterable, Identifiable, Codable {
             return "°F"
         }
     }
-    public static func cToF (_ c: Double) -> Double {
-        c * 9/5
+    public static func cToF (_ celcius: Double) -> Double {
+        celcius * 9/5
     }
 }
 

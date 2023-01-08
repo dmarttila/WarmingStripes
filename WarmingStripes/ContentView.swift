@@ -49,8 +49,8 @@ struct ContentView: View, Haptics {
         chartState == .stripes || chartState == .labelledStripes ? 0 : TemperatureAnomaly.maxAnomaly * -1
     }
     //there is a small space between the bars by default. This fixes that
-    func getBarWidth (_ w: CGFloat) -> MarkDimension {
-        let ratio = w / Double($model.anomalies.count)
+    func getBarWidth (_ width: CGFloat) -> MarkDimension {
+        let ratio = width / Double($model.anomalies.count)
         return MarkDimension(floatLiteral: ratio + 0.5)
     }
     

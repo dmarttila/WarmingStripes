@@ -19,11 +19,18 @@ struct AboutAppQA {
         ),
         QuestionAnswer (
             question: "So you just stole his idea?",
-            answer: "Pretty much. I wanted to learn [the new charting framework for iOS](https://developer.apple.com/documentation/charts). Plus the app's free, I gave credit, and [all the code is open source](https://github.com/dmarttila/WarmingStripes). But, yes, Ed Hawkins deserves all the credit. You can support his environemntal work [here](https://showyourstripes.info/support)."
+            answer: """
+Pretty much. I wanted to learn [the new charting framework for iOS](https://developer.apple.com/documentation/charts).
+Plus the app's free, I gave credit, and [all the code is open source](https://github.com/dmarttila/WarmingStripes).
+But, yes, Ed Hawkins deserves all the credit. You can support his environemntal work [here](https://showyourstripes.info/support).
+"""
         ),
         QuestionAnswer (
             question: "Where is the data from?",
-            answer: "HadCRUT.5 data were obtained from [the Met Office Hadley Centre observations datasets]( http://www.metoffice.gov.uk/hadobs/hadcrut5) on August 14, 2022 and are © British Crown Copyright, Met Office 2022, provided under an [Open Government License](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/)."
+            answer: """
+HadCRUT.5 data were obtained from [the Met Office Hadley Centre observations datasets]( http://www.metoffice.gov.uk/hadobs/hadcrut5) on August 14, 2022 and are © British Crown Copyright,
+Met Office 2022, provided under an [Open Government License](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/).
+"""
         )
     ]
 }
