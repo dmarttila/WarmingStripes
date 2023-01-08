@@ -12,7 +12,7 @@ struct PreferencesView: View, Haptics {
     
     @EnvironmentObject var model: Model
     
-    func thePickerHasChanged (value: TemperatureUnit) {
+    func thePickerHasChanged(value: TemperatureUnit) {
         hapticSelectionChange()
         model.preferences.units = value
     }
@@ -21,7 +21,7 @@ struct PreferencesView: View, Haptics {
         NavigationView {
             VStack {
                 Form {
-                    Section (header: Text("About")) {
+                    Section(header: Text("About")) {
                         NavigationLink(destination: AboutView()) {
                             Text(Preferences.appTitle)
                         }
@@ -30,7 +30,7 @@ struct PreferencesView: View, Haptics {
                         }
                         
                     }
-                    Section (header: Text("Units")) {
+                    Section(header: Text("Units")) {
                         Picker("Units:", selection: $model.preferences.units) {
                             ForEach(TemperatureUnit.allCases) { unit in
                                 Text(unit.rawValue)

@@ -34,7 +34,7 @@ public enum TemperatureUnit: String, CaseIterable, Identifiable, Codable {
             return "°F"
         }
     }
-    public static func cToF (_ celcius: Double) -> Double {
+    public static func cToF(_ celcius: Double) -> Double {
         celcius * 9/5
     }
 }
@@ -74,7 +74,7 @@ class Model: ObservableObject{
             }
         }
     }
-    init () {
+    init() {
         if let preferences = UserDefaults.standard.data(forKey: "Preferences") {
             let decoder = JSONDecoder()
             if let preferences = try? decoder.decode(Preferences.self, from: preferences) {
@@ -89,7 +89,7 @@ class Model: ObservableObject{
     private let fileName = "HadCRUT.5.0.1.0.analysis.summary_series.global.annual"
     //"HadCRUT.5.0.1.0.summary_series.global.annual_non_infilled"
     
-    private func loadData () {
+    private func loadData() {
         var anomalies: [TemperatureAnomaly] = []
         TemperatureAnomaly.minAnomaly = 0
         TemperatureAnomaly.maxAnomaly = 0

@@ -9,16 +9,16 @@ import Foundation
 import SwiftUI
 
 public extension Double {
-    //4.99999 -> 5
+    // 4.99999 -> 5
     var decimalFormat: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 1
         return formatter.string(from: NSNumber(value: self)) ?? ""
     }
-    //4.99999 -> 4.9
+    // 4.99999 -> 4.9
     var floorDecimalFormat: String {
-        (floor(self * 10) / 10).decimalFormat
+       (floor(self * 10) / 10).decimalFormat
     }
 }
 
@@ -35,7 +35,7 @@ public extension Color {
 }
 
 public extension Date {
-    init (year: Int, month: Int, day: Int) {
+    init(year: Int, month: Int, day: Int) {
         var components = DateComponents()
         components.hour = 12
         components.minute = 0
@@ -45,7 +45,7 @@ public extension Date {
         self = Calendar.current.date(from: components)!
     }
     
-    func getCopyright (startYear: Int) -> String {
+    func getCopyright(startYear: Int) -> String {
         let str = "© "
         let year = Calendar.current.component(.year, from: Date())
         if startYear == year {

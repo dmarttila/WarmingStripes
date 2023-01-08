@@ -13,17 +13,17 @@ import UIKit
 //    error, success, warning, impactLight, impactMedium, impactHeavy, impactRigid, impactSoft, selectionChange
 
 protocol Haptics {
-    func hapticError () -> Void
-    func hapticSelectionChange () -> Void
-    func hapticTap () -> Void
-    func hapticSave () -> Void
+    func hapticError() -> Void
+    func hapticSelectionChange() -> Void
+    func hapticTap() -> Void
+    func hapticSave() -> Void
 }
 extension Haptics {
-    func hapticTap () {
+    func hapticTap() {
         let generator = UIImpactFeedbackGenerator(style: .medium)
         generator.impactOccurred()
     }
-    func hapticSave () {
+    func hapticSave() {
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.success)
     }

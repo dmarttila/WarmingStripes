@@ -10,7 +10,7 @@ import SwiftUI
 struct QuestionAnswerView: View {
     let qa: QuestionAnswer
     var body: some View {
-        VStack (alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: 6) {
             Text(qa.question)
                 .modifier(QuestionStyle())
             Text(qa.answer)
@@ -24,7 +24,7 @@ struct QuestionAnswer: Identifiable {
     let question: LocalizedStringKey
     let answer: LocalizedStringKey
     let id: UUID
-    init (id: UUID = UUID(), question: LocalizedStringKey, answer: LocalizedStringKey) {
+    init(id: UUID = UUID(), question: LocalizedStringKey, answer: LocalizedStringKey) {
         self.id = id
         self.question = question
         self.answer = answer

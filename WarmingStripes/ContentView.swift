@@ -38,28 +38,28 @@ struct ContentView: View, Haptics {
     private var chartState: ChartState {
         model.preferences.chartState
     }
-    
+
     @EnvironmentObject var model: Model
-    
+
     var isBarsWithScale: Bool {
         chartState == .barsWithScale
     }
-    
+
     var axisMinimum: Double {
         chartState == .stripes || chartState == .labelledStripes ? 0 : TemperatureAnomaly.maxAnomaly * -1
     }
-    //there is a small space between the bars by default. This fixes that
-    func getBarWidth (_ width: CGFloat) -> MarkDimension {
+    // there is a small space between the bars by default. This fixes that
+    func getBarWidth(_ width: CGFloat) -> MarkDimension {
         let ratio = width / Double($model.anomalies.count)
         return MarkDimension(floatLiteral: ratio + 0.5)
     }
-    
+
     var titleText: String {
         switch chartState {
         case .stripes:
             return ""
         case .labelledStripes:
-            return "Global temperature change (1850-2021)"
+            return "Global temperature change(1850-2021)"
         case .bars:
             return "Global temperature have increased by over \(TemperatureAnomaly.changedMoreThan)\(model.preferences.units.abbreviation)"
         case .barsWithScale:
@@ -68,27 +68,27 @@ struct ContentView: View, Haptics {
     }
     
     //this calculation works, but it feels like there's a better way to do this. However, ChartProxy documention is a bit light so far
-    func getYearXLoc (year: Int, proxy: ChartProxy, geo: GeometryProxy) -> CGFloat {
+    func getYearXLoc(year: Int, proxy: ChartProxy, geo: GeometryProxy) -> CGFloat {
         let date = Date(year: year, month: 1, day: 1)
         let datePosition = proxy.position(forX: date) ?? 0
         let xAxisDisplayWidth = geo[proxy.plotAreaFrame].origin.x
         return datePosition + xAxisDisplayWidth
     }
-    
+
     @State private var showPreferences = false
-    
+
     private var isC: Bool {
         return model.preferences.units == .celsius
     }
-    
-    func thePickerHasChanged (value: ChartState) {
+
+    func thePickerHasChanged(value: ChartState) {
         hapticSelectionChange()
         model.preferences.chartState = value
     }
-    
+
     var body: some View {
-        ZStack (alignment: .bottomTrailing) {
-            VStack (alignment: .leading){
+        ZStack(alignment: .bottomTrailing) {
+            VStack(alignment: .leading){
                 Picker("Chart state:", selection: $model.preferences.chartState) {
                     ForEach(ChartState.allCases) { state in
                         Text(state.rawValue)
@@ -96,7 +96,7 @@ struct ContentView: View, Haptics {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .onChange(of: model.preferences.chartState, perform: thePickerHasChanged)
-                
+
                 if chartState == .labelledStripes {
                     Text(titleText)
                         .font(.title2)
@@ -106,17 +106,17 @@ struct ContentView: View, Haptics {
                         Text("1850")
                     }
                     GeometryReader { geo in
-                        Chart (model.anomalies) { year in
+                        Chart(model.anomalies) { year in
                             BarMark(
                                 x: .value("Date", year.date, unit: .year),
                                 y: .value("Anomaly", chartState == .stripes || chartState == .labelledStripes ? TemperatureAnomaly.maxAnomaly : year.anomaly),
                                 width: getBarWidth(geo.size.width)
                             )
                             .foregroundStyle(year.color)
-                            //without corner radius == 0, looks like a picket fence
+                            // without corner radius == 0, looks like a picket fence
                             .cornerRadius(0)
-                            //xAxis
-                            //afaict, you can't style the chart axes to replicate the warming stripes axes, so need to draw them
+                            // xAxis
+                            // afaict, you can't style the chart axes to replicate the warming stripes axes, so need to draw them
                             if isBarsWithScale {
                                 RuleMark(
                                     xStart: .value("start date", Date(year: 1850, month: 1, day: 1)),
@@ -127,7 +127,7 @@ struct ContentView: View, Haptics {
                                 .lineStyle(StrokeStyle(lineWidth: 1))
                                 .offset(y: -25)
                             }
-                            //yAxis
+                            // yAxis
                             if isBarsWithScale {
                                 RuleMark(
                                     x: .value("y axis", Date(year: 1850, month: 1, day: 1)),
@@ -138,11 +138,11 @@ struct ContentView: View, Haptics {
                                 .lineStyle(StrokeStyle(lineWidth: 1))
                             }
                         }
-                        //x-axis
+                        // x-axis
                         .chartOverlay { proxy in
                             GeometryReader { proxyGeo in
                                 if chartState == .barsWithScale || chartState == .bars {
-                                    VStack (alignment: .leading){
+                                    VStack(alignment: .leading){
                                         Text(titleText)
                                             .font(.title2)
                                         if chartState == .barsWithScale {
@@ -150,12 +150,12 @@ struct ContentView: View, Haptics {
                                                 .font(.subheadline)
                                         }
                                     }
-                                    //aligns the title with the yAxis
+                                    // aligns the title with the yAxis
                                     .offset(x: proxyGeo[proxy.plotAreaFrame].origin.x)
                                     .padding(5)
                                 }
                                 if isBarsWithScale || chartState == .labelledStripes {
-                                    //TODO: the 20 should be based on the chart proxy
+                                    // TODO: the 20 should be based on the chart proxy
                                     let axisYLoc = proxyGeo.size.height - 20
                                     if chartState == .labelledStripes {
                                         Rectangle()
@@ -179,19 +179,18 @@ struct ContentView: View, Haptics {
                                                 .offset(x: axisXloc, y: axisYLoc - 5)
                                         }
                                     }
-                                    
                                 }
                             }
                         }
                         .chartYScale(domain: axisMinimum...TemperatureAnomaly.maxAnomaly)
-                        //xAxis is drawn above
+                        // xAxis is drawn above
                         .chartXAxis(.hidden)
-                        //hide/show the axes
+                        // hide/show the axes
                         .chartYAxis(isBarsWithScale ? .visible : .hidden)
                         .chartYAxis {
                             AxisMarks(position: .leading, values: .stride(by: isC ? 0.3 : 0.5)) {value in
                                 if let doubleValue = value.as(Double.self), abs(doubleValue) < 0.8 {
-                                    AxisValueLabel() {
+                                    AxisValueLabel {
                                         Text(doubleValue.decimalFormat)
                                             .font(.caption)
                                             .foregroundColor(.white)
@@ -228,7 +227,6 @@ struct ContentView: View, Haptics {
             .offset(y: -30)
             .sheet(isPresented: $showPreferences) {
                 PreferencesView().environmentObject(model)
-                
             }
         }
     }
@@ -239,5 +237,3 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-
-
