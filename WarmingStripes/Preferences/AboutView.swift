@@ -31,7 +31,15 @@ But, yes, Ed Hawkins deserves all the credit. You can support his environemntal 
 HadCRUT.5 data were obtained from [the Met Office Hadley Centre observations datasets]( http://www.metoffice.gov.uk/hadobs/hadcrut5) on August 14, 2022 and are © British Crown Copyright,
 Met Office 2022, provided under an [Open Government License](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/).
 """
-        )
+        ),
+        QuestionAnswer (
+            question: "Do you have other apps?",
+            answer: "[Yes](https://apps.apple.com/tt/developer/douglas-marttila/id1596329457)"
+            ),
+        QuestionAnswer (
+            question: "Do you have a website?",
+            answer: "[Yes]( https://www.forestandthetrees.com/)"
+            )
     ]
 }
 
