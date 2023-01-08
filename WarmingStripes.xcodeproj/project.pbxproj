@@ -35,6 +35,7 @@
 		B45F2D6028A98D040064D3C3 /* HadCRUT.5.0.1.0.summary_series.global.annual_non_infilled.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HadCRUT.5.0.1.0.summary_series.global.annual_non_infilled.csv; sourceTree = "<group>"; };
 		B45F2D6228A98DF80064D3C3 /* HadCRUT.5.0.1.0.analysis.component_series.global.annual.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HadCRUT.5.0.1.0.analysis.component_series.global.annual.csv; sourceTree = "<group>"; };
 		B45F2D6328A98DF90064D3C3 /* HadCRUT.5.0.1.0.analysis.ensemble_series.global.annual.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HadCRUT.5.0.1.0.analysis.ensemble_series.global.annual.csv; sourceTree = "<group>"; };
+		B47B97B9296B058E00740A8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B4B4EA3928BE98C100CEBDF0 /* CommonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
 		B4B81A7F2861E5A500F9E2EC /* WarmingStripes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WarmingStripes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4B81A822861E5A500F9E2EC /* WarmingStripesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmingStripesApp.swift; sourceTree = "<group>"; };
@@ -88,6 +89,7 @@
 		B4B81A812861E5A500F9E2EC /* WarmingStripes */ = {
 			isa = PBXGroup;
 			children = (
+				B47B97B9296B058E00740A8F /* Info.plist */,
 				B4B81A822861E5A500F9E2EC /* WarmingStripesApp.swift */,
 				B4C1BD8528BA9F4900A4366E /* helpers */,
 				B4B81A842861E5A500F9E2EC /* ContentView.swift */,
@@ -367,6 +369,7 @@
 				DEVELOPMENT_TEAM = PZK764WV5H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WarmingStripes/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Climate Warming Stripes";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -398,6 +401,7 @@
 				DEVELOPMENT_TEAM = PZK764WV5H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WarmingStripes/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Climate Warming Stripes";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
