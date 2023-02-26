@@ -142,7 +142,7 @@ struct ContentView: View, Haptics {
                         .chartOverlay { proxy in
                             GeometryReader { proxyGeo in
                                 if chartState == .barsWithScale || chartState == .bars {
-                                    VStack(alignment: .leading){
+                                    VStack(alignment: .leading) {
                                         Text(titleText)
                                             .font(.title2)
                                         if chartState == .barsWithScale {

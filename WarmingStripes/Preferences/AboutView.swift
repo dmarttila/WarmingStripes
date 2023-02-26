@@ -45,16 +45,16 @@ Met Office 2022, provided under an [Open Government License](http://www.national
 
 struct AboutView: View {
     let qas = AboutAppQA().qas
-    let cr = Preferences.appTitle + " " + Preferences.version + "\nDoug Marttila " + Date().getCopyright(startYear: 2024)
+    let copyright = Preferences.appTitle + " " + Preferences.version + "\nDoug Marttila " + Date().getCopyright(startYear: 2023)
 
     var body: some View {
         ZStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    Text(cr)
+                    Text(copyright)
                         .font(.headline)
                     ForEach(qas) {
-                        QuestionAnswerView(qa: $0)
+                        QuestionAnswerView(questionAnswer: $0)
                     }
                 }
                 .padding()

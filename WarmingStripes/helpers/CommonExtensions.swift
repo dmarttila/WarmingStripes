@@ -48,7 +48,7 @@ public extension Date {
     func getCopyright(startYear: Int) -> String {
         let str = "© "
         let year = Calendar.current.component(.year, from: Date())
-        if startYear == year {
+        if startYear >= year {
             return str + String(year)
         } else {
             return str + String(startYear) + " - " + String(year)

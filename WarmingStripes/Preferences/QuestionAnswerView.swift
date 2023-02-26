@@ -8,17 +8,16 @@
 import SwiftUI
 
 struct QuestionAnswerView: View {
-    let qa: QuestionAnswer
+    let questionAnswer: QuestionAnswer
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(qa.question)
+            Text(questionAnswer.question)
                 .modifier(QuestionStyle())
-            Text(qa.answer)
+            Text(questionAnswer.answer)
                 .modifier(AnswerStyle())
         }
     }
 }
-
 
 struct QuestionAnswer: Identifiable {
     let question: LocalizedStringKey
@@ -28,14 +27,14 @@ struct QuestionAnswer: Identifiable {
         self.id = id
         self.question = question
         self.answer = answer
-    }   
+    }
 }
 
 struct QuestionAnswerView_Previews: PreviewProvider {
-    static let question: LocalizedStringKey = "Is weekly fasting healthy?"
+    static let question: LocalizedStringKey = "Whose idea was this?"
     static let answer: LocalizedStringKey = "[Ed Hawkins](http://www.met.reading.ac.uk/~ed/home/index.php)"
-    static let qa = QuestionAnswer(question: question, answer: answer)
+    static let questionAnswer = QuestionAnswer(question: question, answer: answer)
     static var previews: some View {
-        QuestionAnswerView(qa: qa)
+        QuestionAnswerView(questionAnswer: questionAnswer)
     }
 }
