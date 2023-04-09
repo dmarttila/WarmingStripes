@@ -16,6 +16,11 @@ class ChartViewModel: ObservableObject {
         yearFormatter.dateFormat = "yyyy"
     }
     
+    func getYValue (_ year: TemperatureAnomaly) -> Double {
+        chartState == .stripes || chartState == .labelledStripes ? 
+        TemperatureAnomaly.maxAnomaly : year.anomaly
+    }
+    
     var anomalies: [TemperatureAnomaly] {
         model.anomalies
         
@@ -63,6 +68,10 @@ class ChartViewModel: ObservableObject {
         case .barsWithScale:
             return "Global temperature change"
         }
+    }
+    
+    var subTitleText: String {
+        isBarsWithScale ? "Relative to average of 1971-2000 [°\(displayInCelcius ? "C" : "F")]" : ""
     }
     
     let startDate = Date(year: 1850, month: 1, day: 1)

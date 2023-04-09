@@ -38,8 +38,7 @@ struct ChartView: View, Haptics {
                     Chart(viewModel.anomalies) { year in
                         BarMark(
                             x: .value("Date", year.date, unit: .year),
-                            y: .value("Anomaly", viewModel.chartState == .stripes || viewModel.chartState == .labelledStripes ? 
-                                      TemperatureAnomaly.maxAnomaly : year.anomaly),
+                            y: .value("Anomaly", viewModel.getYValue(year)),
                             width: viewModel.getBarWidth(geo.size.width)
                         )
                         .foregroundStyle(year.color)
@@ -75,10 +74,8 @@ struct ChartView: View, Haptics {
                                 VStack(alignment: .leading) {
                                     Text(viewModel.titleText)
                                         .font(.title2)
-                                    if viewModel.isBarsWithScale {
-                                        Text("Relative to average of 1971-2000 [°\(viewModel.displayInCelcius ? "C" : "F")]")
-                                            .font(.subheadline)
-                                    }
+                                    Text(viewModel.subTitleText)
+                                        .font(.subheadline)
                                 }
                                 // aligns the title with the yAxis
                                 .offset(x: proxyGeo[proxy.plotAreaFrame].origin.x)
