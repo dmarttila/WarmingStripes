@@ -2,7 +2,7 @@
 //  ChartView.swift
 //  WarmingStripes
 //
-//  Created by Douglas Marttila on 4/9/23.
+//  Created by Doug Marttila on 4/9/23.
 //
 
 import Charts
@@ -11,78 +11,13 @@ import SwiftUI
 struct ChartView: View, Haptics {
     @EnvironmentObject var model: Model
     
-    private var chartState: ChartState {
-        model.preferences.chartState
-    }
-    private var isBarsWithScale: Bool {
-        chartState == .barsWithScale
-    }
-    private var axisMinimum: Double {
-        chartState == .stripes || chartState == .labelledStripes ? 0 : TemperatureAnomaly.maxAnomaly * -1
-    }
-    private var displayInCelcius: Bool {
-        return model.preferences.units == .celsius
+    @ObservedObject var viewModel: ChartVieeModel
+    
+    init (model: Model) {
+        viewModel = ChartVieeModel(model: model)
+//        yearFormatter.dateFormat = "yyyy"
     }
     
-    let yearFormatter = DateFormatter()
-    init () {
-        yearFormatter.dateFormat = "yyyy"
-    }
-    
-    private func getYear (from date: Date) -> String {
-        yearFormatter.string(from: date)
-    }
-    
-    // there is a small space between the bars by default. This fixes that
-    private func getBarWidth(_ width: CGFloat) -> MarkDimension {
-        let ratio = width / Double($model.anomalies.count)
-        return MarkDimension(floatLiteral: ratio + 0.5)
-    }
-    
-    private var xAxisYears: [Int] {
-        isBarsWithScale ? [1850, 1900, 1950, 2000, 2021] : Array(stride(from: 1860, through: 2010, by: 30))
-    }
-    
-    private var titleText: String {
-        switch chartState {
-        case .stripes:
-            return ""
-        case .labelledStripes:
-            return "Global temperature change(1850-2021)"
-        case .bars:
-            return "Global temperature have increased by over \(TemperatureAnomaly.changedMoreThan)\(model.preferences.units.abbreviation)"
-        case .barsWithScale:
-            return "Global temperature change"
-        }
-    }
-    
-    let startDate = Date(year: 1850, month: 1, day: 1)
-    let endDate = Date(year: 2021, month: 1, day: 1)
-    
-    private var yAxisMinMax: Double {
-        displayInCelcius ? 0.6 : 1
-    }
-    
-    func symetricalAxisValues (minMax: Double, by strideBy: Double) -> [Double] {
-        Array(stride(from: minMax * -1, through: minMax, by: strideBy))
-    }
-    
-    var yAxisValues: [Double] {
-        symetricalAxisValues(minMax: yAxisMinMax, by: displayInCelcius ? 0.3 : 0.5)
-    }
-    
-    //this calculation works, but it feels like there's a better way to do this. However, ChartProxy documention is a bit light so far
-    private func getYearXLoc(year: Int, proxy: ChartProxy, geo: GeometryProxy) -> CGFloat {
-        let date = Date(year: year, month: 1, day: 1)
-        let datePosition = proxy.position(forX: date) ?? 0
-        let xAxisDisplayWidth = geo[proxy.plotAreaFrame].origin.x
-        return datePosition + xAxisDisplayWidth
-    }
-    
-    func handleChartStateChange(value: ChartState) {
-        hapticSelectionChange()
-        model.preferences.chartState = value
-    }
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
@@ -93,45 +28,45 @@ struct ChartView: View, Haptics {
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
-                .onChange(of: model.preferences.chartState, perform: handleChartStateChange)
+                .onChange(of: model.preferences.chartState, perform: viewModel.handleChartStateChange)
                 
-                if chartState == .labelledStripes {
-                    Text(titleText)
+                if viewModel.chartState == .labelledStripes {
+                    Text(viewModel.titleText)
                         .font(.title2)
                 }
                 HStack {
-                    if chartState == .bars {
-                        Text(getYear(from: startDate))
+                    if viewModel.chartState == .bars {
+                        Text(viewModel.getYear(from: viewModel.startDate))
                     }
                     GeometryReader { geo in
                         Chart(model.anomalies) { year in
                             BarMark(
                                 x: .value("Date", year.date, unit: .year),
-                                y: .value("Anomaly", chartState == .stripes || chartState == .labelledStripes ? 
+                                y: .value("Anomaly",viewModel.chartState == .stripes || viewModel.chartState == .labelledStripes ? 
                                           TemperatureAnomaly.maxAnomaly : year.anomaly),
-                                width: getBarWidth(geo.size.width)
+                                width: viewModel.getBarWidth(geo.size.width)
                             )
                             .foregroundStyle(year.color)
                             // without corner radius == 0, looks like a picket fence
                             .cornerRadius(0)
                             
                             // you can't style the chart axes to replicate the warming stripes axes, so draw them
-                            if isBarsWithScale {
+                            if viewModel.isBarsWithScale {
                                 // Draw the lines that frame the chart
                                 //x-axis line
                                 RuleMark(
-                                    xStart: .value("start date", startDate),
-                                    xEnd: .value("end date", endDate),
-                                    y: .value("x axis", axisMinimum)
+                                    xStart: .value("start date", viewModel.startDate),
+                                    xEnd: .value("end date", viewModel.endDate),
+                                    y: .value("x axis", viewModel.axisMinimum)
                                 )
                                 .foregroundStyle(.white)
                                 .lineStyle(StrokeStyle(lineWidth: 1))
                                 .offset(y: -25)
                                 //y-axis line
                                 RuleMark(
-                                    x: .value("y axis", startDate),
-                                    yStart: .value("lowest temperature", yAxisMinMax * -1),
-                                    yEnd: .value("highest temperature", yAxisMinMax)
+                                    x: .value("y axis", viewModel.startDate),
+                                    yStart: .value("lowest temperature", viewModel.yAxisMinMax * -1),
+                                    yEnd: .value("highest temperature", viewModel.yAxisMinMax)
                                 )
                                 .foregroundStyle(.white)
                                 .lineStyle(StrokeStyle(lineWidth: 1))
@@ -140,12 +75,12 @@ struct ChartView: View, Haptics {
                         // x-axis 
                         .chartOverlay { proxy in
                             GeometryReader { proxyGeo in
-                                if isBarsWithScale || chartState == .bars {
+                                if viewModel.isBarsWithScale || viewModel.chartState == .bars {
                                     VStack(alignment: .leading) {
-                                        Text(titleText)
+                                        Text(viewModel.titleText)
                                             .font(.title2)
-                                        if isBarsWithScale {
-                                            Text("Relative to average of 1971-2000 [°\(displayInCelcius ? "C" : "F")]")
+                                        if viewModel.isBarsWithScale {
+                                            Text("Relative to average of 1971-2000 [°\(viewModel.displayInCelcius ? "C" : "F")]")
                                                 .font(.subheadline)
                                         }
                                     }
@@ -153,24 +88,24 @@ struct ChartView: View, Haptics {
                                     .offset(x: proxyGeo[proxy.plotAreaFrame].origin.x)
                                     .padding(5)
                                 }
-                                if isBarsWithScale || chartState == .labelledStripes {
+                                if viewModel.isBarsWithScale || viewModel.chartState == .labelledStripes {
                                     // create an area under the chart to draw the x-axis
                                     let axisYLoc = proxyGeo.size.height - 20
-                                    if chartState == .labelledStripes {
+                                    if viewModel.chartState == .labelledStripes {
                                         Rectangle()
                                             .fill(.black)
                                             .frame(width: geo.size.width + 2, height: 50)
                                             .offset(x: -1, y: axisYLoc - 5)
                                     }
-                                    ForEach(xAxisYears, id: \.self) { year in
+                                    ForEach(viewModel.xAxisYears, id: \.self) { year in
                                         let textFrameWidth: CGFloat = 300
-                                        let axisXloc = getYearXLoc(year: year, proxy: proxy, geo: proxyGeo)
+                                        let axisXloc = viewModel.getYearXLoc(year: year, proxy: proxy, geo: proxyGeo)
                                         Text(String(year))
                                             .font(.caption)
                                             .foregroundColor(.white)
                                             .frame(width: textFrameWidth)
                                             .offset(x: axisXloc - textFrameWidth/2, y: axisYLoc)
-                                        if isBarsWithScale {
+                                        if viewModel.isBarsWithScale {
                                             Rectangle()
                                                 .fill(.white)
                                                 .frame(width: 1, height: 5)
@@ -180,13 +115,13 @@ struct ChartView: View, Haptics {
                                 }
                             }
                         }
-                        .chartYScale(domain: axisMinimum...TemperatureAnomaly.maxAnomaly)
+                        .chartYScale(domain: viewModel.axisMinimum...TemperatureAnomaly.maxAnomaly)
                         // xAxis is drawn above, so it's always hidden
                         .chartXAxis(.hidden)
                         // hide/show the Y axes
-                        .chartYAxis(isBarsWithScale ? .visible : .hidden)
+                        .chartYAxis(viewModel.isBarsWithScale ? .visible : .hidden)
                         .chartYAxis {
-                            AxisMarks(position: .leading, values: yAxisValues) {value in
+                            AxisMarks(position: .leading, values: viewModel.yAxisValues) {value in
                                 if let doubleValue = value.as(Double.self) {
                                     AxisValueLabel {
                                         Text(doubleValue.decimalFormat)
@@ -199,8 +134,8 @@ struct ChartView: View, Haptics {
                             }
                         }
                     }
-                    if chartState == .bars {
-                        Text(getYear(from: endDate))
+                    if viewModel.chartState == .bars {
+                        Text(viewModel.getYear(from: viewModel.endDate))
                     }
                 }
             }

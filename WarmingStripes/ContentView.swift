@@ -36,7 +36,7 @@ struct ContentView: View, Haptics {
 
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
-            ChartView()
+            ChartView(model: model)
             PreferencesButton(showPreferences: $showPreferences)
                 .offset(y: -30)
                 .sheet(isPresented: $showPreferences) {
