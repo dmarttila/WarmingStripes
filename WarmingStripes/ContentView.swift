@@ -23,6 +23,8 @@
  make prefs button move based on type of chart chosen
  
  get the url of the data from the site
+ 
+ AppStorage!
  */
 
 import Charts
@@ -41,8 +43,17 @@ struct ContentView: View, Haptics {
     private var axisMinimum: Double {
         chartState == .stripes || chartState == .labelledStripes ? 0 : TemperatureAnomaly.maxAnomaly * -1
     }
-    private var isC: Bool {
+    private var displayInCelcius: Bool {
         return model.preferences.units == .celsius
+    }
+    
+    let yearFormatter = DateFormatter()
+    init () {
+        yearFormatter.dateFormat = "yyyy"
+    }
+    
+    private func getYear (from date: Date) -> String {
+        yearFormatter.string(from: date)
     }
     
     // there is a small space between the bars by default. This fixes that
@@ -51,6 +62,9 @@ struct ContentView: View, Haptics {
         return MarkDimension(floatLiteral: ratio + 0.5)
     }
     
+    private var xAxisYears: [Int] {
+        isBarsWithScale ? [1850, 1900, 1950, 2000, 2021] : Array(stride(from: 1860, through: 2010, by: 30))
+    }
     
     private var titleText: String {
         switch chartState {
@@ -64,6 +78,22 @@ struct ContentView: View, Haptics {
             return "Global temperature change"
         }
     }
+    
+    let startDate = Date(year: 1850, month: 1, day: 1)
+    let endDate = Date(year: 2021, month: 1, day: 1)
+    
+    private var yAxisMinMax: Double {
+        displayInCelcius ? 0.6 : 1
+    }
+    
+    func symetricalAxisValues (minMax: Double, by strideBy: Double) -> [Double] {
+        Array(stride(from: minMax * -1, through: minMax, by: strideBy))
+    }
+    
+    var yAxisValues: [Double] {
+        symetricalAxisValues(minMax: yAxisMinMax, by: displayInCelcius ? 0.3 : 0.5)
+    }
+    
     
     //this calculation works, but it feels like there's a better way to do this. However, ChartProxy documention is a bit light so far
     private func getYearXLoc(year: Int, proxy: ChartProxy, geo: GeometryProxy) -> CGFloat {
@@ -95,7 +125,7 @@ struct ContentView: View, Haptics {
                 }
                 HStack {
                     if chartState == .bars {
-                        Text("1850")
+                        Text(getYear(from: startDate))
                     }
                     GeometryReader { geo in
                         Chart(model.anomalies) { year in
@@ -110,29 +140,28 @@ struct ContentView: View, Haptics {
                             .cornerRadius(0)
                             
                             // you can't style the chart axes to replicate the warming stripes axes, so draw them
-                            // Draw the lines that frame the chart 
                             if isBarsWithScale {
+                                // Draw the lines that frame the chart
                                 //x-axis line
                                 RuleMark(
-                                    xStart: .value("start date", Date(year: 1850, month: 1, day: 1)),
-                                    xEnd: .value("end date", Date(year: 2021, month: 1, day: 1)),
+                                    xStart: .value("start date", startDate),
+                                    xEnd: .value("end date", endDate),
                                     y: .value("x axis", axisMinimum)
                                 )
                                 .foregroundStyle(.white)
                                 .lineStyle(StrokeStyle(lineWidth: 1))
                                 .offset(y: -25)
-                      
                                 //y-axis line
                                 RuleMark(
-                                    x: .value("y axis", Date(year: 1850, month: 1, day: 1)),
-                                    yStart: .value("lowest temperature", -0.6),
-                                    yEnd: .value("highest temperature", 0.6)
+                                    x: .value("y axis", startDate),
+                                    yStart: .value("lowest temperature", yAxisMinMax * -1),
+                                    yEnd: .value("highest temperature", yAxisMinMax)
                                 )
                                 .foregroundStyle(.white)
                                 .lineStyle(StrokeStyle(lineWidth: 1))
                             }
                         }
-                        // x-axis afaict 
+                        // x-axis 
                         .chartOverlay { proxy in
                             GeometryReader { proxyGeo in
                                 if isBarsWithScale || chartState == .bars {
@@ -140,7 +169,7 @@ struct ContentView: View, Haptics {
                                         Text(titleText)
                                             .font(.title2)
                                         if isBarsWithScale {
-                                            Text("Relative to average of 1971-2000 [°\(isC ? "C" : "F")]")
+                                            Text("Relative to average of 1971-2000 [°\(displayInCelcius ? "C" : "F")]")
                                                 .font(.subheadline)
                                         }
                                     }
@@ -149,7 +178,7 @@ struct ContentView: View, Haptics {
                                     .padding(5)
                                 }
                                 if isBarsWithScale || chartState == .labelledStripes {
-                                    // TODO: the 20 should be based on the chart proxy
+                                    // create an area under the chart to draw the x-axis
                                     let axisYLoc = proxyGeo.size.height - 20
                                     if chartState == .labelledStripes {
                                         Rectangle()
@@ -157,8 +186,7 @@ struct ContentView: View, Haptics {
                                             .frame(width: geo.size.width + 2, height: 50)
                                             .offset(x: -1, y: axisYLoc - 5)
                                     }
-                                    let years = isBarsWithScale ? [1850, 1900, 1950, 2000, 2021] : Array(stride(from: 1860, through: 2010, by: 30))
-                                    ForEach(years, id: \.self) { year in
+                                    ForEach(xAxisYears, id: \.self) { year in
                                         let textFrameWidth: CGFloat = 300
                                         let axisXloc = getYearXLoc(year: year, proxy: proxy, geo: proxyGeo)
                                         Text(String(year))
@@ -182,8 +210,8 @@ struct ContentView: View, Haptics {
                         // hide/show the Y axes
                         .chartYAxis(isBarsWithScale ? .visible : .hidden)
                         .chartYAxis {
-                            AxisMarks(position: .leading, values: .stride(by: isC ? 0.3 : 0.5)) {value in
-                                if let doubleValue = value.as(Double.self), abs(doubleValue) < 0.8 {
+                            AxisMarks(position: .leading, values: yAxisValues) {value in
+                                if let doubleValue = value.as(Double.self) {
                                     AxisValueLabel {
                                         Text(doubleValue.decimalFormat)
                                             .font(.caption)
@@ -196,7 +224,7 @@ struct ContentView: View, Haptics {
                         }
                     }
                     if chartState == .bars {
-                        Text("2021")
+                        Text(getYear(from: endDate))
                     }
                 }
             }
