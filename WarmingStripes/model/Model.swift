@@ -12,7 +12,9 @@ public struct Preferences: Codable {
     var units: TemperatureUnit = .celsius
     var chartState: ChartState = .stripes
     static var appTitle = "Warming Stripes"
-    static var version = "1.0.0"
+    static var version: String {
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0.0"
+    }
 }
 
 public enum ChartState: String,  CaseIterable, Identifiable, Codable {
@@ -64,6 +66,7 @@ struct TemperatureAnomaly: Identifiable {
     }
 }
 
+//TODO: Store in AppStorage
 class Model: ObservableObject{
     @Published var preferences = Preferences() {
         didSet {

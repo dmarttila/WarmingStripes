@@ -1,6 +1,5 @@
 //
 //  QuestionAnswerView.swift
-//  IntermittentFasting
 //
 //  Created by Doug Marttila on 10/28/21.
 //

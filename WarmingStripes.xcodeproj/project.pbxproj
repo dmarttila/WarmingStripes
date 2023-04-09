@@ -11,6 +11,7 @@
 		B430EAA128A7E9850002B884 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430EA9928A7E9850002B884 /* PrivacyView.swift */; };
 		B430EAA228A7E9850002B884 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430EA9A28A7E9850002B884 /* PreferencesView.swift */; };
 		B430EAA628A7E9860002B884 /* QuestionAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430EA9F28A7E9850002B884 /* QuestionAnswerView.swift */; };
+		B43AE57C29E31EF000671F9C /* PreferencesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43AE57B29E31EEF00671F9C /* PreferencesButton.swift */; };
 		B45F2D5D28A98C0F0064D3C3 /* HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv in Resources */ = {isa = PBXBuildFile; fileRef = B45F2D5C28A98C0F0064D3C3 /* HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv */; };
 		B45F2D6128A98D040064D3C3 /* HadCRUT.5.0.1.0.summary_series.global.annual_non_infilled.csv in Resources */ = {isa = PBXBuildFile; fileRef = B45F2D6028A98D040064D3C3 /* HadCRUT.5.0.1.0.summary_series.global.annual_non_infilled.csv */; };
 		B45F2D6428A98DF90064D3C3 /* HadCRUT.5.0.1.0.analysis.component_series.global.annual.csv in Resources */ = {isa = PBXBuildFile; fileRef = B45F2D6228A98DF80064D3C3 /* HadCRUT.5.0.1.0.analysis.component_series.global.annual.csv */; };
@@ -31,6 +32,7 @@
 		B430EA9928A7E9850002B884 /* PrivacyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
 		B430EA9A28A7E9850002B884 /* PreferencesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		B430EA9F28A7E9850002B884 /* QuestionAnswerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionAnswerView.swift; sourceTree = "<group>"; };
+		B43AE57B29E31EEF00671F9C /* PreferencesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesButton.swift; sourceTree = "<group>"; };
 		B45F2D5C28A98C0F0064D3C3 /* HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv; sourceTree = "<group>"; };
 		B45F2D6028A98D040064D3C3 /* HadCRUT.5.0.1.0.summary_series.global.annual_non_infilled.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HadCRUT.5.0.1.0.summary_series.global.annual_non_infilled.csv; sourceTree = "<group>"; };
 		B45F2D6228A98DF80064D3C3 /* HadCRUT.5.0.1.0.analysis.component_series.global.annual.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HadCRUT.5.0.1.0.analysis.component_series.global.annual.csv; sourceTree = "<group>"; };
@@ -70,6 +72,14 @@
 			path = Preferences;
 			sourceTree = "<group>";
 		};
+		B43AE57D29E31EFF00671F9C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B43AE57B29E31EEF00671F9C /* PreferencesButton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		B4B81A762861E5A500F9E2EC = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +112,7 @@
 				B45F2D5C28A98C0F0064D3C3 /* HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv */,
 				B4B81A862861E5A700F9E2EC /* Assets.xcassets */,
 				B4B81A882861E5A700F9E2EC /* Preview Content */,
+				B43AE57D29E31EFF00671F9C /* Views */,
 			);
 			path = WarmingStripes;
 			sourceTree = "<group>";
@@ -233,6 +244,7 @@
 				B4B81A852861E5A500F9E2EC /* ContentView.swift in Sources */,
 				B4B81A832861E5A500F9E2EC /* WarmingStripesApp.swift in Sources */,
 				B430EAA028A7E9850002B884 /* AboutView.swift in Sources */,
+				B43AE57C29E31EF000671F9C /* PreferencesButton.swift in Sources */,
 				B430EAA228A7E9850002B884 /* PreferencesView.swift in Sources */,
 				B4D7F0DD28A7ED5300EF645E /* HapticsProtocol.swift in Sources */,
 				B430EAA128A7E9850002B884 /* PrivacyView.swift in Sources */,

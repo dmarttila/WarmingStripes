@@ -18,43 +18,41 @@
  I'm using the wrong csv
  how did 1.2 become the raise in temps?
  
- remove intermittent fasting everywhere
- 
- remove Growing button no background style
- 
  cahnge copyright to MIT and whatever warming stripes is
  
  make prefs button move based on type of chart chosen
  
- prefs icon to match
- 
  get the url of the data from the site
  */
 
-import SwiftUI
 import Charts
+import SwiftUI
 
 struct ContentView: View, Haptics {
+    @EnvironmentObject var model: Model
+    @State private var showPreferences = false
+    
     private var chartState: ChartState {
         model.preferences.chartState
     }
-
-    @EnvironmentObject var model: Model
-
-    var isBarsWithScale: Bool {
+    private var isBarsWithScale: Bool {
         chartState == .barsWithScale
     }
-
-    var axisMinimum: Double {
+    private var axisMinimum: Double {
         chartState == .stripes || chartState == .labelledStripes ? 0 : TemperatureAnomaly.maxAnomaly * -1
     }
+    private var isC: Bool {
+        return model.preferences.units == .celsius
+    }
+    
     // there is a small space between the bars by default. This fixes that
-    func getBarWidth(_ width: CGFloat) -> MarkDimension {
+    private func getBarWidth(_ width: CGFloat) -> MarkDimension {
         let ratio = width / Double($model.anomalies.count)
         return MarkDimension(floatLiteral: ratio + 0.5)
     }
-
-    var titleText: String {
+    
+    
+    private var titleText: String {
         switch chartState {
         case .stripes:
             return ""
@@ -68,35 +66,29 @@ struct ContentView: View, Haptics {
     }
     
     //this calculation works, but it feels like there's a better way to do this. However, ChartProxy documention is a bit light so far
-    func getYearXLoc(year: Int, proxy: ChartProxy, geo: GeometryProxy) -> CGFloat {
+    private func getYearXLoc(year: Int, proxy: ChartProxy, geo: GeometryProxy) -> CGFloat {
         let date = Date(year: year, month: 1, day: 1)
         let datePosition = proxy.position(forX: date) ?? 0
         let xAxisDisplayWidth = geo[proxy.plotAreaFrame].origin.x
         return datePosition + xAxisDisplayWidth
     }
-
-    @State private var showPreferences = false
-
-    private var isC: Bool {
-        return model.preferences.units == .celsius
-    }
-
-    func thePickerHasChanged(value: ChartState) {
+    
+    func handleChartStateChange(value: ChartState) {
         hapticSelectionChange()
         model.preferences.chartState = value
     }
-
+    
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
-            VStack(alignment: .leading){
+            VStack(alignment: .leading) {
                 Picker("Chart state:", selection: $model.preferences.chartState) {
                     ForEach(ChartState.allCases) { state in
                         Text(state.rawValue)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
-                .onChange(of: model.preferences.chartState, perform: thePickerHasChanged)
-
+                .onChange(of: model.preferences.chartState, perform: handleChartStateChange)
+                
                 if chartState == .labelledStripes {
                     Text(titleText)
                         .font(.title2)
@@ -109,15 +101,18 @@ struct ContentView: View, Haptics {
                         Chart(model.anomalies) { year in
                             BarMark(
                                 x: .value("Date", year.date, unit: .year),
-                                y: .value("Anomaly", chartState == .stripes || chartState == .labelledStripes ? TemperatureAnomaly.maxAnomaly : year.anomaly),
+                                y: .value("Anomaly", chartState == .stripes || chartState == .labelledStripes ? 
+                                          TemperatureAnomaly.maxAnomaly : year.anomaly),
                                 width: getBarWidth(geo.size.width)
                             )
                             .foregroundStyle(year.color)
                             // without corner radius == 0, looks like a picket fence
                             .cornerRadius(0)
-                            // xAxis
-                            // afaict, you can't style the chart axes to replicate the warming stripes axes, so need to draw them
+                            
+                            // you can't style the chart axes to replicate the warming stripes axes, so draw them
+                            // Draw the lines that frame the chart 
                             if isBarsWithScale {
+                                //x-axis line
                                 RuleMark(
                                     xStart: .value("start date", Date(year: 1850, month: 1, day: 1)),
                                     xEnd: .value("end date", Date(year: 2021, month: 1, day: 1)),
@@ -126,9 +121,8 @@ struct ContentView: View, Haptics {
                                 .foregroundStyle(.white)
                                 .lineStyle(StrokeStyle(lineWidth: 1))
                                 .offset(y: -25)
-                            }
-                            // yAxis
-                            if isBarsWithScale {
+                      
+                                //y-axis line
                                 RuleMark(
                                     x: .value("y axis", Date(year: 1850, month: 1, day: 1)),
                                     yStart: .value("lowest temperature", -0.6),
@@ -138,14 +132,14 @@ struct ContentView: View, Haptics {
                                 .lineStyle(StrokeStyle(lineWidth: 1))
                             }
                         }
-                        // x-axis
+                        // x-axis afaict 
                         .chartOverlay { proxy in
                             GeometryReader { proxyGeo in
-                                if chartState == .barsWithScale || chartState == .bars {
+                                if isBarsWithScale || chartState == .bars {
                                     VStack(alignment: .leading) {
                                         Text(titleText)
                                             .font(.title2)
-                                        if chartState == .barsWithScale {
+                                        if isBarsWithScale {
                                             Text("Relative to average of 1971-2000 [°\(isC ? "C" : "F")]")
                                                 .font(.subheadline)
                                         }
@@ -183,9 +177,9 @@ struct ContentView: View, Haptics {
                             }
                         }
                         .chartYScale(domain: axisMinimum...TemperatureAnomaly.maxAnomaly)
-                        // xAxis is drawn above
+                        // xAxis is drawn above, so it's always hidden
                         .chartXAxis(.hidden)
-                        // hide/show the axes
+                        // hide/show the Y axes
                         .chartYAxis(isBarsWithScale ? .visible : .hidden)
                         .chartYAxis {
                             AxisMarks(position: .leading, values: .stride(by: isC ? 0.3 : 0.5)) {value in
@@ -206,28 +200,11 @@ struct ContentView: View, Haptics {
                     }
                 }
             }
-            Button {
-                showPreferences.toggle()
-            } label: {
-                ZStack {
-                    let lightBlue = Color(hex: 0x00BCD4)
-                    let smallSize: CGFloat = 30
-                    Circle()
-                        .fill(lightBlue)
-                        .frame(width: 58, height: 58)
-                    Circle()
-                        .fill(.white)
-                        .frame(width: smallSize - 2, height: smallSize - 2)
-                    Image(systemName: "line.3.horizontal.circle.fill")
-                        .resizable()
-                        .foregroundColor(lightBlue)
-                        .frame(width: smallSize, height: smallSize)
+            PreferencesButton(showPreferences: $showPreferences)
+                .offset(y: -30)
+                .sheet(isPresented: $showPreferences) {
+                    PreferencesView().environmentObject(model)
                 }
-            }
-            .offset(y: -30)
-            .sheet(isPresented: $showPreferences) {
-                PreferencesView().environmentObject(model)
-            }
         }
     }
 }

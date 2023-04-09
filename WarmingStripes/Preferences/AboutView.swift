@@ -1,6 +1,6 @@
 //
 //  AboutView.swift
-//  IntermittentFasting
+//  
 //
 //  Created by Doug Marttila on 10/27/21.
 //
