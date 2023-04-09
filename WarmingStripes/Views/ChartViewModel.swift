@@ -8,16 +8,24 @@
 import Charts
 import SwiftUI
 
-class ChartVieeModel: ObservableObject {
-    let model: Model
+class ChartViewModel: ObservableObject {
+    private let model: Model
     init (model: Model) {
         self.model = model
+        chartState = model.preferences.chartState
         yearFormatter.dateFormat = "yyyy"
     }
     
-    var chartState: ChartState {
-        model.preferences.chartState
+    var anomalies: [TemperatureAnomaly] {
+        model.anomalies
+        
     }
+    
+    @Published var chartState: ChartState = .bars
+    
+//    var chartState: ChartState {
+//        model.preferences.chartState
+//    }
     var isBarsWithScale: Bool {
         chartState == .barsWithScale
     }
@@ -82,6 +90,7 @@ class ChartVieeModel: ObservableObject {
     
     func handleChartStateChange(value: ChartState) {
 //        hapticSelectionChange()
+//        chartState = value
         model.preferences.chartState = value
     }
     
