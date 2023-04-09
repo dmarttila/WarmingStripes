@@ -12,6 +12,7 @@
 		B430EAA228A7E9850002B884 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430EA9A28A7E9850002B884 /* PreferencesView.swift */; };
 		B430EAA628A7E9860002B884 /* QuestionAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430EA9F28A7E9850002B884 /* QuestionAnswerView.swift */; };
 		B43AE57C29E31EF000671F9C /* PreferencesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43AE57B29E31EEF00671F9C /* PreferencesButton.swift */; };
+		B43AE57F29E35CB400671F9C /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43AE57E29E35CB400671F9C /* ChartView.swift */; };
 		B45F2D5D28A98C0F0064D3C3 /* HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv in Resources */ = {isa = PBXBuildFile; fileRef = B45F2D5C28A98C0F0064D3C3 /* HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv */; };
 		B45F2D6128A98D040064D3C3 /* HadCRUT.5.0.1.0.summary_series.global.annual_non_infilled.csv in Resources */ = {isa = PBXBuildFile; fileRef = B45F2D6028A98D040064D3C3 /* HadCRUT.5.0.1.0.summary_series.global.annual_non_infilled.csv */; };
 		B45F2D6428A98DF90064D3C3 /* HadCRUT.5.0.1.0.analysis.component_series.global.annual.csv in Resources */ = {isa = PBXBuildFile; fileRef = B45F2D6228A98DF80064D3C3 /* HadCRUT.5.0.1.0.analysis.component_series.global.annual.csv */; };
@@ -33,6 +34,7 @@
 		B430EA9A28A7E9850002B884 /* PreferencesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		B430EA9F28A7E9850002B884 /* QuestionAnswerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionAnswerView.swift; sourceTree = "<group>"; };
 		B43AE57B29E31EEF00671F9C /* PreferencesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesButton.swift; sourceTree = "<group>"; };
+		B43AE57E29E35CB400671F9C /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		B45F2D5C28A98C0F0064D3C3 /* HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv; sourceTree = "<group>"; };
 		B45F2D6028A98D040064D3C3 /* HadCRUT.5.0.1.0.summary_series.global.annual_non_infilled.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HadCRUT.5.0.1.0.summary_series.global.annual_non_infilled.csv; sourceTree = "<group>"; };
 		B45F2D6228A98DF80064D3C3 /* HadCRUT.5.0.1.0.analysis.component_series.global.annual.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HadCRUT.5.0.1.0.analysis.component_series.global.annual.csv; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				B43AE57B29E31EEF00671F9C /* PreferencesButton.swift */,
+				B43AE57E29E35CB400671F9C /* ChartView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 				B430EAA128A7E9850002B884 /* PrivacyView.swift in Sources */,
 				B4E7FE1928A7E7390032159E /* Modifiers.swift in Sources */,
 				B4B4EA3A28BE98C100CEBDF0 /* CommonExtensions.swift in Sources */,
+				B43AE57F29E35CB400671F9C /* ChartView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
