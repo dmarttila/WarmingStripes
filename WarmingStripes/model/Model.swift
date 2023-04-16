@@ -8,8 +8,8 @@
 import Foundation
 import SwiftUI
 
-public struct Preferences: Codable {
-    var units: TemperatureUnit = .celsius
+public struct Preferences {
+    @AppStorage("units") var units: TemperatureUnit = .celsius
 //    var chartState: ChartState = .stripes
     static var appTitle = "Warming Stripes"
     static var version: String {
@@ -79,19 +79,19 @@ class Model: ObservableObject {
     @Published var preferences = Preferences() {
         didSet {
             loadData()
-            let encoder = JSONEncoder()
-            if let encoded = try? encoder.encode(preferences) {
-                UserDefaults.standard.set(encoded, forKey: "Preferences")
-            }
+//            let encoder = JSONEncoder()
+//            if let encoded = try? encoder.encode(preferences) {
+//                UserDefaults.standard.set(encoded, forKey: "Preferences")
+//            }
         }
     }
     init() {
-        if let preferences = UserDefaults.standard.data(forKey: "Preferences") {
-            let decoder = JSONDecoder()
-            if let preferences = try? decoder.decode(Preferences.self, from: preferences) {
-                self.preferences = preferences
-            }
-        }
+//        if let preferences = UserDefaults.standard.data(forKey: "Preferences") {
+//            let decoder = JSONDecoder()
+//            if let preferences = try? decoder.decode(Preferences.self, from: preferences) {
+//                self.preferences = preferences
+//            }
+//        }
         loadData()
     }
     
