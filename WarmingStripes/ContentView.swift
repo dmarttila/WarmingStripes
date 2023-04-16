@@ -11,16 +11,12 @@
  
  Better color range
  
- For axis show 0.6, 0.3, 0.0, -0.3, -0.6
- 
  make all the ranges work for Fehrenheit too
  
  I'm using the wrong csv
  how did 1.2 become the raise in temps?
  
  cahnge copyright to MIT and whatever warming stripes is
- 
- make prefs button move based on type of chart chosen
  
  get the url of the data from the site
  

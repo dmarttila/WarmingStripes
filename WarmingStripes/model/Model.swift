@@ -10,14 +10,14 @@ import SwiftUI
 
 public struct Preferences: Codable {
     var units: TemperatureUnit = .celsius
-    var chartState: ChartState = .stripes
+//    var chartState: ChartState = .stripes
     static var appTitle = "Warming Stripes"
     static var version: String {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0.0"
     }
 }
 
-public enum ChartState: String,  CaseIterable, Identifiable, Codable {
+public enum ChartState: String, CaseIterable, Identifiable, Codable {
     case stripes = "Warming Stripes"
     case labelledStripes = "Labeled Stripes"
     case bars = "Bars"
@@ -30,11 +30,7 @@ public enum TemperatureUnit: String, CaseIterable, Identifiable, Codable {
     case fahrenheit = "Fahrenheit"
     public var id: TemperatureUnit { self }
     public var abbreviation: String {
-        if self == .celsius {
-            return "°C"
-        } else {
-            return "°F"
-        }
+        self == .celsius ? "°C" : "°F"
     }
     public static func cToF(_ celcius: Double) -> Double {
         celcius * 9/5
@@ -50,24 +46,35 @@ struct TemperatureAnomaly: Identifiable {
     static var changedMoreThan: String {
         delta.floorDecimalFormat
     }
-    
     let date: Date
     let anomaly: Double
-    
     var id = UUID()
-    
+
     var color: Color {
         if anomaly > 0 {
             let val = 1 - anomaly/TemperatureAnomaly.maxAnomaly
             return Color(red: 1, green: val, blue: val)
         }
         let val = 1 - anomaly/TemperatureAnomaly.minAnomaly
-        return Color(red:val, green: val, blue: 1)
+        return Color(red: val, green: val, blue: 1)
     }
 }
 
 //TODO: Store in AppStorage
-class Model: ObservableObject{
+class Model: ObservableObject {
+    @AppStorage("username") var username: String = "Anonymous"
+    
+    @AppStorage("chartState") var chartState: ChartState = .stripes
+    
+//    @AppStorage("preferences") var preferences: Preferences = Preferences()
+//        didSet {
+//            loadData()
+//            let encoder = JSONEncoder()
+//            if let encoded = try? encoder.encode(preferences) {
+//                UserDefaults.standard.set(encoded, forKey: "Preferences")
+//            }
+//        }
+//    }
     @Published var preferences = Preferences() {
         didSet {
             loadData()

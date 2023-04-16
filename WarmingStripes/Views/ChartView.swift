@@ -10,21 +10,23 @@ import SwiftUI
 
 struct ChartView: View, Haptics {
     @ObservedObject var viewModel: ChartViewModel
+    @ObservedObject var model: Model
     
     init (model: Model) {
         viewModel = ChartViewModel(model: model)
+        self.model = model
     }
     
     
     var body: some View {
         VStack(alignment: .leading) {
-            Picker("Chart state:", selection: $viewModel.chartState) {
+            Picker("Chart state:", selection: $model.chartState) {
                 ForEach(ChartState.allCases) { state in
                     Text(state.rawValue)
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
-            .onChange(of: viewModel.chartState, perform: viewModel.handleChartStateChange)
+//            .onChange(of: viewModel.chartState, perform: viewModel.handleChartStateChange)
             
             if viewModel.chartState == .labelledStripes {
                 Text(viewModel.titleText)

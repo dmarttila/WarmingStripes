@@ -12,7 +12,7 @@ class ChartViewModel: ObservableObject {
     private let model: Model
     init (model: Model) {
         self.model = model
-        chartState = model.preferences.chartState
+//        chartState = model.chartState
         yearFormatter.dateFormat = "yyyy"
     }
     
@@ -26,11 +26,11 @@ class ChartViewModel: ObservableObject {
         
     }
     
-    @Published var chartState: ChartState = .bars
+//    @Published var chartState: ChartState = .bars
     
-//    var chartState: ChartState {
-//        model.preferences.chartState
-//    }
+    var chartState: ChartState {
+        model.chartState
+    }
     var isBarsWithScale: Bool {
         chartState == .barsWithScale
     }
@@ -100,7 +100,7 @@ class ChartViewModel: ObservableObject {
     func handleChartStateChange(value: ChartState) {
 //        hapticSelectionChange()
 //        chartState = value
-        model.preferences.chartState = value
+        model.chartState = value
     }
     
 }
