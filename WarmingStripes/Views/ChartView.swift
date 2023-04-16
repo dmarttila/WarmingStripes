@@ -20,7 +20,7 @@ struct ChartView: View, Haptics {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Picker("Chart state:", selection: $viewModel.chartTry) {
+            Picker("Chart state:", selection: $viewModel.chartState) {
                 ForEach(ChartState.allCases) { state in
                     Text(state.rawValue)
                 }

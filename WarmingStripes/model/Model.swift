@@ -62,9 +62,10 @@ struct TemperatureAnomaly: Identifiable {
 
 //TODO: Store in AppStorage
 class Model: ObservableObject {
-    @AppStorage("username") var username: String = "Anonymous"
     
     @AppStorage("chartState") var chartState: ChartState = .stripes
+    
+//    @AppStorage("chartState") var chartState: ChartState = .stripes
     
 //    @AppStorage("preferences") var preferences: Preferences = Preferences()
 //        didSet {

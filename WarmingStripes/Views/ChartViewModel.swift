@@ -11,7 +11,7 @@ import SwiftUI
 class ChartViewModel: ObservableObject {
     private let model: Model
     
-    @Binding var chartTry: ChartState
+    @Binding var chartState: ChartState
     
     /*
      init(isOn: Binding<Bool>) {
@@ -24,7 +24,7 @@ class ChartViewModel: ObservableObject {
         self.model = model
 //        chartState = model.chartState
         yearFormatter.dateFormat = "yyyy"
-        _chartTry = chartState
+        _chartState = chartState
     }
     
     func getYValue (_ year: TemperatureAnomaly) -> Double {
@@ -34,14 +34,13 @@ class ChartViewModel: ObservableObject {
     
     var anomalies: [TemperatureAnomaly] {
         model.anomalies
-        
     }
     
 //    @Published var chartState: ChartState = .bars
     
-    var chartState: ChartState {
-        model.chartState
-    }
+//    var chartState: ChartState {
+//        model.chartState
+//    }
     var isBarsWithScale: Bool {
         chartState == .barsWithScale
     }
