@@ -7,15 +7,18 @@
 
 import SwiftUI
 
-struct PreferencesView: View, Haptics {
+struct PreferencesView: View, Haptics, AppBundleInfo {
     @Environment(\.presentationMode) var presentationMode
     
     @EnvironmentObject var model: Model
     
     func thePickerHasChanged(value: TemperatureUnit) {
         hapticSelectionChange()
+        //TODO: Make this bindable
         model.preferences.units = value
     }
+    
+    
     
     var body: some View {
         NavigationView {
@@ -23,7 +26,8 @@ struct PreferencesView: View, Haptics {
                 Form {
                     Section(header: Text("About")) {
                         NavigationLink(destination: AboutView()) {
-                            Text(Preferences.appTitle)
+                            Text(appName)
+                            // Text(Preferences.appTitle)
                         }
                         NavigationLink(destination: PrivacyView()) {
                             Text("Privacy")

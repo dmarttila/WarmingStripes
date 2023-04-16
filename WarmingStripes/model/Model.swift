@@ -8,13 +8,14 @@
 import Foundation
 import SwiftUI
 
-public struct Preferences {
+public class Preferences: ObservableObject {
     @AppStorage("units") var units: TemperatureUnit = .celsius
 //    var chartState: ChartState = .stripes
-    static var appTitle = "Warming Stripes"
-    static var version: String {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0.0"
-    }
+//    @AppStorage("chartState") var chartState: ChartState = .stripes
+//    static var appTitle = "Warming Stripes"
+//    static var version: String {
+//        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0.0"
+//    }
 }
 
 public enum ChartState: String, CaseIterable, Identifiable, Codable {
@@ -79,10 +80,10 @@ class Model: ObservableObject {
     @Published var preferences = Preferences() {
         didSet {
             loadData()
-//            let encoder = JSONEncoder()
-//            if let encoded = try? encoder.encode(preferences) {
-//                UserDefaults.standard.set(encoded, forKey: "Preferences")
-//            }
+////            let encoder = JSONEncoder()
+////            if let encoded = try? encoder.encode(preferences) {
+////                UserDefaults.standard.set(encoded, forKey: "Preferences")
+////            }
         }
     }
     init() {

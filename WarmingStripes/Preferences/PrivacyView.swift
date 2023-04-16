@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-struct PrivacyView: View {
+struct PrivacyView: View, AppBundleInfo {
     var body: some View {
         ZStack {
             ScrollView {
@@ -17,7 +17,7 @@ struct PrivacyView: View {
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                     Text("""
-All information entered in \(Preferences.appTitle) is only stored on your device.(The only data that is stored is the temperature unit preference and the chart state.)
+All information entered in \(appName) is only stored on your device.(The only data that is stored is the temperature unit preference and the chart state.)
 It is not transmitted anywhere.
 If you backup your device to iCloud, the data will be copied there, but is still only accessible to you.
 """)

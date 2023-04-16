@@ -43,9 +43,12 @@ Met Office 2022, provided under an [Open Government License](http://www.national
     ]
 }
 
-struct AboutView: View {
+struct AboutView: View, AppBundleInfo {
     let qas = AboutAppQA().qas
-    let copyright = Preferences.appTitle + " " + Preferences.version + "\nDoug Marttila " + Date().getCopyright(startYear: 2023)
+    
+    var copyright: String {
+        appName + " " + appVersion + "\nDoug Marttila " + Date().getCopyright(startYear: 2023)
+    }
 
     var body: some View {
         ZStack {
