@@ -10,17 +10,17 @@ import SwiftUI
 
 struct ChartView: View, Haptics {
     @ObservedObject var viewModel: ChartViewModel
-    @ObservedObject var model: Model
+//    @ObservedObject var model: Model
     
     init (model: Model) {
-        viewModel = ChartViewModel(model: model)
-        self.model = model
+        viewModel = ChartViewModel(model: model, chartState: model.$chartState)
+//        self.model = model
     }
     
     
     var body: some View {
         VStack(alignment: .leading) {
-            Picker("Chart state:", selection: $model.chartState) {
+            Picker("Chart state:", selection: $viewModel.chartTry) {
                 ForEach(ChartState.allCases) { state in
                     Text(state.rawValue)
                 }

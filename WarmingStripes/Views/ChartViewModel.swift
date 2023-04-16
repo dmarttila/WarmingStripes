@@ -10,10 +10,21 @@ import SwiftUI
 
 class ChartViewModel: ObservableObject {
     private let model: Model
-    init (model: Model) {
+    
+    @Binding var chartTry: ChartState
+    
+    /*
+     init(isOn: Binding<Bool>) {
+             _isOn = isOn
+         }
+
+     */
+    
+    init (model: Model, chartState: Binding<ChartState>) {
         self.model = model
 //        chartState = model.chartState
         yearFormatter.dateFormat = "yyyy"
+        _chartTry = chartState
     }
     
     func getYValue (_ year: TemperatureAnomaly) -> Double {
@@ -100,7 +111,7 @@ class ChartViewModel: ObservableObject {
     func handleChartStateChange(value: ChartState) {
 //        hapticSelectionChange()
 //        chartState = value
-        model.chartState = value
+//        model.chartState = value
     }
     
 }
