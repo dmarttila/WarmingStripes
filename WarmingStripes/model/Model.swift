@@ -66,6 +66,8 @@ class Model: ObservableObject {
     
     @AppStorage("chartState") var chartState: ChartState = .stripes
     
+    
+    
 //    @AppStorage("chartState") var chartState: ChartState = .stripes
     
 //    @AppStorage("preferences") var preferences: Preferences = Preferences()

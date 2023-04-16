@@ -11,14 +11,16 @@
  
  Better color range
  
- make all the ranges work for Fehrenheit too
- 
  I'm using the wrong csv
  how did 1.2 become the raise in temps?
  
  cahnge copyright to MIT and whatever warming stripes is
  
  get the url of the data from the site
+ 
+ make Anomalies @Published
+ 
+ Make Binding happen in Preferences
  
  AppStorage!
  */
@@ -36,7 +38,7 @@ struct ContentView: View, Haptics {
             PreferencesButton(showPreferences: $showPreferences)
                 .offset(y: -30)
                 .sheet(isPresented: $showPreferences) {
-                    PreferencesView().environmentObject(model)
+                    PreferencesView()
                 }
         }
     }
