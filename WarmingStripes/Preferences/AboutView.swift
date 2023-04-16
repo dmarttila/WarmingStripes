@@ -7,6 +7,7 @@
 
 import SwiftUI
 struct AboutAppQA {
+    // swiftlint:disable line_length
     let qas = [
         QuestionAnswer(
             question: "What does the app do?",
@@ -45,17 +46,19 @@ Met Office 2022, provided under an [Open Government License](http://www.national
 
 struct AboutView: View, AppBundleInfo {
     let qas = AboutAppQA().qas
-    
-    var copyright: String {
-        appName + " " + appVersion + "\nDoug Marttila " + Date().getCopyright(startYear: 2023)
+    var license: LocalizedStringKey {
+        """
+        \(appName) is licensed under a [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/). 
+        Original licensor: [Ed Hawkins, University of Reading](http://www.met.reading.ac.uk/~ed/home/index.php).
+        """
     }
 
     var body: some View {
         ZStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    Text(copyright)
-                        .font(.headline)
+                    Text(license)
+                        .modifier(AnswerStyle())
                     ForEach(qas) {
                         QuestionAnswerView(questionAnswer: $0)
                     }
@@ -72,3 +75,4 @@ struct AboutView_Previews: PreviewProvider {
         AboutView()
     }
 }
+// swiftlint:enable line_length

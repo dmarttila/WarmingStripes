@@ -22,6 +22,8 @@
  
  Make Binding happen in Preferences
  
+ DOn't reload data every time just convert between C and F
+ 
  AppStorage!
  */
 
