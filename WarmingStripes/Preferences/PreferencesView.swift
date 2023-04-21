@@ -11,44 +11,36 @@ struct PreferencesView: View, Haptics, AppBundleInfo {
     @Environment(\.presentationMode) var presentationMode
     
     @EnvironmentObject var model: Model
-    
-    func thePickerHasChanged(value: TemperatureScale) {
-        hapticSelectionChange()
-        //TODO: Make this bindable
-        model.temperatureScale = value
-    }
-    
-    
-    
+
     var body: some View {
         NavigationView {
             VStack {
-//                Form {
-//                    Section(header: Text("About")) {
-//                        NavigationLink(destination: AboutView()) {
-//                            Text(appName)
-//                            // Text(Preferences.appTitle)
-//                        }
-//                        NavigationLink(destination: PrivacyView()) {
-//                            Text("Privacy")
-//                        }
-//                        
-//                    }
-//                    Section(header: Text("Units")) {
-//                        Picker("Units:", selection: $model.preferences.units) {
-//                            ForEach(TemperatureScale.allCases) { unit in
-//                                Text(unit.rawValue)
-//                            }
-//                        }
-//                        .pickerStyle(SegmentedPickerStyle())
-//                        .onChange(of: model.preferences.units, perform: thePickerHasChanged)
-//                    }
-//                }
+                Form {
+                    Section(header: Text("About")) {
+                        NavigationLink(destination: AboutView()) {
+                            Text(appName)
+                        }
+                        NavigationLink(destination: PrivacyView()) {
+                            Text("Privacy")
+                        }
+                    }
+                    Section(header: Text("Units")) {
+                        Picker("Units:", selection: $model.temperatureScale) {
+                            ForEach(TemperatureScale.allCases) { scale in
+                                Text(scale.rawValue)
+                            }
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .onChange(of: model.temperatureScale) { _ in
+                            hapticSelectionChange()
+                        }
+                    }
+                }
             }
             .navigationTitle("Preferences")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Done"){
+                    Button("Done") {
                         self.presentationMode.wrappedValue.dismiss()
                     }
                 }
