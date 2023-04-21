@@ -16,10 +16,8 @@
  get the url of the data from the site
  
  make Anomalies @Published
- 
  DOn't reload data every time just convert between C and F
- 
- the app name does not match the name of the app
+
  
  
  */

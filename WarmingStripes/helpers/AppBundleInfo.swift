@@ -13,10 +13,9 @@ protocol AppBundleInfo {
 }
 
 
-// Provide a default implementation for the getter using an extension
 extension AppBundleInfo {
     var appName: String {
-        Bundle.main.infoDictionary?["CFBundleName"] as? String ?? ""
+        Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String ?? ""
     }
     var appVersion: String {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0.0"

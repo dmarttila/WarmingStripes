@@ -38,7 +38,7 @@ struct TemperatureAnomaly: Identifiable {
         delta.floorDecimalFormat
     }
     let date: Date
-    let anomaly: Double
+    let anomaly: Double 
     var id = UUID()
     var color: Color {
         if anomaly > 0 {
@@ -63,7 +63,7 @@ class Model: ObservableObject {
         loadData()
     }
     
-    @Published var anomalies: [TemperatureAnomaly] = []
+    var anomalies: [TemperatureAnomaly] = []
     //    HadCRUT.5.0.1.0.analysis.summary_series.global.annual
     private let fileName = "HadCRUT.5.0.1.0.analysis.summary_series.global.annual"
     //"HadCRUT.5.0.1.0.summary_series.global.annual_non_infilled"
