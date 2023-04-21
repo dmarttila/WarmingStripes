@@ -7,7 +7,6 @@
 
 /*TODO:
  
- maybe bar width should be based on chart geo proxy?
  
  Better color range
  
@@ -18,10 +17,9 @@
  
  make Anomalies @Published
  
- Make Binding happen in Preferences
- 
  DOn't reload data every time just convert between C and F
  
+ the app name does not match the name of the app
  
  
  */
@@ -35,7 +33,7 @@ struct ContentView: View, Haptics {
 
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
-            ChartView(model: model)
+            ChartView(viewModel: ChartViewModel(model: model))
             PreferencesButton(showPreferences: $showPreferences)
                 .offset(y: -30)
                 .sheet(isPresented: $showPreferences) {

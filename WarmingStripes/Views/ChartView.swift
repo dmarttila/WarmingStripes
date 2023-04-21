@@ -10,13 +10,6 @@ import SwiftUI
 
 struct ChartView: View, Haptics {
     @ObservedObject var viewModel: ChartViewModel
-//    @ObservedObject var model: Model
-    
-    init (model: Model) {
-        viewModel = ChartViewModel(model: model, chartState: model.$chartState)
-//        self.model = model
-    }
-    
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -26,8 +19,7 @@ struct ChartView: View, Haptics {
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
-//            .onChange(of: viewModel.chartState, perform: viewModel.handleChartStateChange)
-            
+    
             if viewModel.chartState == .labelledStripes {
                 Text(viewModel.titleText)
                     .font(.title2)
@@ -84,7 +76,7 @@ struct ChartView: View, Haptics {
                                 .padding(5)
                             }
                             if viewModel.isBarsWithScale || viewModel.chartState == .labelledStripes {
-                                // create an area under the chart to draw the x-axis
+                                // create an area under the chart to draw the x-axis that displays years
                                 let axisYLoc = proxyGeo.size.height - 20
                                 if viewModel.chartState == .labelledStripes {
                                     Rectangle()
@@ -92,6 +84,7 @@ struct ChartView: View, Haptics {
                                         .frame(width: geo.size.width + 2, height: 50)
                                         .offset(x: -1, y: axisYLoc - 5)
                                 }
+                                //the years
                                 ForEach(viewModel.xAxisYears, id: \.self) { year in
                                     let textFrameWidth: CGFloat = 300
                                     let axisXloc = viewModel.getYearXLoc(year: year, proxy: proxy, geo: proxyGeo)
@@ -101,6 +94,7 @@ struct ChartView: View, Haptics {
                                         .frame(width: textFrameWidth)
                                         .offset(x: axisXloc - textFrameWidth/2, y: axisYLoc)
                                     if viewModel.isBarsWithScale {
+                                        //draw the tic marks above the years
                                         Rectangle()
                                             .fill(.white)
                                             .frame(width: 1, height: 5)
@@ -116,7 +110,7 @@ struct ChartView: View, Haptics {
                     // hide/show the Y axes
                     .chartYAxis(viewModel.isBarsWithScale ? .visible : .hidden)
                     .chartYAxis {
-                        AxisMarks(position: .leading, values: viewModel.yAxisValues) {value in
+                        AxisMarks(position: .leading, values: viewModel.yAxisValues) { value in
                             if let doubleValue = value.as(Double.self) {
                                 AxisValueLabel {
                                     Text(doubleValue.decimalFormat)

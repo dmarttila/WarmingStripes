@@ -8,39 +8,27 @@
 import Charts
 import SwiftUI
 
-class ChartViewModel: ObservableObject {
-    private let model: Model
-    
-    @Binding var chartState: ChartState
-    
-    /*
-     init(isOn: Binding<Bool>) {
-             _isOn = isOn
-         }
-
-     */
-    
-    init (model: Model, chartState: Binding<ChartState>) {
-        self.model = model
-//        chartState = model.chartState
-        yearFormatter.dateFormat = "yyyy"
-        _chartState = chartState
+class ChartViewModel: ObservableObject, Haptics {
+    @ObservedObject var model: Model
+    @Binding var chartState: ChartState {
+        didSet {
+            hapticSelectionChange()
+        }
     }
-    
+
+    init (model: Model) {
+        self.model = model
+        _chartState = model.$chartState
+        yearFormatter.dateFormat = "yyyy"
+    }
+
     func getYValue (_ year: TemperatureAnomaly) -> Double {
         chartState == .stripes || chartState == .labelledStripes ? 
         TemperatureAnomaly.maxAnomaly : year.anomaly
     }
-    
     var anomalies: [TemperatureAnomaly] {
         model.anomalies
     }
-    
-//    @Published var chartState: ChartState = .bars
-    
-//    var chartState: ChartState {
-//        model.chartState
-//    }
     var isBarsWithScale: Bool {
         chartState == .barsWithScale
     }
@@ -50,7 +38,6 @@ class ChartViewModel: ObservableObject {
     var displayInCelsius: Bool {
         return model.temperatureScale == .celsius
     }
-    
     let yearFormatter = DateFormatter()
     
     func getYear (from date: Date) -> String {
@@ -106,11 +93,4 @@ class ChartViewModel: ObservableObject {
         let xAxisDisplayWidth = geo[proxy.plotAreaFrame].origin.x
         return datePosition + xAxisDisplayWidth
     }
-    
-    func handleChartStateChange(value: ChartState) {
-//        hapticSelectionChange()
-//        chartState = value
-//        model.chartState = value
-    }
-    
 }
