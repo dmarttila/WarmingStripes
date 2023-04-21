@@ -7,7 +7,6 @@
 
 /*TODO:
  
- 
  Better color range
  
  I'm using the wrong csv
@@ -22,7 +21,6 @@
  
  */
 
-import Charts
 import SwiftUI
 
 struct ContentView: View, Haptics {

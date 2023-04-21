@@ -12,7 +12,6 @@ protocol AppBundleInfo {
     var appVersion: String { get }
 }
 
-
 extension AppBundleInfo {
     var appName: String {
         Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String ?? ""

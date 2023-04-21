@@ -9,7 +9,6 @@ import SwiftUI
 
 struct PreferencesView: View, Haptics, AppBundleInfo {
     @Environment(\.presentationMode) var presentationMode
-    
     @EnvironmentObject var model: Model
 
     var body: some View {

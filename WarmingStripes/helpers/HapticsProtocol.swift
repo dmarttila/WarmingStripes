@@ -1,6 +1,5 @@
 //
-//  HapticsProtocol.swift
-//  HapticTests
+//  Haptics.swift
 //
 //  Created by Doug Marttila on 9/20/21.
 //
@@ -8,15 +7,11 @@
 
 import UIKit
 
-//All the standard iOS haptics: https://developer.apple.com/documentation/uikit/uifeedbackgenerator
-//iOS provides the following standard iOS haptics
-//    error, success, warning, impactLight, impactMedium, impactHeavy, impactRigid, impactSoft, selectionChange
-
 protocol Haptics {
-    func hapticError() -> Void
-    func hapticSelectionChange() -> Void
-    func hapticTap() -> Void
-    func hapticSave() -> Void
+    func hapticError() 
+    func hapticSelectionChange() 
+    func hapticTap() 
+    func hapticSave()
 }
 extension Haptics {
     func hapticTap() {
@@ -27,15 +22,14 @@ extension Haptics {
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.success)
     }
-    
+
     func hapticError() {
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.error)
     }
-    
+
     func hapticSelectionChange() {
         let generator = UISelectionFeedbackGenerator()
         generator.selectionChanged()
     }
 }
-

@@ -5,7 +5,6 @@
 //  Created by Doug Marttila on 8/30/22.
 //
 
-import Foundation
 import SwiftUI
 
 public extension Double {
@@ -43,16 +42,6 @@ public extension Date {
         components.day = day
         components.year = year
         self = Calendar.current.date(from: components)!
-    }
-    
-    func getCopyright(startYear: Int) -> String {
-        let str = "© "
-        let year = Calendar.current.component(.year, from: Date())
-        if startYear >= year {
-            return str + String(year)
-        } else {
-            return str + String(startYear) + " - " + String(year)
-        }
     }
 }
 
