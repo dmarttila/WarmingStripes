@@ -22,8 +22,6 @@
  
  DOn't reload data every time just convert between C and F
  
- change units to temperature scale everywhere
- 
  
  
  */

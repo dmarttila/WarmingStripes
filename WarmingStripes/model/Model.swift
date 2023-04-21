@@ -53,7 +53,7 @@ struct TemperatureAnomaly: Identifiable {
 
 class Model: ObservableObject {
     @AppStorage("chartState") var chartState: ChartState = .stripes
-    @AppStorage("units") var temperatureScale: TemperatureScale = .celsius {
+    @AppStorage("temperatureScale") var temperatureScale: TemperatureScale = .celsius {
         didSet {
             loadData()
         }

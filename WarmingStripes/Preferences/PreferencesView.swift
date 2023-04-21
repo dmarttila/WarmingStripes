@@ -24,8 +24,8 @@ struct PreferencesView: View, Haptics, AppBundleInfo {
                             Text("Privacy")
                         }
                     }
-                    Section(header: Text("Units")) {
-                        Picker("Units:", selection: $model.temperatureScale) {
+                    Section(header: Text("Temperature Scale")) {
+                        Picker("Temperature Scale:", selection: $model.temperatureScale) {
                             ForEach(TemperatureScale.allCases) { scale in
                                 Text(scale.rawValue)
                             }
