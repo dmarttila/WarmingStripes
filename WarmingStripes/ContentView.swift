@@ -17,7 +17,9 @@
  make Anomalies @Published
  DOn't reload data every time just convert between C and F
 
+ make chart view model and chart lineup next to eachother
  
+ check imports everywhere
  
  */
 
