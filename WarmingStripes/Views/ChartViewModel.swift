@@ -22,9 +22,9 @@ class ChartViewModel: ObservableObject, Haptics {
         yearFormatter.dateFormat = "yyyy"
     }
 
-    func getYValue (_ year: TemperatureAnomaly) -> Double {
+    func getYValue (_ anomaly: TemperatureAnomaly) -> Double {
         chartState == .stripes || chartState == .labelledStripes ? 
-        TemperatureAnomaly.maxAnomaly : year.anomaly
+        model.maxAnomaly : anomaly.anomaly
     }
     var anomalies: [TemperatureAnomaly] {
         model.anomalies
@@ -32,9 +32,24 @@ class ChartViewModel: ObservableObject, Haptics {
     var isBarsWithScale: Bool {
         chartState == .barsWithScale
     }
-    var axisMinimum: Double {
-        chartState == .stripes || chartState == .labelledStripes ? 0 : TemperatureAnomaly.maxAnomaly * -1
+    var yAxisMinimum: Double {
+        chartState == .stripes || chartState == .labelledStripes ? 0 : model.maxAnomaly * -1
     }
+    
+    var yAxisMaximum: Double  {
+        model.maxAnomaly
+    }
+    
+    func getBarColor (_ temperaturAnomaly: TemperatureAnomaly) -> Color {
+        let anomaly = temperaturAnomaly.anomaly
+        if anomaly > 0 {
+            let val = 1 - anomaly/model.maxAnomaly
+            return Color(red: 1, green: val, blue: val)
+        }
+        let val = 1 - anomaly/model.minAnomaly
+        return Color(red: val, green: val, blue: 1)
+    }
+    
     var displayInCelsius: Bool {
         return model.temperatureScale == .celsius
     }
@@ -61,7 +76,7 @@ class ChartViewModel: ObservableObject, Haptics {
         case .labelledStripes:
             return "Global temperature change(1850-2021)"
         case .bars:
-            return "Global temperature have increased by over \(TemperatureAnomaly.changedMoreThan)\(model.temperatureScale.abbreviation)"
+            return "Global temperature have increased by over \(model.changedMoreThan)\(model.temperatureScale.abbreviation)"
         case .barsWithScale:
             return "Global temperature change"
         }

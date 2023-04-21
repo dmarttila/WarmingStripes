@@ -29,27 +29,10 @@ public enum TemperatureScale: String, CaseIterable, Identifiable, Codable {
 }
 
 struct TemperatureAnomaly: Identifiable {
-    static var maxAnomaly: Double = 0
-    static var minAnomaly: Double = 0
-    static var delta: Double {
-        maxAnomaly - minAnomaly
-    }
-    static var changedMoreThan: String {
-        delta.floorDecimalFormat
-    }
     let date: Date
     let anomaly: Double 
     var id = UUID()
-    var color: Color {
-        if anomaly > 0 {
-            let val = 1 - anomaly/TemperatureAnomaly.maxAnomaly
-            return Color(red: 1, green: val, blue: val)
-        }
-        let val = 1 - anomaly/TemperatureAnomaly.minAnomaly
-        return Color(red: val, green: val, blue: 1)
-    }
 }
-
 
 class Model: ObservableObject {
     @AppStorage("chartState") var chartState: ChartState = .stripes
@@ -63,6 +46,15 @@ class Model: ObservableObject {
         loadData()
     }
     
+    @Published var maxAnomaly: Double = 0
+    @Published var minAnomaly: Double = 0
+    var delta: Double {
+        maxAnomaly - minAnomaly
+    }
+    var changedMoreThan: String {
+        delta.floorDecimalFormat
+    }
+    
     var anomalies: [TemperatureAnomaly] = []
     //    HadCRUT.5.0.1.0.analysis.summary_series.global.annual
     private let fileName = "HadCRUT.5.0.1.0.analysis.summary_series.global.annual"
@@ -70,8 +62,8 @@ class Model: ObservableObject {
     
     private func loadData() {
         var anomalies: [TemperatureAnomaly] = []
-        TemperatureAnomaly.minAnomaly = 0
-        TemperatureAnomaly.maxAnomaly = 0
+        minAnomaly = 0
+        maxAnomaly = 0
         if let filepath = Bundle.main.path(forResource: fileName, ofType: "csv") {
             do {
                 let contents = try String(contentsOfFile: filepath)
@@ -84,8 +76,8 @@ class Model: ObservableObject {
                         }
                         let date = Date(year: year, month: 1, day: 1)
                         anomalies.append(TemperatureAnomaly(date: date, anomaly: tempDiff))
-                        TemperatureAnomaly.minAnomaly = min(TemperatureAnomaly.minAnomaly, tempDiff)
-                        TemperatureAnomaly.maxAnomaly = max(TemperatureAnomaly.maxAnomaly, tempDiff)
+                        minAnomaly = min(minAnomaly, tempDiff)
+                        maxAnomaly = max(maxAnomaly, tempDiff)
                     }
                 }
             } catch {

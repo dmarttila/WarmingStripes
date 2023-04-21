@@ -29,13 +29,13 @@ struct ChartView: View, Haptics {
                     Text(viewModel.getYear(from: viewModel.startDate))
                 }
                 GeometryReader { geo in
-                    Chart(viewModel.anomalies) { year in
+                    Chart(viewModel.anomalies) { anomaly in
                         BarMark(
-                            x: .value("Date", year.date, unit: .year),
-                            y: .value("Anomaly", viewModel.getYValue(year)),
+                            x: .value("Date", anomaly.date, unit: .year),
+                            y: .value("Anomaly", viewModel.getYValue(anomaly)),
                             width: viewModel.getBarWidth(geo.size.width)
                         )
-                        .foregroundStyle(year.color)
+                        .foregroundStyle(viewModel.getBarColor(anomaly))
                         // without corner radius == 0, looks like a picket fence
                         .cornerRadius(0)
                         
@@ -46,7 +46,7 @@ struct ChartView: View, Haptics {
                             RuleMark(
                                 xStart: .value("start date", viewModel.startDate),
                                 xEnd: .value("end date", viewModel.endDate),
-                                y: .value("x axis", viewModel.axisMinimum)
+                                y: .value("x axis", viewModel.yAxisMinimum)
                             )
                             .foregroundStyle(.white)
                             .lineStyle(StrokeStyle(lineWidth: 1))
@@ -84,7 +84,7 @@ struct ChartView: View, Haptics {
                                         .frame(width: geo.size.width + 2, height: 50)
                                         .offset(x: -1, y: axisYLoc - 5)
                                 }
-                                //the years
+                                // the years
                                 ForEach(viewModel.xAxisYears, id: \.self) { year in
                                     let textFrameWidth: CGFloat = 300
                                     let axisXloc = viewModel.getYearXLoc(year: year, proxy: proxy, geo: proxyGeo)
@@ -94,7 +94,7 @@ struct ChartView: View, Haptics {
                                         .frame(width: textFrameWidth)
                                         .offset(x: axisXloc - textFrameWidth/2, y: axisYLoc)
                                     if viewModel.isBarsWithScale {
-                                        //draw the tic marks above the years
+                                        // draw the tic marks above the years
                                         Rectangle()
                                             .fill(.white)
                                             .frame(width: 1, height: 5)
@@ -104,7 +104,7 @@ struct ChartView: View, Haptics {
                             }
                         }
                     }
-                    .chartYScale(domain: viewModel.axisMinimum...TemperatureAnomaly.maxAnomaly)
+                    .chartYScale(domain: viewModel.yAxisMinimum...viewModel.yAxisMaximum)
                     // xAxis is drawn above, so it's always hidden
                     .chartXAxis(.hidden)
                     // hide/show the Y axes
