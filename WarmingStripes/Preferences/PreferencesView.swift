@@ -12,10 +12,10 @@ struct PreferencesView: View, Haptics, AppBundleInfo {
     
     @EnvironmentObject var model: Model
     
-    func thePickerHasChanged(value: TemperatureUnit) {
+    func thePickerHasChanged(value: TemperatureScale) {
         hapticSelectionChange()
         //TODO: Make this bindable
-        model.preferences.units = value
+        model.temperatureScale = value
     }
     
     
@@ -23,27 +23,27 @@ struct PreferencesView: View, Haptics, AppBundleInfo {
     var body: some View {
         NavigationView {
             VStack {
-                Form {
-                    Section(header: Text("About")) {
-                        NavigationLink(destination: AboutView()) {
-                            Text(appName)
-                            // Text(Preferences.appTitle)
-                        }
-                        NavigationLink(destination: PrivacyView()) {
-                            Text("Privacy")
-                        }
-                        
-                    }
-                    Section(header: Text("Units")) {
-                        Picker("Units:", selection: $model.preferences.units) {
-                            ForEach(TemperatureUnit.allCases) { unit in
-                                Text(unit.rawValue)
-                            }
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
-                        .onChange(of: model.preferences.units, perform: thePickerHasChanged)
-                    }
-                }
+//                Form {
+//                    Section(header: Text("About")) {
+//                        NavigationLink(destination: AboutView()) {
+//                            Text(appName)
+//                            // Text(Preferences.appTitle)
+//                        }
+//                        NavigationLink(destination: PrivacyView()) {
+//                            Text("Privacy")
+//                        }
+//                        
+//                    }
+//                    Section(header: Text("Units")) {
+//                        Picker("Units:", selection: $model.preferences.units) {
+//                            ForEach(TemperatureScale.allCases) { unit in
+//                                Text(unit.rawValue)
+//                            }
+//                        }
+//                        .pickerStyle(SegmentedPickerStyle())
+//                        .onChange(of: model.preferences.units, perform: thePickerHasChanged)
+//                    }
+//                }
             }
             .navigationTitle("Preferences")
             .toolbar {

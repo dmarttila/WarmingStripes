@@ -14,8 +14,6 @@
  I'm using the wrong csv
  how did 1.2 become the raise in temps?
  
- cahnge copyright to MIT and whatever warming stripes is
- 
  get the url of the data from the site
  
  make Anomalies @Published
@@ -24,7 +22,6 @@
  
  DOn't reload data every time just convert between C and F
  
- AppStorage!
  */
 
 import Charts

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 public class Preferences: ObservableObject {
-    @AppStorage("units") var units: TemperatureUnit = .celsius
+//    @AppStorage("units") var units: TemperatureUnit = .celsius
 //    var chartState: ChartState = .stripes
 //    @AppStorage("chartState") var chartState: ChartState = .stripes
 //    static var appTitle = "Warming Stripes"
@@ -26,10 +26,10 @@ public enum ChartState: String, CaseIterable, Identifiable, Codable {
     public var id: ChartState { self }
 }
 
-public enum TemperatureUnit: String, CaseIterable, Identifiable, Codable {
+public enum TemperatureScale: String, CaseIterable, Identifiable, Codable {
     case celsius = "Celsius"
     case fahrenheit = "Fahrenheit"
-    public var id: TemperatureUnit { self }
+    public var id: TemperatureScale { self }
     public var abbreviation: String {
         self == .celsius ? "°C" : "°F"
     }
@@ -151,6 +151,8 @@ class Model: ObservableObject {
     
     @AppStorage("chartState") var chartState: ChartState = .stripes
     
+    @AppStorage("units") var temperatureScale: TemperatureScale = .celsius
+    
     
     
 //    @AppStorage("chartState") var chartState: ChartState = .stripes
@@ -199,8 +201,8 @@ class Model: ObservableObject {
                 for datum in data {
                     let values = datum.components(separatedBy: ",")
                     if let year = Int(values[0]), var tempDiff = Double(values[1]) {
-                        if preferences.units == .fahrenheit {
-                            tempDiff = TemperatureUnit.cToF(tempDiff)
+                        if temperatureScale == .fahrenheit {
+                            tempDiff = TemperatureScale.cToF(tempDiff)
                         }
                         let date = Date(year: year, month: 1, day: 1)
                         anomalies.append(TemperatureAnomaly(date: date, anomaly: tempDiff))

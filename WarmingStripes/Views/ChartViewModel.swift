@@ -47,8 +47,8 @@ class ChartViewModel: ObservableObject {
     var axisMinimum: Double {
         chartState == .stripes || chartState == .labelledStripes ? 0 : TemperatureAnomaly.maxAnomaly * -1
     }
-    var displayInCelcius: Bool {
-        return model.preferences.units == .celsius
+    var displayInCelsius: Bool {
+        return model.temperatureScale == .celsius
     }
     
     let yearFormatter = DateFormatter()
@@ -74,21 +74,21 @@ class ChartViewModel: ObservableObject {
         case .labelledStripes:
             return "Global temperature change(1850-2021)"
         case .bars:
-            return "Global temperature have increased by over \(TemperatureAnomaly.changedMoreThan)\(model.preferences.units.abbreviation)"
+            return "Global temperature have increased by over \(TemperatureAnomaly.changedMoreThan)\(model.temperatureScale.abbreviation)"
         case .barsWithScale:
             return "Global temperature change"
         }
     }
     
     var subTitleText: String {
-        isBarsWithScale ? "Relative to average of 1971-2000 [°\(displayInCelcius ? "C" : "F")]" : ""
+        isBarsWithScale ? "Relative to average of 1971-2000 [°\(displayInCelsius ? "C" : "F")]" : ""
     }
     
     let startDate = Date(year: 1850, month: 1, day: 1)
     let endDate = Date(year: 2021, month: 1, day: 1)
     
     var yAxisMinMax: Double {
-        displayInCelcius ? 0.6 : 1
+        displayInCelsius ? 0.6 : 1
     }
     
     func symetricalAxisValues (minMax: Double, by strideBy: Double) -> [Double] {
@@ -96,7 +96,7 @@ class ChartViewModel: ObservableObject {
     }
     
     var yAxisValues: [Double] {
-        symetricalAxisValues(minMax: yAxisMinMax, by: displayInCelcius ? 0.3 : 0.5)
+        symetricalAxisValues(minMax: yAxisMinMax, by: displayInCelsius ? 0.3 : 0.5)
     }
     
     //this calculation works, but it feels like there's a better way to do this. However, ChartProxy documention is a bit light so far
