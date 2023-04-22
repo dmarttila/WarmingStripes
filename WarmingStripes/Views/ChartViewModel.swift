@@ -21,19 +21,39 @@ class ChartViewModel: ObservableObject, Haptics {
         _chartState = model.$chartState
         yearFormatter.dateFormat = "yyyy"
     }
+    
+    // years that draw to the right and left of the chart for bars state
+    private let yearFormatter = DateFormatter()
+    private func getYear (from date: Date) -> String {
+        yearFormatter.string(from: date)
+    }
+    var startYear: String {
+        getYear(from: startDate)
+    }
+    var endYear: String {
+        getYear(from: endDate)
+    }
 
+    var anomalies: [TemperatureAnomaly] {
+        model.anomalies
+    }
     func getYValue (_ anomaly: TemperatureAnomaly) -> Double {
         chartState == .stripes || chartState == .labelledStripes ? 
         model.maxAnomaly : anomaly.anomaly
-    }
-    var anomalies: [TemperatureAnomaly] {
-        model.anomalies
     }
     var isBarsWithScale: Bool {
         chartState == .barsWithScale
     }
     var yAxisMinimum: Double {
         chartState == .stripes || chartState == .labelledStripes ? 0 : model.maxAnomaly * -1
+    }
+    
+    var drawXAxis: Bool {
+        isBarsWithScale || chartState == .labelledStripes
+    }
+    
+    var yAxisVisible: Visibility {
+        isBarsWithScale ? .visible : .hidden
     }
     
     var yAxisMaximum: Double  {
@@ -53,11 +73,7 @@ class ChartViewModel: ObservableObject, Haptics {
     var displayInCelsius: Bool {
         return model.temperatureScale == .celsius
     }
-    let yearFormatter = DateFormatter()
-    
-    func getYear (from date: Date) -> String {
-        yearFormatter.string(from: date)
-    }
+
     
     // there is a small space between the bars by default. This fixes that
     func getBarWidth(_ width: CGFloat) -> MarkDimension {

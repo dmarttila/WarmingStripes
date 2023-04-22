@@ -21,6 +21,8 @@
  
  check imports everywhere
  
+ cleanup magic numbers in chart view
+ 
  */
 
 import SwiftUI

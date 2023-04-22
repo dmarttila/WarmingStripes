@@ -10,7 +10,6 @@ import SwiftUI
 
 struct ChartView: View, Haptics {
     @ObservedObject var viewModel: ChartViewModel
-    
     var body: some View {
         VStack(alignment: .leading) {
             Picker("Chart state:", selection: $viewModel.chartState) {
@@ -19,14 +18,15 @@ struct ChartView: View, Haptics {
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
-    
+            // Title for Labeled Stripes
             if viewModel.chartState == .labelledStripes {
                 Text(viewModel.titleText)
                     .font(.title2)
             }
             HStack {
+                // if bars state draw the year to the left of the chart
                 if viewModel.chartState == .bars {
-                    Text(viewModel.getYear(from: viewModel.startDate))
+                    Text(viewModel.startYear)
                 }
                 GeometryReader { geo in
                     Chart(viewModel.anomalies) { anomaly in
@@ -38,11 +38,10 @@ struct ChartView: View, Haptics {
                         .foregroundStyle(viewModel.getBarColor(anomaly))
                         // without corner radius == 0, looks like a picket fence
                         .cornerRadius(0)
-                        
-                        // you can't style the chart axes to replicate the warming stripes axes, so draw them
+                        // you can't style the chart axes to replicate the warming stripes axes, so there's a lot of custom drawing
                         if viewModel.isBarsWithScale {
                             // Draw the lines that frame the chart
-                            //x-axis line
+                            // x-axis line
                             RuleMark(
                                 xStart: .value("start date", viewModel.startDate),
                                 xEnd: .value("end date", viewModel.endDate),
@@ -51,20 +50,20 @@ struct ChartView: View, Haptics {
                             .foregroundStyle(.white)
                             .lineStyle(StrokeStyle(lineWidth: 1))
                             .offset(y: -25)
-                            //y-axis line
+                            // y-axis line
                             RuleMark(
                                 x: .value("y axis", viewModel.startDate),
-                                yStart: .value("lowest temperature", viewModel.yAxisMinMax * -1),
-                                yEnd: .value("highest temperature", viewModel.yAxisMinMax)
+                                yStart: .value("lowest temperature anomaly", viewModel.yAxisMinMax * -1),
+                                yEnd: .value("highest temperature anomaly", viewModel.yAxisMinMax)
                             )
                             .foregroundStyle(.white)
                             .lineStyle(StrokeStyle(lineWidth: 1))
                         }
                     }
-                    // x-axis 
-                    .chartOverlay { proxy in
-                        GeometryReader { proxyGeo in
-                            if viewModel.isBarsWithScale || viewModel.chartState == .bars {
+                    // Draws the chart title for bars-with-scale and bars states
+                    .chartOverlay { chartProxy in
+                        if viewModel.isBarsWithScale || viewModel.chartState == .bars {
+                            GeometryReader { geoProxy in
                                 VStack(alignment: .leading) {
                                     Text(viewModel.titleText)
                                         .font(.title2)
@@ -72,13 +71,18 @@ struct ChartView: View, Haptics {
                                         .font(.subheadline)
                                 }
                                 // aligns the title with the yAxis
-                                .offset(x: proxyGeo[proxy.plotAreaFrame].origin.x)
+                                .offset(x: geoProxy[chartProxy.plotAreaFrame].origin.x)
                                 .padding(5)
                             }
-                            if viewModel.isBarsWithScale || viewModel.chartState == .labelledStripes {
-                                // create an area under the chart to draw the x-axis that displays years
-                                let axisYLoc = proxyGeo.size.height - 20
+                        }
+                    }
+                    // x-axis 
+                    .chartOverlay { chartProxy in
+                        if viewModel.drawXAxis {
+                            GeometryReader { geoProxy in
+                                let axisYLoc = geoProxy.size.height - 20
                                 if viewModel.chartState == .labelledStripes {
+                                    // draw a black rectangle on top of the bottom on the chart to draw the x-axis on. 
                                     Rectangle()
                                         .fill(.black)
                                         .frame(width: geo.size.width + 2, height: 50)
@@ -87,7 +91,7 @@ struct ChartView: View, Haptics {
                                 // the years
                                 ForEach(viewModel.xAxisYears, id: \.self) { year in
                                     let textFrameWidth: CGFloat = 300
-                                    let axisXloc = viewModel.getYearXLoc(year: year, proxy: proxy, geo: proxyGeo)
+                                    let axisXloc = viewModel.getYearXLoc(year: year, proxy: chartProxy, geo: geoProxy)
                                     Text(String(year))
                                         .font(.caption)
                                         .foregroundColor(.white)
@@ -108,7 +112,7 @@ struct ChartView: View, Haptics {
                     // xAxis is drawn above, so it's always hidden
                     .chartXAxis(.hidden)
                     // hide/show the Y axes
-                    .chartYAxis(viewModel.isBarsWithScale ? .visible : .hidden)
+                    .chartYAxis(viewModel.yAxisVisible)
                     .chartYAxis {
                         AxisMarks(position: .leading, values: viewModel.yAxisValues) { value in
                             if let doubleValue = value.as(Double.self) {
@@ -123,8 +127,9 @@ struct ChartView: View, Haptics {
                         }
                     }
                 }
+                // year at the right side of the chart for bars state
                 if viewModel.chartState == .bars {
-                    Text(viewModel.getYear(from: viewModel.endDate))
+                    Text(viewModel.endYear)
                 }
             }
         }
