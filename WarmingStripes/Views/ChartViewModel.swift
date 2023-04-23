@@ -66,6 +66,28 @@ class ChartViewModel: ObservableObject, Haptics {
     func getBarColor (_ temperaturAnomaly: TemperatureAnomaly) -> Color {
         let anomaly = temperaturAnomaly.anomaly
         if anomaly > 0 {
+            let color: UIColor = .red// UIColor(Color(hex: 0x67090D))
+            //0 is black 1 is white
+            var val = 1 - anomaly/model.maxAnomaly
+            val *= 0.85
+            val += 0.15
+            let lumin = color.withLuminosity(val)
+            return Color(lumin)
+        }
+        var color: UIColor = UIColor(Color(hex: 0x0A2F6B))
+        color = UIColor(Color(hex: 0x0A2F5C))
+
+        //0 is black 1 is white
+        var val = 1 - (anomaly)/model.minAnomaly
+        val *= 0.85
+        val += 0.15
+        let lumin = color.withLuminosity(val)
+        return Color(lumin)
+    }
+
+    func getBarColor2 (_ temperaturAnomaly: TemperatureAnomaly) -> Color {
+        let anomaly = temperaturAnomaly.anomaly
+        if anomaly > 0 {
             let val = 1 - anomaly/model.maxAnomaly
             return Color(red: 1, green: val, blue: val)
         }
