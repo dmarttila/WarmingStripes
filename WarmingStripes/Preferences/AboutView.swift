@@ -12,7 +12,7 @@ struct AboutAppQA {
     let qas = [
         QuestionAnswer(
             question: "What does the app do?",
-            answer: "Shows how global temperatures have risen over the last 70 years."
+            answer: "Shows the rise in global temperatures over the last 172 years."
         ),
 
         QuestionAnswer(
@@ -21,20 +21,35 @@ struct AboutAppQA {
         ),
         QuestionAnswer(
             question: "So you just stole his idea?",
-            answer: 
+            answer:
             """
-            Pretty much. But, hey, I added Fahrenheit! 
-            Plus the app's free, I gave credit, and [all the code is open source](https://github.com/dmarttila/WarmingStripes).
+            Pretty much. But, hey, I added Fahrenheit!
+            Plus the app's free, I gave credit, and [the code's open source](https://github.com/dmarttila/WarmingStripes).
             You can support Ed Hawkins's environemntal work [here](https://showyourstripes.info/support).
             """
         ),
         QuestionAnswer(
             question: "Where is the data from?",
-            answer: 
+            answer:
             """
             HadCRUT.5 data were obtained from [the Met Office Hadley Centre observations datasets]( http://www.metoffice.gov.uk/hadobs/hadcrut5) on August 14, 2022 and are © British Crown Copyright,
             Met Office 2022, provided under an [Open Government License](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/).
             """
+        ),
+        QuestionAnswer(
+            question: "Why doesn't the chart exacly match the website?",
+            answer:
+            """
+            I don't know. I followed the link to the data from Warming Stripes. Maybe Ed Hawkins knows. I should try to contact him.
+            """
+        ),
+        QuestionAnswer(
+            question: "The colors don't exactly match either.",
+            answer: "Noted."
+        ),
+        QuestionAnswer(
+            question: "Why didn't you name the app, Warming Stripes?",
+            answer: "It wasn't available."
         ),
         QuestionAnswer(
             question: "Do you have other apps?",

@@ -41,7 +41,6 @@ public extension Date {
         components.month = month
         components.day = day
         components.year = year
-        self = Calendar.current.date(from: components)!
+        self = Calendar.current.date(from: components) ?? Date()
     }
 }
-

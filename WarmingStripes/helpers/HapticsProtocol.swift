@@ -8,9 +8,9 @@
 import UIKit
 
 protocol Haptics {
-    func hapticError() 
-    func hapticSelectionChange() 
-    func hapticTap() 
+    func hapticError()
+    func hapticSelectionChange()
+    func hapticTap()
     func hapticSave()
 }
 extension Haptics {

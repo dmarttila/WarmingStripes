@@ -26,7 +26,7 @@ protocol DeviceSize {
 }
 
 extension DeviceSize {
-    //true for SE and iPhone 8
+    // true for SE and iPhone 8
     var isSmallDevice: Bool {
         let screenSize = max(UIScreen.main.bounds.height, UIScreen.main.bounds.width)
         return screenSize <= 667

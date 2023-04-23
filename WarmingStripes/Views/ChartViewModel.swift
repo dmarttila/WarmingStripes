@@ -15,7 +15,6 @@ class ChartViewModel: ObservableObject, Haptics {
             hapticSelectionChange()
         }
     }
-
     init (model: Model) {
         self.model = model
         _chartState = model.$chartState
@@ -31,7 +30,7 @@ class ChartViewModel: ObservableObject, Haptics {
         case .stripes:
             return ""
         case .labelledStripes:
-            return "Global temperature change(1850-2021)"
+            return "Global temperature change(\(startYear) - \(endYear))"
         case .bars:
             // Can't calculate global temp differences from data, so hard code
             return "Global temperature have increased by over \(displayInCelsius ? 1.2 : 2.2)\(model.temperatureScale.abbreviation)"
@@ -100,7 +99,7 @@ class ChartViewModel: ObservableObject, Haptics {
         Array(stride(from: minMax * -1, through: minMax, by: strideBy))
     }
 
-    // draw the x-axis. Swift Charts doesn't styling to match Warming Stripes. So drawing as a chartOverlay
+    // draw the x-axis. Swift Charts can't style to match Warming Stripes. So draw as a chartOverlay
     var drawXAxis: Bool {
         isBarsWithScale || chartState == .labelledStripes
     }
@@ -141,7 +140,6 @@ class ChartViewModel: ObservableObject, Haptics {
     private var isBarsWithScale: Bool {
         chartState == .barsWithScale
     }
-
     private var displayInCelsius: Bool {
         return model.temperatureScale == .celsius
     }

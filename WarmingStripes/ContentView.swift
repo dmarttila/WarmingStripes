@@ -9,8 +9,6 @@
  
  view that is simple charts in Swift
 
- move the preferences button based on the chart state
-
  the data set doesn't match
  
  Later
@@ -25,12 +23,12 @@ import UIKit
 struct ContentView: View, DeviceSize {
     @EnvironmentObject var model: Model
     @State private var showPreferences = false
-    
+
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             ChartView(viewModel: ChartViewModel(model: model))
             PreferencesButton(showPreferences: $showPreferences)
-                .offset(y: -30)
+                .offset(x: -10, y: -40)
                 .sheet(isPresented: $showPreferences) {
                     PreferencesView()
                 }
