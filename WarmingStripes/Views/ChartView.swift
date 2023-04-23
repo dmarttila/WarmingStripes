@@ -37,7 +37,8 @@ struct ChartView: View, Haptics {
                         .foregroundStyle(viewModel.getBarColor(anomaly))
                         // without corner radius == 0, looks like a picket fence
                         .cornerRadius(0)
-                        // you can't style the chart axes to replicate the warming stripes axes, so there's a lot of custom drawing.
+                        // you can't style the chart axes to replicate the warming stripes axes
+                        // so there's a lot of custom drawing.
                         if viewModel.drawChartFrame {
                             // x-axis line
                             RuleMark(
@@ -47,7 +48,6 @@ struct ChartView: View, Haptics {
                             )
                             .foregroundStyle(.white)
                             .lineStyle(StrokeStyle(lineWidth: viewModel.axisLineWidth))
-                            .offset(y: viewModel.xAxisHeight * -1)
                             // y-axis line
                             RuleMark(
                                 x: .value("y axis", viewModel.startDate),
@@ -81,11 +81,6 @@ struct ChartView: View, Haptics {
                         if viewModel.drawXAxis {
                             GeometryReader { geoProxy in
                                 let axisYLoc = viewModel.getXAxisYLoc(chartProxy: chartProxy, geoProxy: geoProxy)
-                                // draw a black rectangle on top of the bottom on the chart to draw the x-axis on. Only matters for labeled stripes
-                                Rectangle()
-                                    .fill(.black)
-                                    .frame(width: geoProxy.size.width + 2, height: viewModel.xAxisHeight)
-                                    .offset(x: -1, y: axisYLoc)
                                 // the years
                                 ForEach(viewModel.xAxisYears, id: \.self) { year in
                                     let yearXloc = viewModel.getXLoc(
@@ -129,6 +124,9 @@ struct ChartView: View, Haptics {
                     Text(viewModel.endYear)
                 }
             }
+            // if the xAxis is drawn, create space for it
+            Spacer()
+                .frame(height: viewModel.spaceForXAxis)
         }
     }
 }

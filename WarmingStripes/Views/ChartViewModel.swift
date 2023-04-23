@@ -22,6 +22,7 @@ class ChartViewModel: ObservableObject, Haptics {
         yearFormatter.dateFormat = "yyyy"
     }
 
+    // Chart title
     var drawTitleAboveChart: Bool {
         chartState == .labelledStripes
     }
@@ -49,7 +50,7 @@ class ChartViewModel: ObservableObject, Haptics {
     }
     private let yearFormatter = DateFormatter()
 
-    // data for the chart
+    // chart data
     var anomalies: [TemperatureAnomaly] {
         model.anomalies
     }
@@ -81,18 +82,17 @@ class ChartViewModel: ObservableObject, Haptics {
         chartState == .stripes || chartState == .labelledStripes ? 0 : model.maxAnomaly * -1
     }
     let axisLineWidth: Double = 1
-    //TODO: this shifts the drawn x-axis up into the chart space. It works because the data doesn't fill the sapce. It should eventually be removed
-    let xAxisHeight: Double = 25
     // TODO: remove the hardcoding - from -0.6 to 0.6
     var yAxisLabelRange: Double {
         displayInCelsius ? 0.6 : 1
     }
 
-    //y-axis data
-    var yAxisMaximum: Double  { model.maxAnomaly }
+    // y-axis
+    var yAxisMaximum: Double { model.maxAnomaly }
     var yAxisVisible: Visibility {
         isBarsWithScale ? .visible : .hidden
     }
+    // returns the list of labels for the y-axis. This should be made dynamic
     var yAxisValues: [Double] {
         symmetricalAxisValues(minMax: yAxisLabelRange, by: displayInCelsius ? 0.3 : 0.5)
     }
@@ -100,14 +100,14 @@ class ChartViewModel: ObservableObject, Haptics {
         Array(stride(from: minMax * -1, through: minMax, by: strideBy))
     }
 
-    // draw the x-axis. Afaict, Charts doesn't allow the axis labeling to match the styling in Warming Stripes.
+    // draw the x-axis. Swift Charts doesn't styling to match Warming Stripes. So drawing as a chartOverlay
     var drawXAxis: Bool {
         isBarsWithScale || chartState == .labelledStripes
     }
     func getXAxisYLoc(chartProxy: ChartProxy, geoProxy: GeometryProxy) -> CGFloat {
         let datePosition = chartProxy.position(forY: yAxisMinimum) ?? 0
         let xAxisDisplayWidth = geoProxy[chartProxy.plotAreaFrame].origin.y
-        return datePosition + xAxisDisplayWidth - xAxisHeight
+        return datePosition + xAxisDisplayWidth
     }
     // TODO: make this dynamic
     var xAxisYears: [Int] {
@@ -130,6 +130,11 @@ class ChartViewModel: ObservableObject, Haptics {
     }
     var subTitleText: String {
         isBarsWithScale ? "Relative to average of 1971-2000 [\(model.temperatureScale.abbreviation)]" : ""
+    }
+
+    //if the xAxis is drawn, create space for it
+    var spaceForXAxis: CGFloat {
+        drawXAxis ? 25 : 0
     }
     
     // HELPERS
