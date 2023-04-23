@@ -17,7 +17,7 @@
 		B43AE57F29E35CB400671F9C /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43AE57E29E35CB400671F9C /* ChartView.swift */; };
 		B43AE58129E35E5200671F9C /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43AE58029E35E5200671F9C /* ChartViewModel.swift */; };
 		B45F2D5D28A98C0F0064D3C3 /* HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv in Resources */ = {isa = PBXBuildFile; fileRef = B45F2D5C28A98C0F0064D3C3 /* HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv */; };
-		B46AC55A29F3179D00D37088 /* ColorScaleAttempts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46AC55929F3179D00D37088 /* ColorScaleAttempts.swift */; };
+		B46AC55A29F3179D00D37088 /* UIColorLuminosity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46AC55929F3179D00D37088 /* UIColorLuminosity.swift */; };
 		B4B4EA3A28BE98C100CEBDF0 /* CommonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B4EA3928BE98C100CEBDF0 /* CommonExtensions.swift */; };
 		B4B81A832861E5A500F9E2EC /* WarmingStripesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B81A822861E5A500F9E2EC /* WarmingStripesApp.swift */; };
 		B4B81A852861E5A500F9E2EC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B81A842861E5A500F9E2EC /* ContentView.swift */; };
@@ -39,7 +39,7 @@
 		B43AE57E29E35CB400671F9C /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		B43AE58029E35E5200671F9C /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
 		B45F2D5C28A98C0F0064D3C3 /* HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv; sourceTree = "<group>"; };
-		B46AC55929F3179D00D37088 /* ColorScaleAttempts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorScaleAttempts.swift; sourceTree = "<group>"; };
+		B46AC55929F3179D00D37088 /* UIColorLuminosity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorLuminosity.swift; sourceTree = "<group>"; };
 		B47B97B9296B058E00740A8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B4B4EA3928BE98C100CEBDF0 /* CommonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
 		B4B81A7F2861E5A500F9E2EC /* WarmingStripes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WarmingStripes.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,7 +133,7 @@
 				B4E7FE1828A7E7390032159E /* Modifiers.swift */,
 				B4B4EA3928BE98C100CEBDF0 /* CommonExtensions.swift */,
 				B431ECC929EC8363005013FE /* BundleIAndDeviceInfo.swift */,
-				B46AC55929F3179D00D37088 /* ColorScaleAttempts.swift */,
+				B46AC55929F3179D00D37088 /* UIColorLuminosity.swift */,
 			);
 			path = helpers;
 			sourceTree = "<group>";
@@ -238,7 +238,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B46AC55A29F3179D00D37088 /* ColorScaleAttempts.swift in Sources */,
+				B46AC55A29F3179D00D37088 /* UIColorLuminosity.swift in Sources */,
 				B4C25B362863341700EE54FC /* Model.swift in Sources */,
 				B430EAA628A7E9860002B884 /* QuestionAnswerView.swift in Sources */,
 				B4B81A852861E5A500F9E2EC /* ContentView.swift in Sources */,

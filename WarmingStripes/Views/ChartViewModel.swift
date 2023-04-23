@@ -62,37 +62,19 @@ class ChartViewModel: ObservableObject, Haptics {
         let ratio = width / Double(model.anomalies.count)
         return MarkDimension(floatLiteral: ratio + 0.5)
     }
-    // TODO: Get the colors to exactly match the warming stripes site
     func getBarColor (_ temperaturAnomaly: TemperatureAnomaly) -> Color {
         let anomaly = temperaturAnomaly.anomaly
+        let color: UIColor
+        var val: Double
         if anomaly > 0 {
-            let color: UIColor = .red// UIColor(Color(hex: 0x67090D))
-            //0 is black 1 is white
-            var val = 1 - anomaly/model.maxAnomaly
-            val *= 0.85
-            val += 0.15
-            let lumin = color.withLuminosity(val)
-            return Color(lumin)
+            color = .red
+            val = 1 - anomaly/model.maxAnomaly
+        } else {
+            color = UIColor(Color(hex: 0x0A2F5C))
+            val = 1 - anomaly/model.minAnomaly
         }
-        var color: UIColor = UIColor(Color(hex: 0x0A2F6B))
-        color = UIColor(Color(hex: 0x0A2F5C))
-
-        //0 is black 1 is white
-        var val = 1 - (anomaly)/model.minAnomaly
-        val *= 0.85
-        val += 0.15
-        let lumin = color.withLuminosity(val)
-        return Color(lumin)
-    }
-
-    func getBarColor2 (_ temperaturAnomaly: TemperatureAnomaly) -> Color {
-        let anomaly = temperaturAnomaly.anomaly
-        if anomaly > 0 {
-            let val = 1 - anomaly/model.maxAnomaly
-            return Color(red: 1, green: val, blue: val)
-        }
-        let val = 1 - anomaly/model.minAnomaly
-        return Color(red: val, green: val, blue: 1)
+        val = val * 0.85 + 0.15
+        return Color(color.withLuminosity(val))
     }
 
     // data for drawing the frame around the chart, only used for Bars with Scale

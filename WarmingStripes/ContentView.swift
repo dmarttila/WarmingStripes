@@ -7,10 +7,8 @@
 
 /*TODO:
 
- the data set doesn't match
  
  Later
- Better color range
  load country data from berkeley site
  
  */
