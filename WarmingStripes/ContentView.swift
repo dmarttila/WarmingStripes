@@ -7,15 +7,12 @@
 
 /*TODO:
  
- 
- 
  get the url of the data from the site
 
  make chart view model and chart lineup next to eachother
   
  cleanup magic numbers in chart view
  
- why isn't 2022 showing up - should be from the data set
  
  view that is simple charts in Swift
  
@@ -25,13 +22,23 @@
  Better color range
  load country data from berkeley site
  
+ var screenHeight: CGFloat {
+   UIScreen.main.bounds.height
+ }
+ 
  */
 
 import SwiftUI
+import UIKit
 
-struct ContentView: View, Haptics {
+struct ContentView: View, DeviceSize {
     @EnvironmentObject var model: Model
     @State private var showPreferences = false
+    
+    //SE and iPhone8 need some padding
+    private var padding: CGFloat {
+        return isSmallDevice ? 10 : 0
+    }
 
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
@@ -42,6 +49,7 @@ struct ContentView: View, Haptics {
                     PreferencesView()
                 }
         }
+        .padding(padding)
     }
 }
 
