@@ -7,15 +7,15 @@
 
 /*TODO:
  
- make chartviewmodel and chartView lineup next to each other
-  
- cleanup magic numbers in chart view
- 
  view that is simple charts in Swift
 
  get user data out of git
 
  add MARK in the ViewModel
+
+ move the preferences button based on the chart state
+
+ the data set doesn't match
  
  Later
  Better color range

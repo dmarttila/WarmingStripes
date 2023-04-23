@@ -32,7 +32,7 @@ class ChartViewModel: ObservableObject, Haptics {
         case .labelledStripes:
             return "Global temperature change(1850-2021)"
         case .bars:
-            // Can't calcuelate global temp differences from data, so hard code
+            // Can't calculate global temp differences from data, so hard code
             return "Global temperature have increased by over \(displayInCelsius ? 1.2 : 2.2)\(model.temperatureScale.abbreviation)"
         case .barsWithScale:
             return "Global temperature change"
@@ -81,7 +81,8 @@ class ChartViewModel: ObservableObject, Haptics {
         chartState == .stripes || chartState == .labelledStripes ? 0 : model.maxAnomaly * -1
     }
     let axisLineWidth: Double = 1
-    let xAxisOffset: Double = -25
+    //TODO: this shifts the drawn x-axis up into the chart space. It works because the data doesn't fill the sapce. It should eventually be removed
+    let xAxisHeight: Double = 25
     // TODO: remove the hardcoding - from -0.6 to 0.6
     var yAxisLabelRange: Double {
         displayInCelsius ? 0.6 : 1
@@ -103,27 +104,25 @@ class ChartViewModel: ObservableObject, Haptics {
     var drawXAxis: Bool {
         isBarsWithScale || chartState == .labelledStripes
     }
-    var drawTickMarks: Bool { isBarsWithScale }
-    let tickMarkHeight: Double = 5
-
-    //un hard code this too
+    func getXAxisYLoc(chartProxy: ChartProxy, geoProxy: GeometryProxy) -> CGFloat {
+        let datePosition = chartProxy.position(forY: yAxisMinimum) ?? 0
+        let xAxisDisplayWidth = geoProxy[chartProxy.plotAreaFrame].origin.y
+        return datePosition + xAxisDisplayWidth - xAxisHeight
+    }
+    // TODO: make this dynamic
     var xAxisYears: [Int] {
-        isBarsWithScale ? [1850, 1900, 1950, 2000, 2022] : 
+        isBarsWithScale ? [1850, 1900, 1950, 2000, 2022] :
         Array(stride(from: 1860, through: 2010, by: 30))
     }
-
-    //this calculation works, but it feels like there's a better way to do this. However, ChartProxy documention is a bit light so far
-    func getYearXLoc(year: Int, chartProxy: ChartProxy, geo: GeometryProxy) -> CGFloat {
+    let yearLabelWidth: CGFloat = 300
+    func getXLoc(for year: Int, chartProxy: ChartProxy, geoProxy: GeometryProxy) -> CGFloat {
         let date = Date(year: year, month: 1, day: 1)
         let datePosition = chartProxy.position(forX: date) ?? 0
-        let xAxisDisplayWidth = geo[chartProxy.plotAreaFrame].origin.x
+        let xAxisDisplayWidth = geoProxy[chartProxy.plotAreaFrame].origin.x
         return datePosition + xAxisDisplayWidth
     }
-    func getYLoc(chartProxy: ChartProxy, geo: GeometryProxy) -> CGFloat {
-        let datePosition = chartProxy.position(forY: yAxisMinimum) ?? 0
-        let xAxisDisplayWidth = geo[chartProxy.plotAreaFrame].origin.x
-        return datePosition// + xAxisDisplayWidth
-    }
+    var drawTickMarks: Bool { isBarsWithScale }
+    let tickMarkHeight: Double = 5
 
     // additional data for drawing the title on top of the chart
     var drawTitleOnTopOfChart: Bool {
@@ -132,13 +131,13 @@ class ChartViewModel: ObservableObject, Haptics {
     var subTitleText: String {
         isBarsWithScale ? "Relative to average of 1971-2000 [\(model.temperatureScale.abbreviation)]" : ""
     }
-
+    
     // HELPERS
-        private var isBarsWithScale: Bool {
-            chartState == .barsWithScale
-        }
+    private var isBarsWithScale: Bool {
+        chartState == .barsWithScale
+    }
 
-        private var displayInCelsius: Bool {
-            return model.temperatureScale == .celsius
-        }
+    private var displayInCelsius: Bool {
+        return model.temperatureScale == .celsius
+    }
 }

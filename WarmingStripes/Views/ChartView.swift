@@ -47,7 +47,7 @@ struct ChartView: View, Haptics {
                             )
                             .foregroundStyle(.white)
                             .lineStyle(StrokeStyle(lineWidth: viewModel.axisLineWidth))
-                            .offset(y: viewModel.xAxisOffset)
+                            .offset(y: viewModel.xAxisHeight * -1)
                             // y-axis line
                             RuleMark(
                                 x: .value("y axis", viewModel.startDate),
@@ -80,30 +80,28 @@ struct ChartView: View, Haptics {
                     .chartOverlay { chartProxy in
                         if viewModel.drawXAxis {
                             GeometryReader { geoProxy in
-                                //let axisYLoc = viewModel.getYLoc(chartProxy: chartProxy, geo: geoProxy)
-                                let axisYLoc = geoProxy.size.height - 20
-                                if viewModel.chartState == .labelledStripes {
-                                    // draw a black rectangle on top of the bottom on the chart to draw the x-axis on.
-                                    Rectangle()
-                                        .fill(.black)
-                                        .frame(width: geo.size.width + 2, height: 50)
-                                        .offset(x: -1, y: axisYLoc - 5)
-                                }
+                                let axisYLoc = viewModel.getXAxisYLoc(chartProxy: chartProxy, geoProxy: geoProxy)
+                                // draw a black rectangle on top of the bottom on the chart to draw the x-axis on. Only matters for labeled stripes
+                                Rectangle()
+                                    .fill(.black)
+                                    .frame(width: geoProxy.size.width + 2, height: viewModel.xAxisHeight)
+                                    .offset(x: -1, y: axisYLoc)
                                 // the years
                                 ForEach(viewModel.xAxisYears, id: \.self) { year in
-                                    let textFrameWidth: CGFloat = 300
-                                    let axisXloc = viewModel.getYearXLoc(year: year, chartProxy: chartProxy, geo: geoProxy)
+                                    let yearXloc = viewModel.getXLoc(
+                                        for: year, chartProxy: chartProxy, geoProxy: geoProxy)
                                     Text(String(year))
                                         .font(.caption)
                                         .foregroundColor(.white)
-                                        .frame(width: textFrameWidth)
-                                        .offset(x: axisXloc - textFrameWidth/2, y: axisYLoc)
+                                        .frame(width: viewModel.yearLabelWidth)
+                                        .offset(x: yearXloc - viewModel.yearLabelWidth/2,
+                                                y: axisYLoc + viewModel.tickMarkHeight)
                                     if viewModel.drawTickMarks {
                                         // draw the tic marks above the years
                                         Rectangle()
                                             .fill(.white)
                                             .frame(width: viewModel.axisLineWidth, height: viewModel.tickMarkHeight)
-                                            .offset(x: axisXloc, y: axisYLoc - 5)
+                                            .offset(x: yearXloc, y: axisYLoc)
                                     }
                                 }
                             }
