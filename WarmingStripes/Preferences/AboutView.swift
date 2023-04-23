@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+
 struct AboutAppQA {
     // swiftlint:disable line_length
     let qas = [

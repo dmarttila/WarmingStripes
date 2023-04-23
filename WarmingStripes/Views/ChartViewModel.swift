@@ -28,10 +28,16 @@ class ChartViewModel: ObservableObject, Haptics {
         yearFormatter.string(from: date)
     }
     var startYear: String {
-        getYear(from: startDate)
+        getYear(from: model.startDate)
     }
     var endYear: String {
-        getYear(from: endDate)
+        getYear(from: model.endDate)
+    }
+    var startDate: Date {
+        model.startDate
+    }
+    var endDate: Date {
+        model.endDate
     }
 
     var anomalies: [TemperatureAnomaly] {
@@ -80,9 +86,22 @@ class ChartViewModel: ObservableObject, Haptics {
         let ratio = width / Double(model.anomalies.count)
         return MarkDimension(floatLiteral: ratio + 0.5)
     }
-    
+    //un hard code this too
     var xAxisYears: [Int] {
-        isBarsWithScale ? [1850, 1900, 1950, 2000, 2021] : Array(stride(from: 1860, through: 2010, by: 30))
+        isBarsWithScale ? [1850, 1900, 1950, 2000, 2022] : 
+        Array(stride(from: 1860, through: 2010, by: 30))
+    }
+    // Can't calcuelate global temp differences from data, so hard code
+    private var globalTemperatureChange : String {
+        "\(displayInCelsius ? 1.2 : 2.2)\(model.temperatureScale.abbreviation)"
+    }
+    
+    var drawChartFrame: Bool {
+        isBarsWithScale
+    }
+    
+    var drawTitleOnTopOfChart: Bool {
+        isBarsWithScale || chartState == .bars
     }
     
     var titleText: String {
@@ -92,31 +111,25 @@ class ChartViewModel: ObservableObject, Haptics {
         case .labelledStripes:
             return "Global temperature change(1850-2021)"
         case .bars:
-            return "Global temperature have increased by over \(model.changedMoreThan)\(model.temperatureScale.abbreviation)"
+            return "Global temperature have increased by over \(globalTemperatureChange)"
         case .barsWithScale:
             return "Global temperature change"
         }
     }
-    
+
     var subTitleText: String {
-        isBarsWithScale ? "Relative to average of 1971-2000 [°\(displayInCelsius ? "C" : "F")]" : ""
+        isBarsWithScale ? "Relative to average of 1971-2000 [\(model.temperatureScale.abbreviation)]" : ""
     }
-    
-    let startDate = Date(year: 1850, month: 1, day: 1)
-    let endDate = Date(year: 2021, month: 1, day: 1)
     
     var yAxisMinMax: Double {
         displayInCelsius ? 0.6 : 1
     }
-    
     func symetricalAxisValues (minMax: Double, by strideBy: Double) -> [Double] {
         Array(stride(from: minMax * -1, through: minMax, by: strideBy))
     }
-    
     var yAxisValues: [Double] {
         symetricalAxisValues(minMax: yAxisMinMax, by: displayInCelsius ? 0.3 : 0.5)
     }
-    
     //this calculation works, but it feels like there's a better way to do this. However, ChartProxy documention is a bit light so far
     func getYearXLoc(year: Int, proxy: ChartProxy, geo: GeometryProxy) -> CGFloat {
         let date = Date(year: year, month: 1, day: 1)

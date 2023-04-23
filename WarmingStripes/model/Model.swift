@@ -5,7 +5,6 @@
 //  Created by Doug Marttila on 6/22/22.
 //
 
-import Foundation
 import SwiftUI
 
 public enum ChartState: String, CaseIterable, Identifiable, Codable {
@@ -48,18 +47,20 @@ class Model: ObservableObject {
     
     @Published var maxAnomaly: Double = 0
     @Published var minAnomaly: Double = 0
-    var delta: Double {
-        maxAnomaly - minAnomaly
+    var startDate: Date {
+        anomalies.min(by: { $0.date < $1.date })?.date ?? .now
     }
-    var changedMoreThan: String {
-        delta.floorDecimalFormat
+    var endDate: Date {
+        anomalies.max(by: { $0.date < $1.date })?.date ?? .now
     }
+    
     
     var anomalies: [TemperatureAnomaly] = []
     //    HadCRUT.5.0.1.0.analysis.summary_series.global.annual
     private let fileName = "HadCRUT.5.0.1.0.analysis.summary_series.global.annual"
     //"HadCRUT.5.0.1.0.summary_series.global.annual_non_infilled"
     
+    //if you cahnge the loading so it's loading from a network, you'd want to convert the data not reload it on temperature scale cahnge, but since it's in bundle, this is the simplest
     private func loadData() {
         var anomalies: [TemperatureAnomaly] = []
         minAnomaly = 0

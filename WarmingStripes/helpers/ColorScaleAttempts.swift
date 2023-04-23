@@ -8,7 +8,6 @@
 import SwiftUI
 
 
-
 var colorAgain: Color {
     let color = UIColor.blue // the color you want to adjust the brightness of
     let brightnessOffset: CGFloat = 0 // the amount you want to adjust the brightness by
