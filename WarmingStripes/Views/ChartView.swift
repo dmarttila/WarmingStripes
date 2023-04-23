@@ -38,8 +38,8 @@ struct ChartView: View, Haptics {
                         .foregroundStyle(viewModel.getBarColor(anomaly))
                         // without corner radius == 0, looks like a picket fence
                         .cornerRadius(0)
-                        // you can't style the chart axes to replicate the warming stripes axes, so there's a lot of custom drawing
-                        if viewModel.isBarsWithScale {
+                        // you can't style the chart axes to replicate the warming stripes axes, so there's a lot of custom drawing.
+                        if viewModel.drawChartFrame {
                             // Draw the lines that frame the chart
                             // x-axis line
                             RuleMark(
@@ -48,21 +48,21 @@ struct ChartView: View, Haptics {
                                 y: .value("x axis", viewModel.yAxisMinimum)
                             )
                             .foregroundStyle(.white)
-                            .lineStyle(StrokeStyle(lineWidth: 1))
-                            .offset(y: -25)
+                            .lineStyle(StrokeStyle(lineWidth: viewModel.axisLineWidth))
+                            .offset(y: viewModel.xAxisOffset)
                             // y-axis line
                             RuleMark(
                                 x: .value("y axis", viewModel.startDate),
-                                yStart: .value("lowest temperature anomaly", viewModel.yAxisMinMax * -1),
-                                yEnd: .value("highest temperature anomaly", viewModel.yAxisMinMax)
+                                yStart: .value("lowest temperature anomaly", viewModel.yAxisLabelRange * -1),
+                                yEnd: .value("highest temperature anomaly", viewModel.yAxisLabelRange)
                             )
                             .foregroundStyle(.white)
-                            .lineStyle(StrokeStyle(lineWidth: 1))
+                            .lineStyle(StrokeStyle(lineWidth: viewModel.axisLineWidth))
                         }
                     }
                     // Draws the chart title for bars-with-scale and bars states
                     .chartOverlay { chartProxy in
-                        if viewModel.isBarsWithScale || viewModel.chartState == .bars {
+                        if viewModel.drawTitleOnTopOfChart {
                             GeometryReader { geoProxy in
                                 VStack(alignment: .leading) {
                                     Text(viewModel.titleText)
@@ -97,12 +97,12 @@ struct ChartView: View, Haptics {
                                         .foregroundColor(.white)
                                         .frame(width: textFrameWidth)
                                         .offset(x: axisXloc - textFrameWidth/2, y: axisYLoc)
-                                    if viewModel.isBarsWithScale {
+                                    if viewModel.drawTickMarks {
                                         // draw the tic marks above the years
                                         Rectangle()
                                             .fill(.white)
-                                            .frame(width: 1, height: 5)
-                                            .offset(x: axisXloc, y: axisYLoc - 5)
+                                            .frame(width: viewModel.axisLineWidth, height: viewModel.tickMarkHeight)
+                                            .offset(x: axisXloc, y: viewModel.xAxisOffset)
                                     }
                                 }
                             }

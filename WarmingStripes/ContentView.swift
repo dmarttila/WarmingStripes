@@ -12,6 +12,8 @@
  cleanup magic numbers in chart view
  
  view that is simple charts in Swift
+
+ get user data out of git
  
  Later
  Better color range
