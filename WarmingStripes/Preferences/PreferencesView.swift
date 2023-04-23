@@ -22,6 +22,9 @@ struct PreferencesView: View, Haptics, AppBundleInfo {
                         NavigationLink(destination: PrivacyView()) {
                             Text("Privacy")
                         }
+                        NavigationLink(destination: SimpleChartView(viewModel: ChartViewModel(model: model))) {
+                            Text("What would the chart look like using Swift Chart defaults?")
+                        }
                     }
                     Section(header: Text("Temperature Scale")) {
                         Picker("Temperature Scale:", selection: $model.temperatureScale) {

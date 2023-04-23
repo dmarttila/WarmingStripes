@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B40EE4D129F5D04600AA1689 /* SimpleChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40EE4D029F5D04600AA1689 /* SimpleChartView.swift */; };
 		B430EAA028A7E9850002B884 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430EA9828A7E9850002B884 /* AboutView.swift */; };
 		B430EAA128A7E9850002B884 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430EA9928A7E9850002B884 /* PrivacyView.swift */; };
 		B430EAA228A7E9850002B884 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430EA9A28A7E9850002B884 /* PreferencesView.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B40EE4D029F5D04600AA1689 /* SimpleChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleChartView.swift; sourceTree = "<group>"; };
 		B430EA9828A7E9850002B884 /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		B430EA9928A7E9850002B884 /* PrivacyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
 		B430EA9A28A7E9850002B884 /* PreferencesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 				B43AE57B29E31EEF00671F9C /* PreferencesButton.swift */,
 				B43AE57E29E35CB400671F9C /* ChartView.swift */,
 				B43AE58029E35E5200671F9C /* ChartViewModel.swift */,
+				B40EE4D029F5D04600AA1689 /* SimpleChartView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 				B4B81A832861E5A500F9E2EC /* WarmingStripesApp.swift in Sources */,
 				B430EAA028A7E9850002B884 /* AboutView.swift in Sources */,
 				B431ECCA29EC8363005013FE /* BundleIAndDeviceInfo.swift in Sources */,
+				B40EE4D129F5D04600AA1689 /* SimpleChartView.swift in Sources */,
 				B43AE57C29E31EF000671F9C /* PreferencesButton.swift in Sources */,
 				B430EAA228A7E9850002B884 /* PreferencesView.swift in Sources */,
 				B4D7F0DD28A7ED5300EF645E /* HapticsProtocol.swift in Sources */,

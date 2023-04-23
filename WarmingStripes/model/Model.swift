@@ -53,10 +53,8 @@ class Model: ObservableObject {
     var endDate: Date {
         anomalies.max(by: { $0.date < $1.date })?.date ?? .now
     }
-    
-    
+
     var anomalies: [TemperatureAnomaly] = []
-    //    HadCRUT.5.0.1.0.analysis.summary_series.global.annual
     private let fileName = "HadCRUT.5.0.1.0.analysis.summary_series.global.annual"
     //if data sets are loaded from the internet, you'd want to convert the values to Fahrenheit rather than reload, but since it's in the bundle, this is the simplest
     private func loadData() {

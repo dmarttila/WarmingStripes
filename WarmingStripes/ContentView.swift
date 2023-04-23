@@ -6,8 +6,6 @@
 //
 
 /*TODO:
- 
- view that is simple charts in Swift
 
  the data set doesn't match
  
