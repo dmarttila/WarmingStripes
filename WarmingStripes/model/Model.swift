@@ -58,9 +58,7 @@ class Model: ObservableObject {
     var anomalies: [TemperatureAnomaly] = []
     //    HadCRUT.5.0.1.0.analysis.summary_series.global.annual
     private let fileName = "HadCRUT.5.0.1.0.analysis.summary_series.global.annual"
-    //"HadCRUT.5.0.1.0.summary_series.global.annual_non_infilled"
-    
-    //if you cahnge the loading so it's loading from a network, you'd want to convert the data not reload it on temperature scale cahnge, but since it's in bundle, this is the simplest
+    //if data sets are loaded from the internet, you'd want to convert the values to Fahrenheit rather than reload, but since it's in the bundle, this is the simplest
     private func loadData() {
         var anomalies: [TemperatureAnomaly] = []
         minAnomaly = 0

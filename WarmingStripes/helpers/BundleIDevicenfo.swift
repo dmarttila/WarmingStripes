@@ -1,5 +1,5 @@
 //
-//  AppBundleInfo.swift
+//  BundleDeviceInfo.swift
 //  WarmingStripes
 //
 //  Created by Doug Marttila on 4/16/23.
