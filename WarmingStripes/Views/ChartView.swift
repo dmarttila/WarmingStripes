@@ -18,14 +18,13 @@ struct ChartView: View, Haptics {
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
-            // Title for Labeled Stripes
-            if viewModel.chartState == .labelledStripes {
+
+            if viewModel.drawTitleAboveChart {
                 Text(viewModel.titleText)
                     .font(.title2)
             }
             HStack {
-                // if bars state draw the year to the left of the chart
-                if viewModel.chartState == .bars {
+                if viewModel.drawLeadingAndTrailingYears {
                     Text(viewModel.startYear)
                 }
                 GeometryReader { geo in
@@ -40,7 +39,6 @@ struct ChartView: View, Haptics {
                         .cornerRadius(0)
                         // you can't style the chart axes to replicate the warming stripes axes, so there's a lot of custom drawing.
                         if viewModel.drawChartFrame {
-                            // Draw the lines that frame the chart
                             // x-axis line
                             RuleMark(
                                 xStart: .value("start date", viewModel.startDate),
@@ -53,11 +51,62 @@ struct ChartView: View, Haptics {
                             // y-axis line
                             RuleMark(
                                 x: .value("y axis", viewModel.startDate),
-                                yStart: .value("lowest temperature anomaly", viewModel.yAxisLabelRange * -1),
-                                yEnd: .value("highest temperature anomaly", viewModel.yAxisLabelRange)
+                                yStart: .value("y-axis minimum", viewModel.yAxisLabelRange * -1),
+                                yEnd: .value("y-axis maximum", viewModel.yAxisLabelRange)
                             )
                             .foregroundStyle(.white)
                             .lineStyle(StrokeStyle(lineWidth: viewModel.axisLineWidth))
+                        }
+                    }
+                    .chartYScale(domain: viewModel.yAxisMinimum...viewModel.yAxisMaximum)
+                    // xAxis is drawn below, so it's always hidden
+                    .chartXAxis(.hidden)
+                    // hide/show the Y axes
+                    .chartYAxis(viewModel.yAxisVisible)
+                    .chartYAxis {
+                        AxisMarks(position: .leading, values: viewModel.yAxisValues) { value in
+                            if let doubleValue = value.as(Double.self) {
+                                AxisValueLabel {
+                                    Text(doubleValue.decimalFormat)
+                                        .font(.caption)
+                                        .foregroundColor(.white)
+                                }
+                                AxisTick(stroke: StrokeStyle(lineWidth: viewModel.axisLineWidth))
+                                    .foregroundStyle(.white)
+                            }
+                        }
+                    }
+                    // x-axis
+                    .chartOverlay { chartProxy in
+                        if viewModel.drawXAxis {
+                            GeometryReader { geoProxy in
+                                //let axisYLoc = viewModel.getYLoc(chartProxy: chartProxy, geo: geoProxy)
+                                let axisYLoc = geoProxy.size.height - 20
+                                if viewModel.chartState == .labelledStripes {
+                                    // draw a black rectangle on top of the bottom on the chart to draw the x-axis on.
+                                    Rectangle()
+                                        .fill(.black)
+                                        .frame(width: geo.size.width + 2, height: 50)
+                                        .offset(x: -1, y: axisYLoc - 5)
+                                }
+                                // the years
+                                ForEach(viewModel.xAxisYears, id: \.self) { year in
+                                    let textFrameWidth: CGFloat = 300
+                                    let axisXloc = viewModel.getYearXLoc(year: year, chartProxy: chartProxy, geo: geoProxy)
+                                    Text(String(year))
+                                        .font(.caption)
+                                        .foregroundColor(.white)
+                                        .frame(width: textFrameWidth)
+                                        .offset(x: axisXloc - textFrameWidth/2, y: axisYLoc)
+                                    if viewModel.drawTickMarks {
+                                        // draw the tic marks above the years
+                                        Rectangle()
+                                            .fill(.white)
+                                            .frame(width: viewModel.axisLineWidth, height: viewModel.tickMarkHeight)
+                                            .offset(x: axisXloc, y: axisYLoc - 5)
+                                    }
+                                }
+                            }
                         }
                     }
                     // Draws the chart title for bars-with-scale and bars states
@@ -76,59 +125,9 @@ struct ChartView: View, Haptics {
                             }
                         }
                     }
-                    // x-axis 
-                    .chartOverlay { chartProxy in
-                        if viewModel.drawXAxis {
-                            GeometryReader { geoProxy in
-                                let axisYLoc = geoProxy.size.height - 20
-                                if viewModel.chartState == .labelledStripes {
-                                    // draw a black rectangle on top of the bottom on the chart to draw the x-axis on. 
-                                    Rectangle()
-                                        .fill(.black)
-                                        .frame(width: geo.size.width + 2, height: 50)
-                                        .offset(x: -1, y: axisYLoc - 5)
-                                }
-                                // the years
-                                ForEach(viewModel.xAxisYears, id: \.self) { year in
-                                    let textFrameWidth: CGFloat = 300
-                                    let axisXloc = viewModel.getYearXLoc(year: year, proxy: chartProxy, geo: geoProxy)
-                                    Text(String(year))
-                                        .font(.caption)
-                                        .foregroundColor(.white)
-                                        .frame(width: textFrameWidth)
-                                        .offset(x: axisXloc - textFrameWidth/2, y: axisYLoc)
-                                    if viewModel.drawTickMarks {
-                                        // draw the tic marks above the years
-                                        Rectangle()
-                                            .fill(.white)
-                                            .frame(width: viewModel.axisLineWidth, height: viewModel.tickMarkHeight)
-                                            .offset(x: axisXloc, y: viewModel.xAxisOffset)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    .chartYScale(domain: viewModel.yAxisMinimum...viewModel.yAxisMaximum)
-                    // xAxis is drawn above, so it's always hidden
-                    .chartXAxis(.hidden)
-                    // hide/show the Y axes
-                    .chartYAxis(viewModel.yAxisVisible)
-                    .chartYAxis {
-                        AxisMarks(position: .leading, values: viewModel.yAxisValues) { value in
-                            if let doubleValue = value.as(Double.self) {
-                                AxisValueLabel {
-                                    Text(doubleValue.decimalFormat)
-                                        .font(.caption)
-                                        .foregroundColor(.white)
-                                }
-                                AxisTick(stroke: StrokeStyle(lineWidth: 1.5))
-                                    .foregroundStyle(.white)
-                            }
-                        }
-                    }
                 }
                 // year at the right side of the chart for bars state
-                if viewModel.chartState == .bars {
+                if viewModel.drawLeadingAndTrailingYears {
                     Text(viewModel.endYear)
                 }
             }
