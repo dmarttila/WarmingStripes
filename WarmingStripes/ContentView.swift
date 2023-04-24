@@ -8,7 +8,7 @@
 import SwiftUI
 import UIKit
 
-struct ContentView: View, DeviceSize {
+struct ContentView: View, DeviceInfo {
     @EnvironmentObject var model: Model
     @State private var showPreferences = false
 

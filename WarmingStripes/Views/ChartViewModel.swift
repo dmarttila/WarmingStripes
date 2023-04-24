@@ -8,7 +8,7 @@
 import Charts
 import SwiftUI
 
-class ChartViewModel: ObservableObject, Haptics {
+class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
     @ObservedObject var model: Model
     @Binding var chartState: ChartState {
         didSet {
@@ -122,8 +122,17 @@ class ChartViewModel: ObservableObject, Haptics {
     func getXLoc(for year: Int, chartProxy: ChartProxy, geoProxy: GeometryProxy) -> CGFloat {
         let date = Date(year: year, month: 1, day: 1)
         let datePosition = chartProxy.position(forX: date) ?? 0
-        let xAxisDisplayWidth = geoProxy[chartProxy.plotAreaFrame].origin.x
-        return datePosition + xAxisDisplayWidth
+        let chartPlotAreaXLoc = geoProxy[chartProxy.plotAreaFrame].origin.x
+        return datePosition + chartPlotAreaXLoc
+    }
+
+    func getYearLabelXLoc (for year: Int, chartProxy: ChartProxy, geoProxy: GeometryProxy) -> CGFloat {
+        // in Landscape mode the last year gets truncated, draw it offscreen
+        if !inLandscapeMode && year == xAxisYears.last {
+            return 5000
+        }
+        let xLoc = getXLoc(for: year, chartProxy: chartProxy, geoProxy: geoProxy)
+        return xLoc - yearLabelWidth/2
     }
     var drawTickMarks: Bool { isBarsWithScale }
     let tickMarkHeight: Double = 5
@@ -136,11 +145,11 @@ class ChartViewModel: ObservableObject, Haptics {
         isBarsWithScale ? "Relative to average of 1971-2000 [\(model.temperatureScale.abbreviation)]" : ""
     }
 
-    //if the xAxis is drawn, create space for it
+    // if the xAxis is drawn, create space for it
     var spaceForXAxis: CGFloat {
         drawXAxis ? 25 : 0
     }
-    
+
     // HELPERS
     private var isBarsWithScale: Bool {
         chartState == .barsWithScale

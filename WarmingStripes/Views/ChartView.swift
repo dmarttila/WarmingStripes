@@ -8,7 +8,7 @@
 import Charts
 import SwiftUI
 
-struct ChartView: View, Haptics {
+struct ChartView: View {
     @ObservedObject var viewModel: ChartViewModel
     var body: some View {
         VStack(alignment: .leading) {
@@ -85,11 +85,13 @@ struct ChartView: View, Haptics {
                                 ForEach(viewModel.xAxisYears, id: \.self) { year in
                                     let yearXloc = viewModel.getXLoc(
                                         for: year, chartProxy: chartProxy, geoProxy: geoProxy)
+                                    let yearTextLabelXLoc = viewModel.getYearLabelXLoc(
+                                        for: year, chartProxy: chartProxy, geoProxy: geoProxy)
                                     Text(String(year))
                                         .font(.caption)
                                         .foregroundColor(.white)
                                         .frame(width: viewModel.yearLabelWidth)
-                                        .offset(x: yearXloc - viewModel.yearLabelWidth/2,
+                                        .offset(x: yearTextLabelXLoc,
                                                 y: axisYLoc + viewModel.tickMarkHeight)
                                     if viewModel.drawTickMarks {
                                         // draw the tic marks above the years
