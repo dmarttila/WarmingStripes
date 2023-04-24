@@ -39,7 +39,7 @@ struct ChartView: View, Haptics {
                         .cornerRadius(0)
                         // you can't style the chart axes to replicate the warming stripes axes
                         // so there's a lot of custom drawing.
-                        if viewModel.drawChartFrame {
+                        if viewModel.drawAxisLines {
                             // x-axis line
                             RuleMark(
                                 xStart: .value("start date", viewModel.startDate),

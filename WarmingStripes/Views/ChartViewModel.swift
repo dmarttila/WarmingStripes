@@ -30,7 +30,7 @@ class ChartViewModel: ObservableObject, Haptics {
         case .stripes:
             return ""
         case .labelledStripes:
-            return "Global temperature change(\(startYear) - \(endYear))"
+            return "Global temperature change (\(startYear) - \(endYear))"
         case .bars:
             // Can't calculate global temp differences from data, so hard code
             return "Global temperature have increased by over \(displayInCelsius ? 1.2 : 2.2)\(model.temperatureScale.abbreviation)"
@@ -65,20 +65,20 @@ class ChartViewModel: ObservableObject, Haptics {
     func getBarColor (_ temperaturAnomaly: TemperatureAnomaly) -> Color {
         let anomaly = temperaturAnomaly.anomaly
         let color: UIColor
-        var val: Double
+        var luminosity: Double
         if anomaly > 0 {
             color = .red
-            val = 1 - anomaly/model.maxAnomaly
+            luminosity = 1 - anomaly/model.maxAnomaly
         } else {
             color = UIColor(Color(hex: 0x0A2F5C))
-            val = 1 - anomaly/model.minAnomaly
+            luminosity = 1 - anomaly/model.minAnomaly
         }
-        val = val * 0.85 + 0.15
-        return Color(color.withLuminosity(val))
+        luminosity = luminosity * 0.85 + 0.15
+        return Color(color.withLuminosity(luminosity))
     }
 
     // data for drawing the frame around the chart, only used for Bars with Scale
-    var drawChartFrame: Bool { isBarsWithScale }
+    var drawAxisLines: Bool { isBarsWithScale }
     var startDate: Date { model.startDate }
     var endDate: Date { model.endDate }
     var yAxisMinimum: Double {

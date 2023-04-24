@@ -23,8 +23,9 @@ struct PreferencesView: View, Haptics, AppBundleInfo {
                             Text("Privacy")
                         }
                         NavigationLink(destination: SimpleChartView(viewModel: ChartViewModel(model: model))) {
-                            Text("What would the chart look like using Swift Chart defaults?")
+                            Text("See the data using default Swift Chart settings")
                         }
+                        Link("Code available here", destination: URL(string: "https://github.com/dmarttila/WarmingStripes")!)
                     }
                     Section(header: Text("Temperature Scale")) {
                         Picker("Temperature Scale:", selection: $model.temperatureScale) {

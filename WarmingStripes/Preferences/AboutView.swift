@@ -17,23 +17,25 @@ struct AboutAppQA {
 
         QuestionAnswer(
             question: "Who came up with the idea?",
-            answer: "[Ed Hawkins](http://www.met.reading.ac.uk/~ed/home/index.php). Please [chcek out his website](https://showyourstripes.info/l/globe). It has a lot more data than this app."
+            answer:
+            """
+            [Ed Hawkins](http://www.met.reading.ac.uk/~ed/home/index.php). Please [chcek out his website](https://showyourstripes.info/l/globe). It has a lot more data than this app.
+            You can support Ed Hawkins's environemntal work [here](https://showyourstripes.info/support).
+            """
         ),
         QuestionAnswer(
             question: "So you just stole his idea?",
             answer:
             """
-            Pretty much. But, hey, I added Fahrenheit!
-            Plus the app's free, I gave credit, and [the code's open source](https://github.com/dmarttila/WarmingStripes).
-            You can support Ed Hawkins's environemntal work [here](https://showyourstripes.info/support).
+            Pretty much. But, hey, I added Fahrenheit! Plus the app's free, I gave credit, and [the code's open source](https://github.com/dmarttila/WarmingStripes).
+            And I plan to add more features.
             """
         ),
         QuestionAnswer(
             question: "Where is the data from?",
             answer:
             """
-            HadCRUT.5 data were obtained from [the Met Office Hadley Centre observations datasets]( http://www.metoffice.gov.uk/hadobs/hadcrut5) on August 14, 2022 and are © British Crown Copyright,
-            Met Office 2022, provided under an [Open Government License](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/).
+            HadCRUT.5 data were obtained from [the Met Office Hadley Centre observations datasets]( http://www.metoffice.gov.uk/hadobs/hadcrut5) on August 14, 2022 and are © British Crown Copyright, Met Office 2022, provided under an [Open Government License](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/).
             """
         ),
         QuestionAnswer(
@@ -42,10 +44,6 @@ struct AboutAppQA {
             """
             I don't know. I followed the link to the data from Warming Stripes. Maybe Ed Hawkins knows. I should try to contact him.
             """
-        ),
-        QuestionAnswer(
-            question: "The colors don't exactly match either.",
-            answer: "Noted."
         ),
         QuestionAnswer(
             question: "Why didn't you name the app, Warming Stripes?",

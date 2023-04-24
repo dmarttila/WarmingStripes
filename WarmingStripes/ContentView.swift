@@ -5,14 +5,6 @@
 //  Created by Doug Marttila on 6/21/22.
 //
 
-/*TODO:
-
- 
- Later
- load country data from berkeley site
- 
- */
-
 import SwiftUI
 import UIKit
 

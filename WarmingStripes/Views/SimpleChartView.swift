@@ -12,7 +12,7 @@ struct SimpleChartView: View {
     @ObservedObject var viewModel: ChartViewModel
     var body: some View {
         VStack(alignment: .leading) {
-            Text("10 lines of code using default Chart parameters.")
+            Text("Default Chart parameters. 10 lines of code.")
             Chart(viewModel.anomalies) { anomaly in
                 BarMark(
                     x: .value("Date", anomaly.date, unit: .year),
@@ -24,5 +24,6 @@ struct SimpleChartView: View {
                 AxisMarks(position: .leading)
             }
         }
+        .padding()
     }
 }
