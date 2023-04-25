@@ -127,8 +127,8 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
     }
 
     func getYearLabelXLoc (for year: Int, chartProxy: ChartProxy, geoProxy: GeometryProxy) -> CGFloat {
-        // in Landscape mode the last year gets truncated, draw it offscreen
-        if !inLandscapeMode && year == xAxisYears.last {
+        // in Landscape mode the last year gets truncated on bars with scale, draw it offscreen
+        if !inLandscapeMode && year == xAxisYears.last && isBarsWithScale {
             return 5000
         }
         let xLoc = getXLoc(for: year, chartProxy: chartProxy, geoProxy: geoProxy)
