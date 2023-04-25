@@ -28,7 +28,7 @@ struct AboutAppQA {
             answer:
             """
             Pretty much. But, hey, I added Fahrenheit! Plus the app's free, I gave credit, and [the code's open source](https://github.com/dmarttila/WarmingStripes).
-            And I plan to add more features.
+            And I'll add more features.
             """
         ),
         QuestionAnswer(

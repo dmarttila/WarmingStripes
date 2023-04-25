@@ -33,7 +33,7 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
             return "Global temperature change (\(startYear) - \(endYear))"
         case .bars:
             // Can't calculate global temp differences from data, so hard code
-            return "Global temperature have increased by over \(displayInCelsius ? 1.2 : 2.2)\(model.temperatureScale.abbreviation)"
+            return "Global temperatures have increased by over \(displayInCelsius ? 1.2 : 2.2)\(model.temperatureScale.abbreviation)"
         case .barsWithScale:
             return "Global temperature change"
         }

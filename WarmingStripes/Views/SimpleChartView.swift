@@ -12,7 +12,7 @@ struct SimpleChartView: View {
     @ObservedObject var viewModel: ChartViewModel
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Default Chart parameters. 10 lines of code.")
+            Text("Default Swift Chart parameters. 10 lines of code.")
             Chart(viewModel.anomalies) { anomaly in
                 BarMark(
                     x: .value("Date", anomaly.date, unit: .year),

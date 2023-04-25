@@ -12,12 +12,12 @@
 		B430EAA128A7E9850002B884 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430EA9928A7E9850002B884 /* PrivacyView.swift */; };
 		B430EAA228A7E9850002B884 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430EA9A28A7E9850002B884 /* PreferencesView.swift */; };
 		B430EAA628A7E9860002B884 /* QuestionAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430EA9F28A7E9850002B884 /* QuestionAnswerView.swift */; };
-		B431ECCA29EC8363005013FE /* BundleIAndDeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B431ECC929EC8363005013FE /* BundleIAndDeviceInfo.swift */; };
 		B43AE57C29E31EF000671F9C /* PreferencesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43AE57B29E31EEF00671F9C /* PreferencesButton.swift */; };
 		B43AE57F29E35CB400671F9C /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43AE57E29E35CB400671F9C /* ChartView.swift */; };
 		B43AE58129E35E5200671F9C /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43AE58029E35E5200671F9C /* ChartViewModel.swift */; };
 		B45F2D5D28A98C0F0064D3C3 /* HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv in Resources */ = {isa = PBXBuildFile; fileRef = B45F2D5C28A98C0F0064D3C3 /* HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv */; };
 		B46AC55A29F3179D00D37088 /* UIColorLuminosity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46AC55929F3179D00D37088 /* UIColorLuminosity.swift */; };
+		B4A1002C29F7F5CB0062B844 /* BundleAndDeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A1002B29F7F5CB0062B844 /* BundleAndDeviceInfo.swift */; };
 		B4B4EA3A28BE98C100CEBDF0 /* CommonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B4EA3928BE98C100CEBDF0 /* CommonExtensions.swift */; };
 		B4B81A832861E5A500F9E2EC /* WarmingStripesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B81A822861E5A500F9E2EC /* WarmingStripesApp.swift */; };
 		B4B81A852861E5A500F9E2EC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B81A842861E5A500F9E2EC /* ContentView.swift */; };
@@ -34,13 +34,13 @@
 		B430EA9928A7E9850002B884 /* PrivacyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
 		B430EA9A28A7E9850002B884 /* PreferencesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		B430EA9F28A7E9850002B884 /* QuestionAnswerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionAnswerView.swift; sourceTree = "<group>"; };
-		B431ECC929EC8363005013FE /* BundleIAndDeviceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleIAndDeviceInfo.swift; sourceTree = "<group>"; };
 		B43AE57B29E31EEF00671F9C /* PreferencesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesButton.swift; sourceTree = "<group>"; };
 		B43AE57E29E35CB400671F9C /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		B43AE58029E35E5200671F9C /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
 		B45F2D5C28A98C0F0064D3C3 /* HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv; sourceTree = "<group>"; };
 		B46AC55929F3179D00D37088 /* UIColorLuminosity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorLuminosity.swift; sourceTree = "<group>"; };
 		B47B97B9296B058E00740A8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B4A1002B29F7F5CB0062B844 /* BundleAndDeviceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleAndDeviceInfo.swift; sourceTree = "<group>"; };
 		B4B4EA3928BE98C100CEBDF0 /* CommonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
 		B4B81A7F2861E5A500F9E2EC /* WarmingStripes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WarmingStripes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4B81A822861E5A500F9E2EC /* WarmingStripesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmingStripesApp.swift; sourceTree = "<group>"; };
@@ -132,8 +132,8 @@
 				B4D7F0DC28A7ED5300EF645E /* HapticsProtocol.swift */,
 				B4E7FE1828A7E7390032159E /* Modifiers.swift */,
 				B4B4EA3928BE98C100CEBDF0 /* CommonExtensions.swift */,
-				B431ECC929EC8363005013FE /* BundleIAndDeviceInfo.swift */,
 				B46AC55929F3179D00D37088 /* UIColorLuminosity.swift */,
+				B4A1002B29F7F5CB0062B844 /* BundleAndDeviceInfo.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -242,9 +242,9 @@
 				B4C25B362863341700EE54FC /* Model.swift in Sources */,
 				B430EAA628A7E9860002B884 /* QuestionAnswerView.swift in Sources */,
 				B4B81A852861E5A500F9E2EC /* ContentView.swift in Sources */,
+				B4A1002C29F7F5CB0062B844 /* BundleAndDeviceInfo.swift in Sources */,
 				B4B81A832861E5A500F9E2EC /* WarmingStripesApp.swift in Sources */,
 				B430EAA028A7E9850002B884 /* AboutView.swift in Sources */,
-				B431ECCA29EC8363005013FE /* BundleIAndDeviceInfo.swift in Sources */,
 				B40EE4D129F5D04600AA1689 /* SimpleChartView.swift in Sources */,
 				B43AE57C29E31EF000671F9C /* PreferencesButton.swift in Sources */,
 				B430EAA228A7E9850002B884 /* PreferencesView.swift in Sources */,
