@@ -13,6 +13,7 @@ struct SimpleChartView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("Default Swift Chart parameters. 10 lines of code.")
+                .font(.subheadline)
             Chart(viewModel.anomalies) { anomaly in
                 BarMark(
                     x: .value("Date", anomaly.date, unit: .year),

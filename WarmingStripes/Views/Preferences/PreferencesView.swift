@@ -23,7 +23,7 @@ struct PreferencesView: View, Haptics, AppBundleInfo {
                             Text("Privacy")
                         }
                         NavigationLink(destination: SimpleChartView(viewModel: ChartViewModel(model: model))) {
-                            Text("See the data using default Swift Chart parameters")
+                            Text("Default Swift Chart parameters")
                         }
                         Link("Code available here", destination: URL(string: "https://github.com/dmarttila/WarmingStripes")!)
                     }

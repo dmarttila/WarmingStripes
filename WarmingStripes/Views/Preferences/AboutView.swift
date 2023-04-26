@@ -27,8 +27,8 @@ struct AboutAppQA {
             question: "So you just stole his idea?",
             answer:
             """
-            Pretty much. But, hey, I added Fahrenheit! Plus the app's free, I gave credit, and [the code's open source](https://github.com/dmarttila/WarmingStripes).
-            And I'll add more features.
+            Pretty much. But, hey, I added Fahrenheit! Plus the app's free, I gave credit, [the code's open source](https://github.com/dmarttila/WarmingStripes), and I'll add more features.
+            I also wanted to learn the new [Swift Chart framework](https://developer.apple.com/documentation/charts) and see if it was possible to replicate Warming Stripes. It was. But it was a lot of work. For comparison, I also included a chart with the default Swift Chart parameters, which looks good and took no time at all.
             """
         ),
         QuestionAnswer(
@@ -44,10 +44,6 @@ struct AboutAppQA {
             """
             I don't know. I followed the link to the data from Warming Stripes. Maybe Ed Hawkins knows. I should try to contact him.
             """
-        ),
-        QuestionAnswer(
-            question: "Why didn't you name the app, Warming Stripes?",
-            answer: "It wasn't available."
         ),
         QuestionAnswer(
             question: "Do you have other apps?",
