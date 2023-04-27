@@ -16,20 +16,15 @@ struct AboutAppQA {
         ),
 
         QuestionAnswer(
-            question: "Who came up with the idea?",
+            question: "Who came up with the original idea?",
             answer:
             """
-            [Ed Hawkins](http://www.met.reading.ac.uk/~ed/home/index.php). Please [chcek out his website](https://showyourstripes.info/l/globe). It has a lot more data than this app.
-            You can support Ed Hawkins's environemntal work [here](https://showyourstripes.info/support).
+            [Ed Hawkins](http://www.met.reading.ac.uk/~ed/home/index.php). The orignal website is [here](https://showyourstripes.info/l/globe). You can support Ed Hawkins's environemntal work [here](https://showyourstripes.info/support).
             """
         ),
         QuestionAnswer(
-            question: "So you just stole his idea?",
-            answer:
-            """
-            Pretty much. But, hey, I added Fahrenheit! Plus the app's free, I gave credit, [the code's open source](https://github.com/dmarttila/WarmingStripes), and I'll add more features.
-            I also wanted to learn the new [Swift Chart framework](https://developer.apple.com/documentation/charts) and see if it was possible to replicate Warming Stripes. It was. But it was a lot of work. For comparison, I also included a chart with the default Swift Chart parameters, which looks good and took no time at all.
-            """
+            question: "Does this app add any features?",
+            answer: "It supports the fahrenheit temperature scale."
         ),
         QuestionAnswer(
             question: "Where is the data from?",
@@ -39,20 +34,9 @@ struct AboutAppQA {
             """
         ),
         QuestionAnswer(
-            question: "Why doesn't the chart exacly match the website?",
-            answer:
-            """
-            I don't know. I followed the link to the data from Warming Stripes. Maybe Ed Hawkins knows. I should try to contact him.
-            """
-        ),
-        QuestionAnswer(
-            question: "Do you have other apps?",
-            answer: "[Yes](https://apps.apple.com/tt/developer/douglas-marttila/id1596329457)"
-            ),
-        QuestionAnswer(
-            question: "Do you have a website?",
-            answer: "[Yes]( https://www.forestandthetrees.com/)"
-            )
+            question: "Is there a support page?",
+            answer: "[Yes](https://www.forestandthetrees.com/climate-warming-stripes/)."
+        )
     ]
 }
 
@@ -62,6 +46,8 @@ struct AboutView: View, AppBundleInfo {
         """
         \(appName) is licensed under a [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/). 
         Original licensor: [Ed Hawkins, University of Reading](http://www.met.reading.ac.uk/~ed/home/index.php).
+        
+        This app was built by [Doug Marttila](https://www.forestandthetrees.com/).
         """
     }
 
@@ -69,11 +55,11 @@ struct AboutView: View, AppBundleInfo {
         ZStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    Text(license)
-                        .modifier(AnswerStyle())
                     ForEach(qas) {
                         QuestionAnswerView(questionAnswer: $0)
                     }
+                    Text(license)
+                        .modifier(AnswerStyle())
                 }
                 .padding()
                 .navigationTitle("About")

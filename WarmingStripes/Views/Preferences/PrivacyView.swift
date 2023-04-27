@@ -10,7 +10,7 @@ struct PrivacyView: View, AppBundleInfo {
     
     var privacyExplanation: String {
     """
-    All information entered in \(appName) is only stored on your device.(The only data that is stored is the temperature-scale preference and the chart state.)
+    All information entered in \(appName) is only stored on your device. (The only data that is stored is the temperature-scale preference and the chart state.)
     It is not transmitted anywhere.
     If you backup your device to iCloud, the data will be copied there, but is still only accessible to you.
     """
