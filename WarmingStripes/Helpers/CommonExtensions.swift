@@ -44,6 +44,14 @@ public extension Date {
         self = Calendar.current.date(from: components) ?? Date()
     }
     var yearString: String {
-        "Test year"
+        DateFormatter.yearFormatter.string(from: self)
     }
+}
+
+extension DateFormatter {
+  static let yearFormatter: DateFormatter = {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy"
+    return dateFormatter
+  }()
 }
