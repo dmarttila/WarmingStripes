@@ -17,6 +17,8 @@
 		B43AE57C29E31EF000671F9C /* PreferencesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43AE57B29E31EEF00671F9C /* PreferencesButton.swift */; };
 		B43AE57F29E35CB400671F9C /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43AE57E29E35CB400671F9C /* ChartView.swift */; };
 		B43AE58129E35E5200671F9C /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43AE58029E35E5200671F9C /* ChartViewModel.swift */; };
+		B44D921929FEDA6B00A7EA92 /* WarmingStripesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44D921829FEDA6B00A7EA92 /* WarmingStripesTests.swift */; };
+		B44D922029FEEFCD00A7EA92 /* ChartViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44D921F29FEEFCD00A7EA92 /* ChartViewModelTests.swift */; };
 		B45F2D5D28A98C0F0064D3C3 /* HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv in Resources */ = {isa = PBXBuildFile; fileRef = B45F2D5C28A98C0F0064D3C3 /* HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv */; };
 		B46AC55A29F3179D00D37088 /* UIColorLuminosity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46AC55929F3179D00D37088 /* UIColorLuminosity.swift */; };
 		B4A1002C29F7F5CB0062B844 /* BundleAndDeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A1002B29F7F5CB0062B844 /* BundleAndDeviceInfo.swift */; };
@@ -30,6 +32,16 @@
 		B4E7FE1928A7E7390032159E /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E7FE1828A7E7390032159E /* Modifiers.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		B44D921A29FEDA6B00A7EA92 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B4B81A772861E5A500F9E2EC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B4B81A7E2861E5A500F9E2EC;
+			remoteInfo = WarmingStripes;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		B40EE4D029F5D04600AA1689 /* SimpleChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleChartView.swift; sourceTree = "<group>"; };
 		B430EA9828A7E9850002B884 /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
@@ -41,6 +53,9 @@
 		B43AE57B29E31EEF00671F9C /* PreferencesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesButton.swift; sourceTree = "<group>"; };
 		B43AE57E29E35CB400671F9C /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		B43AE58029E35E5200671F9C /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
+		B44D921629FEDA6B00A7EA92 /* WarmingStripesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WarmingStripesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B44D921829FEDA6B00A7EA92 /* WarmingStripesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmingStripesTests.swift; sourceTree = "<group>"; };
+		B44D921F29FEEFCD00A7EA92 /* ChartViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModelTests.swift; sourceTree = "<group>"; };
 		B45F2D5C28A98C0F0064D3C3 /* HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv; sourceTree = "<group>"; };
 		B46AC55929F3179D00D37088 /* UIColorLuminosity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorLuminosity.swift; sourceTree = "<group>"; };
 		B47B97B9296B058E00740A8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -57,6 +72,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B44D921329FEDA6B00A7EA92 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B4B81A7C2861E5A500F9E2EC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -92,10 +114,20 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		B44D921729FEDA6B00A7EA92 /* WarmingStripesTests */ = {
+			isa = PBXGroup;
+			children = (
+				B44D921829FEDA6B00A7EA92 /* WarmingStripesTests.swift */,
+				B44D921F29FEEFCD00A7EA92 /* ChartViewModelTests.swift */,
+			);
+			path = WarmingStripesTests;
+			sourceTree = "<group>";
+		};
 		B4B81A762861E5A500F9E2EC = {
 			isa = PBXGroup;
 			children = (
 				B4B81A812861E5A500F9E2EC /* WarmingStripes */,
+				B44D921729FEDA6B00A7EA92 /* WarmingStripesTests */,
 				B4B81A802861E5A500F9E2EC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -104,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				B4B81A7F2861E5A500F9E2EC /* WarmingStripes.app */,
+				B44D921629FEDA6B00A7EA92 /* WarmingStripesTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -155,6 +188,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B44D921529FEDA6B00A7EA92 /* WarmingStripesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B44D921E29FEDA6B00A7EA92 /* Build configuration list for PBXNativeTarget "WarmingStripesTests" */;
+			buildPhases = (
+				B44D921229FEDA6B00A7EA92 /* Sources */,
+				B44D921329FEDA6B00A7EA92 /* Frameworks */,
+				B44D921429FEDA6B00A7EA92 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B44D921B29FEDA6B00A7EA92 /* PBXTargetDependency */,
+			);
+			name = WarmingStripesTests;
+			productName = WarmingStripesTests;
+			productReference = B44D921629FEDA6B00A7EA92 /* WarmingStripesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		B4B81A7E2861E5A500F9E2EC /* WarmingStripes */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B4B81A8D2861E5A700F9E2EC /* Build configuration list for PBXNativeTarget "WarmingStripes" */;
@@ -180,9 +231,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1400;
+				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1400;
 				TargetAttributes = {
+					B44D921529FEDA6B00A7EA92 = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = B4B81A7E2861E5A500F9E2EC;
+					};
 					B4B81A7E2861E5A500F9E2EC = {
 						CreatedOnToolsVersion = 14.0;
 					};
@@ -202,11 +257,19 @@
 			projectRoot = "";
 			targets = (
 				B4B81A7E2861E5A500F9E2EC /* WarmingStripes */,
+				B44D921529FEDA6B00A7EA92 /* WarmingStripesTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B44D921429FEDA6B00A7EA92 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B4B81A7D2861E5A500F9E2EC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -240,6 +303,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B44D921229FEDA6B00A7EA92 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B44D921929FEDA6B00A7EA92 /* WarmingStripesTests.swift in Sources */,
+				B44D922029FEEFCD00A7EA92 /* ChartViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B4B81A7B2861E5A500F9E2EC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -267,7 +339,55 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		B44D921B29FEDA6B00A7EA92 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B4B81A7E2861E5A500F9E2EC /* WarmingStripes */;
+			targetProxy = B44D921A29FEDA6B00A7EA92 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		B44D921C29FEDA6B00A7EA92 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PZK764WV5H;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = forestandthetrees.WarmingStripesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WarmingStripes.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/WarmingStripes";
+			};
+			name = Debug;
+		};
+		B44D921D29FEDA6B00A7EA92 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PZK764WV5H;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = forestandthetrees.WarmingStripesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WarmingStripes.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/WarmingStripes";
+			};
+			name = Release;
+		};
 		B4B81A8B2861E5A700F9E2EC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -449,6 +569,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B44D921E29FEDA6B00A7EA92 /* Build configuration list for PBXNativeTarget "WarmingStripesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B44D921C29FEDA6B00A7EA92 /* Debug */,
+				B44D921D29FEDA6B00A7EA92 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B4B81A7A2861E5A500F9E2EC /* Build configuration list for PBXProject "WarmingStripes" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

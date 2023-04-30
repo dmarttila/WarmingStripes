@@ -172,7 +172,7 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
         guard let temperatureAnomaly = model.anomalies.first(where: { $0.date > date }) else { return }
         rolledOverAnomaly = temperatureAnomaly
         var locX = location.x
-        let locY = location.y - 60
+        let locY = location.y - 75
         locX -= rolloverViewWidth * locX/chartProxyGeo.size.width
         chartValueIndicatorOffset = CGSize(width: locX, height: locY)
         isDragging = true

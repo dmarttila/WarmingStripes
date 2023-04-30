@@ -5,7 +5,7 @@
 //  Created by Doug Marttila on 6/21/22.
 //
 // load data from other site
-// clean up branches on repo
+// add tests
 
 import SwiftUI
 

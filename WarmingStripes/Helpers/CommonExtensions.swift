@@ -10,10 +10,7 @@ import SwiftUI
 public extension Double {
     // 4.99999 -> 5
     var decimalFormat: String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 1
-        return formatter.string(from: NSNumber(value: self)) ?? ""
+        NumberFormatter.decimalFormatter.string(from: NSNumber(value: self)) ?? ""
     }
     // 4.99999 -> 4.9
     var floorDecimalFormat: String {
@@ -55,3 +52,14 @@ extension DateFormatter {
     return dateFormatter
   }()
 }
+
+extension NumberFormatter {
+  static let decimalFormatter: NumberFormatter = {
+      let formatter = NumberFormatter()
+      formatter.numberStyle = .decimal
+      formatter.maximumFractionDigits = 1
+      return formatter
+  }()
+}
+
+
