@@ -43,4 +43,7 @@ public extension Date {
         components.year = year
         self = Calendar.current.date(from: components) ?? Date()
     }
+    var yearString: String {
+        "Test year"
+    }
 }
