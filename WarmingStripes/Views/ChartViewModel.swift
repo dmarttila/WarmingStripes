@@ -64,7 +64,7 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
         let ratio = width / Double(model.anomalies.count)
         return MarkDimension(floatLiteral: ratio + 0.5)
     }
-    // color scales are tricky. This works, but will probably need tweaking when additional data sets are loaded
+    // color scales are tricky. This works, but will need tweaking when additional data sets are loaded
     func getBarColor (_ temperaturAnomaly: TemperatureAnomaly) -> Color {
         let anomaly = temperaturAnomaly.anomaly
         let color: UIColor

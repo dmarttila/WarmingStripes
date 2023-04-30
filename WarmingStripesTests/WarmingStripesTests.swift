@@ -40,4 +40,12 @@ final class WarmingStripesTests: XCTestCase {
         XCTAssertEqual(sut.temperatureScale.abbreviation, tempAbbreviation)
     }
 
+    func testMaxMinDate () {
+        let startDate = Date(year: 1850, month: 1, day: 1)
+        XCTAssertEqual(startDate, sut.startDate)
+
+        let endDate = Date(year: 2022, month: 1, day: 1)
+        XCTAssertEqual(endDate, sut.endDate)
+    }
+
 }
