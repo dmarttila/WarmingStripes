@@ -2,7 +2,7 @@
 //  ChartPlotView.swift
 //  WarmingStripes
 //
-//  Created by Douglas Marttila on 4/27/23.
+//  Created by Doug Marttila on 4/27/23.
 //
 
 import Charts
@@ -10,7 +10,6 @@ import SwiftUI
 
 struct ChartPlotView: View {
     @ObservedObject var viewModel: ChartViewModel
-
 
     var body: some View {
         GeometryReader { geo in
@@ -114,14 +113,17 @@ struct ChartPlotView: View {
                             DragGesture(minimumDistance: 0)
                                 .onChanged {
                                     viewModel.dragging(location: $0.location, chartProxy: chartProxy, chartProxyGeo: chartProxyGeo)
-                                    //                                              dragging(value: $0, geo: geo)
                                 }
                                 .onEnded { _ in
                                     viewModel.stoppedDragging()
                                 }
                         )
+
                     if viewModel.isDragging {
-                        ChartRolloverView(temperatureAnomaly: viewModel.rolledOverAnomaly)
+                        ChartRolloverView(
+                            temperatureAnomaly: viewModel.rolledOverAnomaly,
+                            temperatureAbbreviation: viewModel.temperatureAbbreviation,
+                            rolloverViewWidth: viewModel.rolloverViewWidth)
                             .offset(viewModel.chartValueIndicatorOffset)
                     }
 

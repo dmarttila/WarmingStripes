@@ -9,6 +9,7 @@ import Charts
 import SwiftUI
 
 class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
+
     @ObservedObject var model: Model
     @Binding var chartState: ChartState {
         didSet {
@@ -24,6 +25,9 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
     var drawTitleAboveChart: Bool {
         chartState == .labelledStripes
     }
+    var temperatureAbbreviation: String {
+        model.temperatureScale.abbreviation
+    }
     var titleText: String {
         switch chartState {
         case .stripes:
@@ -32,7 +36,7 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
             return "Global temperature change (\(startYear) - \(endYear))"
         case .bars:
             // Can't calculate global temp differences from data, so hard code
-            return "Global temperatures have increased by over \(displayInCelsius ? 1.2 : 2.2)\(model.temperatureScale.abbreviation)"
+            return "Global temperatures have increased by over \(displayInCelsius ? 1.2 : 2.2)\(temperatureAbbreviation)"
         case .barsWithScale:
             return "Global temperature change"
         }
@@ -140,7 +144,7 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
         isBarsWithScale || chartState == .bars
     }
     var subTitleText: String {
-        isBarsWithScale ? "Relative to average of 1971-2000 [\(model.temperatureScale.abbreviation)]" : ""
+        isBarsWithScale ? "Relative to average of 1961-1990 [\(temperatureAbbreviation)]" : ""
     }
 
     // if the xAxis is drawn, create space for it
@@ -155,27 +159,25 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
     private var displayInCelsius: Bool {
         return model.temperatureScale == .celsius
     }
+
+    //Rollover code
     @Published var chartValueIndicatorOffset = CGSize.zero
-    @Published var rolloverText: String = ""
     @Published var isDragging: Bool = false
-    @Published var rolledOverAnomaly: TemperatureAnomaly? = nil
-    let textDisplayWidth: CGFloat = 50
+    @Published var rolledOverAnomaly: TemperatureAnomaly?
+    let rolloverViewWidth: CGFloat = 130
 
     func dragging(location: CGPoint, chartProxy: ChartProxy, chartProxyGeo: GeometryProxy) {
         let currentX = location.x - chartProxyGeo[chartProxy.plotAreaFrame].origin.x
         guard let date = chartProxy.value(atX: currentX, as: Date.self) else { return }
         guard let temperatureAnomaly = model.anomalies.first(where: { $0.date > date }) else { return }
         rolledOverAnomaly = temperatureAnomaly
-
-
         var locX = location.x
-        let locY = location.y - 90
-        locX -= textDisplayWidth * locX/chartProxyGeo.size.width
+        let locY = location.y - 60
+        locX -= rolloverViewWidth * locX/chartProxyGeo.size.width
         chartValueIndicatorOffset = CGSize(width: locX, height: locY)
         isDragging = true
     }
     func stoppedDragging() {
-        rolloverText = ""
         isDragging = false
     }
 

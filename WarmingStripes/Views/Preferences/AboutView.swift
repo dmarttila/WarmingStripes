@@ -12,7 +12,7 @@ struct AboutAppQA {
     let qas = [
         QuestionAnswer(
             question: "What does the app do?",
-            answer: "Shows the rise in global temperatures over the last 172 years."
+            answer: "Shows the rise in global temperatures over the last 172 years. Each bar represents a year. Each bar's color is calculated by comparing that year's global average temperature to the 1961-1990 reference period."
         ),
 
         QuestionAnswer(
