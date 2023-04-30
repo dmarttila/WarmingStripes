@@ -18,7 +18,6 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
     init (model: Model) {
         self.model = model
         _chartState = model.$chartState
-        yearFormatter.dateFormat = "yyyy"
     }
 
     // Chart title
@@ -42,12 +41,11 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
     // for the Bars chart, draw years to the left and right of the chart
     var drawLeadingAndTrailingYears: Bool { chartState == .bars }
     var startYear: String {
-        yearFormatter.string(from: model.startDate)
+        model.startDate.yearString
     }
     var endYear: String {
-        yearFormatter.string(from: model.endDate)
+        model.endDate.yearString
     }
-    private let yearFormatter = DateFormatter()
 
     // chart data
     var anomalies: [TemperatureAnomaly] {
@@ -157,4 +155,28 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
     private var displayInCelsius: Bool {
         return model.temperatureScale == .celsius
     }
+    @Published var chartValueIndicatorOffset = CGSize.zero
+    @Published var rolloverText: String = ""
+    @Published var isDragging: Bool = false
+    @Published var rolledOverAnomaly: TemperatureAnomaly? = nil
+    let textDisplayWidth: CGFloat = 50
+
+    func dragging(location: CGPoint, chartProxy: ChartProxy, chartProxyGeo: GeometryProxy) {
+        let currentX = location.x - chartProxyGeo[chartProxy.plotAreaFrame].origin.x
+        guard let date = chartProxy.value(atX: currentX, as: Date.self) else { return }
+        guard let temperatureAnomaly = model.anomalies.first(where: { $0.date > date }) else { return }
+        rolledOverAnomaly = temperatureAnomaly
+
+
+        var locX = location.x
+        let locY = location.y - 90
+        locX -= textDisplayWidth * locX/chartProxyGeo.size.width
+        chartValueIndicatorOffset = CGSize(width: locX, height: locY)
+        isDragging = true
+    }
+    func stoppedDragging() {
+        rolloverText = ""
+        isDragging = false
+    }
+
 }
