@@ -10,7 +10,7 @@ import SwiftUI
 
 class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
 
-    @ObservedObject var model: Model
+    let model: Model
     @Binding var chartState: ChartState {
         didSet {
             hapticSelectionChange()
@@ -34,6 +34,7 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
             return "Global temperature change (\(startYear) - \(endYear))"
         case .bars:
             // Can't calculate global temp differences from data, so hard code
+            // swiftlint:disable:next line_length
             return "Global temperatures have increased by over \(displayInCelsius ? 1.2 : 2.2)\(temperatureAbbreviation)"
         case .barsWithScale:
             return "Global temperature change"
@@ -64,7 +65,7 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
         let ratio = width / Double(model.anomalies.count)
         return MarkDimension(floatLiteral: ratio + 0.5)
     }
-    // color scales are tricky. This works, but will need tweaking when additional data sets are loaded
+
     func getBarColor (_ temperaturAnomaly: TemperatureAnomaly) -> Color {
         let anomaly = temperaturAnomaly.anomaly
         let color: UIColor
@@ -88,7 +89,7 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
         chartState == .stripes || chartState == .labelledStripes ? 0 : model.maxAnomaly * -1
     }
     let axisLineWidth: Double = 1
-    // TODO: remove the hardcoding - from -0.6 to 0.6
+    // TODO: make dynamic
     var yAxisLabelRange: Double {
         displayInCelsius ? 0.6 : 1
     }
@@ -145,7 +146,6 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
     var subTitleText: String {
         isBarsWithScale ? "Relative to average of 1961-1990 [\(temperatureAbbreviation)]" : ""
     }
-
     // if the xAxis is drawn, create space for it
     var spaceForXAxis: CGFloat {
         drawXAxis ? 25 : 0
@@ -155,17 +155,21 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
     @Published var chartValueIndicatorOffset = CGSize.zero
     @Published var isDragging: Bool = false
     @Published var rolloverText: String = ""
-    let rolloverViewWidth: CGFloat = 130
+    let rolloverWidth: CGFloat = 150
     let rolloverBackground = Color(hex: 0x5B5B60)
+    let rolloverPadding: CGFloat = 3
+    let rolloverCornerRadius: CGFloat = 5
 
     func dragging(location: CGPoint, chartProxy: ChartProxy, chartProxyGeo: GeometryProxy) {
         let currentX = location.x - chartProxyGeo[chartProxy.plotAreaFrame].origin.x
-        guard let date = chartProxy.value(atX: currentX, as: Date.self) else { return }
-        guard let temperatureAnomaly = model.anomalies.first(where: { $0.date > date }) else { return }
+        guard let date = chartProxy.value(atX: currentX, as: Date.self),
+        let temperatureAnomaly = model.anomalies.first(where: { $0.date > date }) else { return }
         rolloverText = getRolloverText(temperatureAnomaly)
         var locX = location.x
-        let locY = location.y - 75
-        locX -= rolloverViewWidth * locX/chartProxyGeo.size.width
+        // add some space so the rollover is above the touch
+        let locY = location.y - 90
+        // make sure it doesn't draw offscreen
+        locX -= rolloverWidth * locX/chartProxyGeo.size.width
         chartValueIndicatorOffset = CGSize(width: locX, height: locY)
         isDragging = true
     }
@@ -189,5 +193,4 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
     private var temperatureAbbreviation: String {
         model.temperatureScale.abbreviation
     }
-
 }

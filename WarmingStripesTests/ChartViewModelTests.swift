@@ -3,12 +3,10 @@
 //  WarmingStripesTests
 //
 //  Created by Doug Marttila on 4/30/23.
-//
 
-import XCTest
-@testable import WarmingStripes
-import Charts
 import SwiftUI
+@testable import WarmingStripes
+import XCTest
 
 final class ChartViewModelTests: XCTestCase {
     var sut: ChartViewModel!
@@ -78,6 +76,10 @@ final class ChartViewModelTests: XCTestCase {
         XCTAssertEqual(sut.endYear, expectedYear)
     }
 
+    func testAnomalies() {
+        XCTAssertEqual(sut.anomalies, model.anomalies)
+    }
+
     private func makeTemperatureAnomaly (year: Int, anomaly: Double) -> TemperatureAnomaly {
         TemperatureAnomaly(date: Date(year: year, month: 1, day: 1), anomaly: anomaly)
     }
@@ -100,7 +102,13 @@ final class ChartViewModelTests: XCTestCase {
         XCTAssertEqual(sut.getYValue(temperatureAnomaly), anomaly)
     }
 
-    //TODO: Test for getBarWidth and getBarColor
+    // getBarWidth doesn't seem to be testable because MarkDimension isn't Equatable and doesn't have public properties
+
+    func testGetBarColor() {
+        let temperatureAnomaly = makeTemperatureAnomaly(year: 2022, anomaly: model.maxAnomaly)
+        let expected = Color(UIColor.red.withLuminosity(0.15))
+        XCTAssertEqual(sut.getBarColor(temperatureAnomaly), expected)
+    }
 
     func testDrawAxisLines() {
         sut.chartState = .stripes
@@ -178,7 +186,7 @@ final class ChartViewModelTests: XCTestCase {
         XCTAssertTrue(sut.drawXAxis)
     }
 
-    //TODO: test getXAxisYLoc
+    // getXAxisYLoc doesn't seem testable because it uses ChartProxy and GeometryProxy and they don't appear mockable
 
     func testXAxisYears() {
         sut.chartState = .labelledStripes
@@ -188,7 +196,7 @@ final class ChartViewModelTests: XCTestCase {
         XCTAssertEqual(sut.xAxisYears, [1850, 1900, 1950, 2000, 2022])
     }
 
-    //TODO: test getXLoc, getYearLabelXLoc
+    // getXLoc and getYearLabelXLoc don't seem testable because they uses ChartProxy and GeometryProxy and they don't appear mockable
 
     func testDrawTickMarks() {
         sut.chartState = .labelledStripes
@@ -255,5 +263,4 @@ final class ChartViewModelTests: XCTestCase {
         expected = sut.getRolloverText(temperatureAnomaly)
         XCTAssertEqual(expected, "Year: 2022\nAnomaly: 0.5°F")
     }
-
 }

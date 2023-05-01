@@ -7,7 +7,7 @@
 
 import Charts
 import SwiftUI
-
+ 
 struct ChartPlotView: View {
     @ObservedObject var viewModel: ChartViewModel
 
@@ -106,7 +106,6 @@ struct ChartPlotView: View {
                 }
             }
             .chartOverlay { chartProxy in
-                //TODO: Put this in a view?
                 GeometryReader { chartProxyGeo in
                     Rectangle().fill(.clear).contentShape(Rectangle())
                         .gesture(
@@ -121,10 +120,10 @@ struct ChartPlotView: View {
 
                     if viewModel.isDragging {
                         Text(viewModel.rolloverText)
-                            .frame(minWidth: viewModel.rolloverViewWidth, alignment: .leading)
-                            .padding(3)
+                            .frame(minWidth: viewModel.rolloverWidth, alignment: .leading)
+                            .padding(viewModel.rolloverPadding)
                             .background(viewModel.rolloverBackground)
-                            .cornerRadius(5)
+                            .cornerRadius(viewModel.rolloverCornerRadius)
                             .offset(viewModel.chartValueIndicatorOffset)
                     }
                 }

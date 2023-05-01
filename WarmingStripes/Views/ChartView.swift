@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ChartView: View {
     @ObservedObject var viewModel: ChartViewModel
+
     var body: some View {
         VStack(alignment: .leading) {
             Picker("Chart state:", selection: $viewModel.chartState) {

@@ -27,7 +27,7 @@ public enum TemperatureScale: String, CaseIterable, Identifiable, Codable {
     }
 }
 
-struct TemperatureAnomaly: Identifiable {
+struct TemperatureAnomaly: Identifiable, Equatable {
     let date: Date
     let anomaly: Double 
     var id = UUID()
@@ -40,13 +40,18 @@ class Model: ObservableObject {
             loadData()
         }
     }
-    
+
     init() {
         loadData()
     }
-    
-    @Published var maxAnomaly: Double = 0
-    @Published var minAnomaly: Double = 0
+
+    var minAnomaly: Double {
+        anomalies.min(by: { $0.anomaly < $1.anomaly })?.anomaly ?? 0
+    }
+    var maxAnomaly: Double {
+        anomalies.max(by: { $0.anomaly < $1.anomaly })?.anomaly ?? 0
+    }
+
     var startDate: Date {
         anomalies.min(by: { $0.date < $1.date })?.date ?? .now
     }
@@ -59,8 +64,6 @@ class Model: ObservableObject {
     //if data sets are loaded from the internet, you'd want to convert the values to Fahrenheit rather than reload, but since it's in the bundle, this is the simplest
     private func loadData() {
         var anomalies: [TemperatureAnomaly] = []
-        minAnomaly = 0
-        maxAnomaly = 0
         if let filepath = Bundle.main.path(forResource: fileName, ofType: "csv") {
             do {
                 let contents = try String(contentsOfFile: filepath)
@@ -73,8 +76,6 @@ class Model: ObservableObject {
                         }
                         let date = Date(year: year, month: 1, day: 1)
                         anomalies.append(TemperatureAnomaly(date: date, anomaly: tempDiff))
-                        minAnomaly = min(minAnomaly, tempDiff)
-                        maxAnomaly = max(maxAnomaly, tempDiff)
                     }
                 }
             } catch {

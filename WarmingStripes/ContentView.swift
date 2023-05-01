@@ -4,8 +4,7 @@
 //
 //  Created by Doug Marttila on 6/21/22.
 //
-// load data from other site
-// add tests
+// TODO: load data for other countries - https://berkeleyearth.org/
 
 import SwiftUI
 

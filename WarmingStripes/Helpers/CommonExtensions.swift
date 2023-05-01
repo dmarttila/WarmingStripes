@@ -7,18 +7,14 @@
 
 import SwiftUI
 
-public extension Double {
+extension Double {
     // 4.99999 -> 5
     var decimalFormat: String {
         NumberFormatter.decimalFormatter.string(from: NSNumber(value: self)) ?? ""
     }
-    // 4.99999 -> 4.9
-    var floorDecimalFormat: String {
-       (floor(self * 10) / 10).decimalFormat
-    }
 }
 
-public extension Color {
+extension Color {
     init(hex: UInt, alpha: Double = 1) {
         self.init(
             .sRGB,
@@ -30,7 +26,7 @@ public extension Color {
     }
 }
 
-public extension Date {
+extension Date {
     init(year: Int, month: Int, day: Int) {
         var components = DateComponents()
         components.hour = 12
@@ -61,5 +57,3 @@ extension NumberFormatter {
       return formatter
   }()
 }
-
-

@@ -9,10 +9,10 @@ import SwiftUI
 
 struct PreferencesButton: View {
     @Binding var showPreferences: Bool
-    
+
     private let lightBlue = Color(hex: 0x00BCD4)
     private let innerCircleSize: CGFloat = 30
-    
+
     var body: some View {
         Button {
             showPreferences.toggle()
