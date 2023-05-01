@@ -13,7 +13,6 @@
 		B430EAA228A7E9850002B884 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430EA9A28A7E9850002B884 /* PreferencesView.swift */; };
 		B430EAA628A7E9860002B884 /* QuestionAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430EA9F28A7E9850002B884 /* QuestionAnswerView.swift */; };
 		B4335B9F29FEBDEF006F65F0 /* ChartPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4335B9E29FEBDEF006F65F0 /* ChartPlotView.swift */; };
-		B4335BA129FEBE3A006F65F0 /* ChartRolloverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4335BA029FEBE3A006F65F0 /* ChartRolloverView.swift */; };
 		B43AE57C29E31EF000671F9C /* PreferencesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43AE57B29E31EEF00671F9C /* PreferencesButton.swift */; };
 		B43AE57F29E35CB400671F9C /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43AE57E29E35CB400671F9C /* ChartView.swift */; };
 		B43AE58129E35E5200671F9C /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43AE58029E35E5200671F9C /* ChartViewModel.swift */; };
@@ -49,7 +48,6 @@
 		B430EA9A28A7E9850002B884 /* PreferencesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		B430EA9F28A7E9850002B884 /* QuestionAnswerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionAnswerView.swift; sourceTree = "<group>"; };
 		B4335B9E29FEBDEF006F65F0 /* ChartPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartPlotView.swift; sourceTree = "<group>"; };
-		B4335BA029FEBE3A006F65F0 /* ChartRolloverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartRolloverView.swift; sourceTree = "<group>"; };
 		B43AE57B29E31EEF00671F9C /* PreferencesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesButton.swift; sourceTree = "<group>"; };
 		B43AE57E29E35CB400671F9C /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		B43AE58029E35E5200671F9C /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
@@ -109,7 +107,6 @@
 				B43AE58029E35E5200671F9C /* ChartViewModel.swift */,
 				B40EE4D029F5D04600AA1689 /* SimpleChartView.swift */,
 				B4335B9E29FEBDEF006F65F0 /* ChartPlotView.swift */,
-				B4335BA029FEBE3A006F65F0 /* ChartRolloverView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -328,7 +325,6 @@
 				B430EAA228A7E9850002B884 /* PreferencesView.swift in Sources */,
 				B4D7F0DD28A7ED5300EF645E /* HapticsProtocol.swift in Sources */,
 				B430EAA128A7E9850002B884 /* PrivacyView.swift in Sources */,
-				B4335BA129FEBE3A006F65F0 /* ChartRolloverView.swift in Sources */,
 				B4E7FE1928A7E7390032159E /* Modifiers.swift in Sources */,
 				B4335B9F29FEBDEF006F65F0 /* ChartPlotView.swift in Sources */,
 				B4B4EA3A28BE98C100CEBDF0 /* CommonExtensions.swift in Sources */,

@@ -120,13 +120,13 @@ struct ChartPlotView: View {
                         )
 
                     if viewModel.isDragging {
-                        ChartRolloverView(
-                            temperatureAnomaly: viewModel.rolledOverAnomaly,
-                            temperatureAbbreviation: viewModel.temperatureAbbreviation,
-                            rolloverViewWidth: viewModel.rolloverViewWidth)
+                        Text(viewModel.rolloverText)
+                            .frame(minWidth: viewModel.rolloverViewWidth, alignment: .leading)
+                            .padding(3)
+                            .background(viewModel.rolloverBackground)
+                            .cornerRadius(5)
                             .offset(viewModel.chartValueIndicatorOffset)
                     }
-
                 }
             }
         }

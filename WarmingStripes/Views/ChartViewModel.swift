@@ -163,14 +163,19 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
     //Rollover code
     @Published var chartValueIndicatorOffset = CGSize.zero
     @Published var isDragging: Bool = false
-    @Published var rolledOverAnomaly: TemperatureAnomaly?
     let rolloverViewWidth: CGFloat = 130
+
+
+    let rolloverBackground = Color(hex: 0x5B5B60)
+    @Published var rolloverText: String = ""
 
     func dragging(location: CGPoint, chartProxy: ChartProxy, chartProxyGeo: GeometryProxy) {
         let currentX = location.x - chartProxyGeo[chartProxy.plotAreaFrame].origin.x
         guard let date = chartProxy.value(atX: currentX, as: Date.self) else { return }
         guard let temperatureAnomaly = model.anomalies.first(where: { $0.date > date }) else { return }
-        rolledOverAnomaly = temperatureAnomaly
+        rolloverText = "Year: \(temperatureAnomaly.date.yearString)\n"
+        rolloverText +=  "Anomaly: \(temperatureAnomaly.anomaly.decimalFormat)"
+        rolloverText += temperatureAbbreviation
         var locX = location.x
         let locY = location.y - 75
         locX -= rolloverViewWidth * locX/chartProxyGeo.size.width
