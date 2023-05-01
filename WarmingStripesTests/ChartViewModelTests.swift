@@ -26,10 +26,13 @@ final class ChartViewModelTests: XCTestCase {
     func testDrawTitleAboveChart() {
         sut.chartState = .stripes
         XCTAssertFalse(sut.drawTitleAboveChart)
+
         sut.chartState = .labelledStripes
         XCTAssertTrue(sut.drawTitleAboveChart)
+
         sut.chartState = .bars
         XCTAssertFalse(sut.drawTitleAboveChart)
+
         sut.chartState = .barsWithScale
         XCTAssertFalse(sut.drawTitleAboveChart)
     }
@@ -79,7 +82,7 @@ final class ChartViewModelTests: XCTestCase {
         TemperatureAnomaly(date: Date(year: year, month: 1, day: 1), anomaly: anomaly)
     }
 
-    func testYValue() {
+    func testGetYValue() {
         let anomaly = 0.5
         let expectedValue = sut.model.maxAnomaly
         let temperatureAnomaly = makeTemperatureAnomaly(year: 2022, anomaly: anomaly)
@@ -96,7 +99,9 @@ final class ChartViewModelTests: XCTestCase {
         sut.chartState = .barsWithScale
         XCTAssertEqual(sut.getYValue(temperatureAnomaly), anomaly)
     }
-    //TODO: test bar width and bar color
+
+    //TODO: Test for getBarWidth and getBarColor
+
     func testDrawAxisLines() {
         sut.chartState = .stripes
         XCTAssertFalse(sut.drawAxisLines)
@@ -140,10 +145,13 @@ final class ChartViewModelTests: XCTestCase {
     func testYAxisVisible() {
         sut.chartState = .stripes
         XCTAssertEqual(sut.yAxisVisible, .hidden)
+
         sut.chartState = .labelledStripes
         XCTAssertEqual(sut.yAxisVisible, .hidden)
+
         sut.chartState = .bars
         XCTAssertEqual(sut.yAxisVisible, .hidden)
+
         sut.chartState = .barsWithScale
         XCTAssertEqual(sut.yAxisVisible, .visible)
     }
@@ -151,6 +159,7 @@ final class ChartViewModelTests: XCTestCase {
     func testYAxisValues() {
         model.temperatureScale = .celsius
         XCTAssertEqual(sut.yAxisValues, [-0.6, -0.3, -0.0, 0.3, 0.6])
+
         model.temperatureScale = .fahrenheit
         XCTAssertEqual(sut.yAxisValues, [-1, -0.5, 0.0, 0.5, 1.0])
     }
@@ -158,37 +167,47 @@ final class ChartViewModelTests: XCTestCase {
     func testDrawXAxis() {
         sut.chartState = .stripes
         XCTAssertFalse(sut.drawXAxis)
+
         sut.chartState = .labelledStripes
         XCTAssertTrue(sut.drawXAxis)
+
         sut.chartState = .bars
         XCTAssertFalse(sut.drawXAxis)
+
         sut.chartState = .barsWithScale
         XCTAssertTrue(sut.drawXAxis)
     }
-    // TODO getXAxisLoc - test
+
+    //TODO: test getXAxisYLoc
+
     func testXAxisYears() {
         sut.chartState = .labelledStripes
         XCTAssertEqual(sut.xAxisYears, [1860, 1890, 1920, 1950, 1980, 2010])
+
         sut.chartState = .barsWithScale
         XCTAssertEqual(sut.xAxisYears, [1850, 1900, 1950, 2000, 2022])
     }
 
-    //todo getXLoc, getYearLabelXloc
+    //TODO: test getXLoc, getYearLabelXLoc
 
     func testDrawTickMarks() {
         sut.chartState = .labelledStripes
         XCTAssertFalse(sut.drawTickMarks)
+
         sut.chartState = .barsWithScale
         XCTAssertTrue(sut.drawTickMarks)
     }
-//todo remove Gets
+
     func testDrawTitleOnChartPlot() {
         sut.chartState = .stripes
         XCTAssertFalse(sut.drawTitleOnChartPlot)
+
         sut.chartState = .labelledStripes
         XCTAssertFalse(sut.drawTitleOnChartPlot)
+
         sut.chartState = .bars
         XCTAssertTrue(sut.drawTitleOnChartPlot)
+
         sut.chartState = .barsWithScale
         XCTAssertTrue(sut.drawTitleOnChartPlot)
     }
@@ -223,4 +242,18 @@ final class ChartViewModelTests: XCTestCase {
         sut.chartState = .barsWithScale
         XCTAssertEqual(sut.spaceForXAxis, 25)
     }
+
+    func testGetRolloverText() {
+        let anomaly = 0.5
+        let temperatureAnomaly = makeTemperatureAnomaly(year: 2022, anomaly: anomaly)
+
+        model.temperatureScale = .celsius
+        var expected = sut.getRolloverText(temperatureAnomaly)
+        XCTAssertEqual(expected, "Year: 2022\nAnomaly: 0.5°C")
+
+        model.temperatureScale = .fahrenheit
+        expected = sut.getRolloverText(temperatureAnomaly)
+        XCTAssertEqual(expected, "Year: 2022\nAnomaly: 0.5°F")
+    }
+
 }

@@ -162,14 +162,18 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
         let currentX = location.x - chartProxyGeo[chartProxy.plotAreaFrame].origin.x
         guard let date = chartProxy.value(atX: currentX, as: Date.self) else { return }
         guard let temperatureAnomaly = model.anomalies.first(where: { $0.date > date }) else { return }
-        rolloverText = "Year: \(temperatureAnomaly.date.yearString)\n"
-        rolloverText +=  "Anomaly: \(temperatureAnomaly.anomaly.decimalFormat)"
-        rolloverText += temperatureAbbreviation
+        rolloverText = getRolloverText(temperatureAnomaly)
         var locX = location.x
         let locY = location.y - 75
         locX -= rolloverViewWidth * locX/chartProxyGeo.size.width
         chartValueIndicatorOffset = CGSize(width: locX, height: locY)
         isDragging = true
+    }
+    func getRolloverText (_ temperatureAnomaly: TemperatureAnomaly) -> String {
+        var str = "Year: \(temperatureAnomaly.date.yearString)\n"
+        str +=  "Anomaly: \(temperatureAnomaly.anomaly.decimalFormat)"
+        str += temperatureAbbreviation
+        return str
     }
     func stoppedDragging() {
         isDragging = false
