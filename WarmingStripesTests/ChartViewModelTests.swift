@@ -23,6 +23,17 @@ final class ChartViewModelTests: XCTestCase {
         sut = nil
     }
 
+    func testDrawTitleAboveChart() {
+        sut.chartState = .stripes
+        XCTAssertFalse(sut.drawTitleAboveChart)
+        sut.chartState = .labelledStripes
+        XCTAssertTrue(sut.drawTitleAboveChart)
+        sut.chartState = .bars
+        XCTAssertFalse(sut.drawTitleAboveChart)
+        sut.chartState = .barsWithScale
+        XCTAssertFalse(sut.drawTitleAboveChart)
+    }
+
     func testTitleText() {
         sut.chartState = .stripes
         XCTAssertEqual(sut.titleText, "")
@@ -33,7 +44,6 @@ final class ChartViewModelTests: XCTestCase {
         sut.chartState = .bars
         model.temperatureScale = .fahrenheit
         XCTAssertEqual(sut.titleText, "Global temperatures have increased by over 2.2°F")
-
         model.temperatureScale = .celsius
         XCTAssertEqual(sut.titleText, "Global temperatures have increased by over 1.2°C")
 
@@ -41,27 +51,17 @@ final class ChartViewModelTests: XCTestCase {
         XCTAssertEqual(sut.titleText, "Global temperature change")
     }
 
-    func testDrawTitleAboveChart() {
-        sut.chartState = .labelledStripes
-        XCTAssertTrue(sut.drawTitleAboveChart)
-
-        sut.chartState = .bars
-        XCTAssertFalse(sut.drawTitleAboveChart)
-    }
-
-    func testTemperatureAbbreviation() {
-        model.temperatureScale = .celsius
-        XCTAssertEqual(sut.temperatureAbbreviation, "°C")
-
-        model.temperatureScale = .fahrenheit
-        XCTAssertEqual(sut.temperatureAbbreviation, "°F")
-    }
-
     func testDrawLeadingAndTrailingYears() {
+        sut.chartState = .stripes
+        XCTAssertFalse(sut.drawLeadingAndTrailingYears)
+
+        sut.chartState = .labelledStripes
+        XCTAssertFalse(sut.drawLeadingAndTrailingYears)
+
         sut.chartState = .bars
         XCTAssertTrue(sut.drawLeadingAndTrailingYears)
 
-        sut.chartState = .stripes
+        sut.chartState = .barsWithScale
         XCTAssertFalse(sut.drawLeadingAndTrailingYears)
     }
 
@@ -75,15 +75,16 @@ final class ChartViewModelTests: XCTestCase {
         XCTAssertEqual(sut.endYear, expectedYear)
     }
 
-    func makeTemperatureAnomaly (year: Int, anomaly: Double) -> TemperatureAnomaly {
+    private func makeTemperatureAnomaly (year: Int, anomaly: Double) -> TemperatureAnomaly {
         TemperatureAnomaly(date: Date(year: year, month: 1, day: 1), anomaly: anomaly)
     }
 
-    func testGetYValue() {
-        sut.chartState = .stripes
+    func testYValue() {
         let anomaly = 0.5
         let expectedValue = sut.model.maxAnomaly
         let temperatureAnomaly = makeTemperatureAnomaly(year: 2022, anomaly: anomaly)
+
+        sut.chartState = .stripes
         XCTAssertEqual(sut.getYValue(temperatureAnomaly), expectedValue)
 
         sut.chartState = .labelledStripes
@@ -95,12 +96,19 @@ final class ChartViewModelTests: XCTestCase {
         sut.chartState = .barsWithScale
         XCTAssertEqual(sut.getYValue(temperatureAnomaly), anomaly)
     }
+    //TODO: test bar width and bar color
     func testDrawAxisLines() {
-        sut.chartState = .barsWithScale
-        XCTAssertTrue(sut.drawAxisLines)
+        sut.chartState = .stripes
+        XCTAssertFalse(sut.drawAxisLines)
+
+        sut.chartState = .labelledStripes
+        XCTAssertFalse(sut.drawAxisLines)
 
         sut.chartState = .bars
         XCTAssertFalse(sut.drawAxisLines)
+
+        sut.chartState = .barsWithScale
+        XCTAssertTrue(sut.drawAxisLines)
     }
 
     func testYAxisMinimum() {
@@ -117,31 +125,102 @@ final class ChartViewModelTests: XCTestCase {
         XCTAssertEqual(sut.yAxisMinimum, -model.maxAnomaly)
     }
 
-    func testGetYAxisMaximum() {
+    func testYAxisLabelRange() {
+        model.temperatureScale = .celsius
+        XCTAssertEqual(sut.yAxisLabelRange, 0.6)
+
+        model.temperatureScale = .fahrenheit
+        XCTAssertEqual(sut.yAxisLabelRange, 1)
+    }
+
+    func testYAxisMaximum() {
         XCTAssertEqual(sut.yAxisMaximum, model.maxAnomaly)
     }
 
-    func testGetYAxisVisible() {
+    func testYAxisVisible() {
+        sut.chartState = .stripes
+        XCTAssertEqual(sut.yAxisVisible, .hidden)
+        sut.chartState = .labelledStripes
+        XCTAssertEqual(sut.yAxisVisible, .hidden)
+        sut.chartState = .bars
+        XCTAssertEqual(sut.yAxisVisible, .hidden)
         sut.chartState = .barsWithScale
         XCTAssertEqual(sut.yAxisVisible, .visible)
     }
 
-    func testGetYAxisValues() {
+    func testYAxisValues() {
         model.temperatureScale = .celsius
         XCTAssertEqual(sut.yAxisValues, [-0.6, -0.3, -0.0, 0.3, 0.6])
         model.temperatureScale = .fahrenheit
         XCTAssertEqual(sut.yAxisValues, [-1, -0.5, 0.0, 0.5, 1.0])
     }
 
-    func testGetDrawXAxis() {
-        sut.chartState = .labelledStripes
-        XCTAssertEqual(sut.drawXAxis, true)
-        sut.chartState = .bars
-        XCTAssertEqual(sut.drawXAxis, false)
+    func testDrawXAxis() {
         sut.chartState = .stripes
-        XCTAssertEqual(sut.drawXAxis, false)
+        XCTAssertFalse(sut.drawXAxis)
+        sut.chartState = .labelledStripes
+        XCTAssertTrue(sut.drawXAxis)
+        sut.chartState = .bars
+        XCTAssertFalse(sut.drawXAxis)
         sut.chartState = .barsWithScale
-        XCTAssertEqual(sut.drawXAxis, true)
+        XCTAssertTrue(sut.drawXAxis)
+    }
+    // TODO getXAxisLoc - test
+    func testXAxisYears() {
+        sut.chartState = .labelledStripes
+        XCTAssertEqual(sut.xAxisYears, [1860, 1890, 1920, 1950, 1980, 2010])
+        sut.chartState = .barsWithScale
+        XCTAssertEqual(sut.xAxisYears, [1850, 1900, 1950, 2000, 2022])
     }
 
+    //todo getXLoc, getYearLabelXloc
+
+    func testDrawTickMarks() {
+        sut.chartState = .labelledStripes
+        XCTAssertFalse(sut.drawTickMarks)
+        sut.chartState = .barsWithScale
+        XCTAssertTrue(sut.drawTickMarks)
+    }
+//todo remove Gets
+    func testDrawTitleOnChartPlot() {
+        sut.chartState = .stripes
+        XCTAssertFalse(sut.drawTitleOnChartPlot)
+        sut.chartState = .labelledStripes
+        XCTAssertFalse(sut.drawTitleOnChartPlot)
+        sut.chartState = .bars
+        XCTAssertTrue(sut.drawTitleOnChartPlot)
+        sut.chartState = .barsWithScale
+        XCTAssertTrue(sut.drawTitleOnChartPlot)
+    }
+
+    func testSubTitleText() {
+        sut.chartState = .stripes
+        XCTAssertEqual(sut.subTitleText, "")
+
+        sut.chartState = .labelledStripes
+        XCTAssertEqual(sut.subTitleText, "")
+
+        sut.chartState = .bars
+        XCTAssertEqual(sut.subTitleText, "")
+
+        sut.chartState = .barsWithScale
+        model.temperatureScale = .fahrenheit
+        XCTAssertEqual(sut.subTitleText, "Relative to average of 1961-1990 [°F]")
+        model.temperatureScale = .celsius
+        XCTAssertEqual(sut.subTitleText, "Relative to average of 1961-1990 [°C]")
+    }
+
+    func testSpaceForXAxis() {
+        sut.chartState = .stripes
+        XCTAssertEqual(sut.spaceForXAxis, 0)
+
+        sut.chartState = .labelledStripes
+        XCTAssertEqual(sut.spaceForXAxis, 25)
+
+        sut.chartState = .bars
+        XCTAssertEqual(sut.spaceForXAxis, 0)
+
+        sut.chartState = .barsWithScale
+        XCTAssertEqual(sut.spaceForXAxis, 25)
+    }
 }

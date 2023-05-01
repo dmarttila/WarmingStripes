@@ -28,7 +28,6 @@ struct ChartView: View {
                     Text(viewModel.startYear)
                 }
                 ChartPlotView(viewModel: viewModel)
-                // year at the right side of the chart for bars state
                 if viewModel.drawLeadingAndTrailingYears {
                     Text(viewModel.endYear)
                 }

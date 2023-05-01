@@ -91,7 +91,7 @@ struct ChartPlotView: View {
             }
             // Draws the chart title for bars-with-scale and bars states
             .chartOverlay { chartProxy in
-                if viewModel.drawTitleOnTopOfChart {
+                if viewModel.drawTitleOnChartPlot {
                     GeometryReader { geoProxy in
                         VStack(alignment: .leading) {
                             Text(viewModel.titleText)

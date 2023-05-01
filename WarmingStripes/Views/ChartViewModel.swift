@@ -25,9 +25,7 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
     var drawTitleAboveChart: Bool {
         chartState == .labelledStripes
     }
-    var temperatureAbbreviation: String {
-        model.temperatureScale.abbreviation
-    }
+
     var titleText: String {
         switch chartState {
         case .stripes:
@@ -42,8 +40,10 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
         }
     }
 
-    // for the Bars chart, draw years to the left and right of the chart
-    var drawLeadingAndTrailingYears: Bool { chartState == .bars }
+    // for the Bars state, draw years to the left and right of the chart
+    var drawLeadingAndTrailingYears: Bool {
+        chartState == .bars
+    }
     var startYear: String {
         model.startDate.yearString
     }
@@ -98,12 +98,11 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
     var yAxisVisible: Visibility {
         isBarsWithScale ? .visible : .hidden
     }
+
     // returns the list of labels for the y-axis. This should be made dynamic
     var yAxisValues: [Double] {
-        symmetricalAxisValues(minMax: yAxisLabelRange, by: displayInCelsius ? 0.3 : 0.5)
-    }
-    private func symmetricalAxisValues (minMax: Double, by strideBy: Double) -> [Double] {
-        Array(stride(from: minMax * -1, through: minMax, by: strideBy))
+        let strideBy = displayInCelsius ? 0.3 : 0.5
+        return Array(stride(from: yAxisLabelRange * -1, through: yAxisLabelRange, by: strideBy))
     }
 
     // draw the x-axis. Swift Charts can't style to match Warming Stripes. So draw as a chartOverlay
@@ -140,7 +139,7 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
     let tickMarkHeight: Double = 5
 
     // additional data for drawing the title on top of the chart
-    var drawTitleOnTopOfChart: Bool {
+    var drawTitleOnChartPlot: Bool {
         isBarsWithScale || chartState == .bars
     }
     var subTitleText: String {
@@ -152,22 +151,12 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
         drawXAxis ? 25 : 0
     }
 
-    // HELPERS
-    private var isBarsWithScale: Bool {
-        chartState == .barsWithScale
-    }
-    private var displayInCelsius: Bool {
-        return model.temperatureScale == .celsius
-    }
-
     //Rollover code
     @Published var chartValueIndicatorOffset = CGSize.zero
     @Published var isDragging: Bool = false
-    let rolloverViewWidth: CGFloat = 130
-
-
-    let rolloverBackground = Color(hex: 0x5B5B60)
     @Published var rolloverText: String = ""
+    let rolloverViewWidth: CGFloat = 130
+    let rolloverBackground = Color(hex: 0x5B5B60)
 
     func dragging(location: CGPoint, chartProxy: ChartProxy, chartProxyGeo: GeometryProxy) {
         let currentX = location.x - chartProxyGeo[chartProxy.plotAreaFrame].origin.x
@@ -184,6 +173,17 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
     }
     func stoppedDragging() {
         isDragging = false
+    }
+
+    // HELPERS
+    private var isBarsWithScale: Bool {
+        chartState == .barsWithScale
+    }
+    private var displayInCelsius: Bool {
+        return model.temperatureScale == .celsius
+    }
+    private var temperatureAbbreviation: String {
+        model.temperatureScale.abbreviation
     }
 
 }
