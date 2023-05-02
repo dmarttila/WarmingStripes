@@ -24,7 +24,7 @@ struct AboutAppQA {
         ),
         QuestionAnswer(
             question: "Does this app add any features?",
-            answer: "It supports the fahrenheit temperature scale."
+            answer: "It supports the fahrenheit temperature scale and if you tap the charts, a rollover is displayed showing the year and anomaly value."
         ),
         QuestionAnswer(
             question: "Where is the data from?",
