@@ -3,6 +3,7 @@
 //  WarmingStripesTests
 //
 //  Created by Doug Marttila on 4/30/23.
+// TODO: modify the mock and make different mocks to test different data sets
 
 import SwiftUI
 @testable import WarmingStripes

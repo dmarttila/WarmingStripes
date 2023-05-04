@@ -47,6 +47,11 @@ class Model: ObservableObject {
         loadData()
     }
 
+    private let bundle: Bundle
+    private let csvFileName: String
+    static let globalTemperatureAnomalies = "HadCRUT.5.0.1.0.analysis.summary_series.global.annual"
+
+    var anomalies: [TemperatureAnomaly] = []
 
     var minAnomaly: Double {
         anomalies.min(by: { $0.anomaly < $1.anomaly })?.anomaly ?? 0
@@ -61,12 +66,8 @@ class Model: ObservableObject {
     var endDate: Date {
         anomalies.max(by: { $0.date < $1.date })?.date ?? .now
     }
-    let bundle: Bundle
-    var anomalies: [TemperatureAnomaly] = []
-    let csvFileName: String
-    static let globalTemperatureAnomalies = "HadCRUT.5.0.1.0.analysis.summary_series.global.annual"
+
     //if data sets are loaded from the internet, you'd want to convert the values to Fahrenheit rather than reload, but since it's in the bundle, this is the simplest
-//    func
     private func loadData() {
         var anomalies: [TemperatureAnomaly] = []
         if let filepath = bundle.path(forResource: csvFileName, ofType: "csv") {
