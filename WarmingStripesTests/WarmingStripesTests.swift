@@ -3,7 +3,7 @@
 //  WarmingStripesTests
 //
 //  Created by Doug Marttila on 4/30/23.
-//
+// TODO: Create duplicates of mock data for testing different sets
 
 import XCTest
 @testable import WarmingStripes
