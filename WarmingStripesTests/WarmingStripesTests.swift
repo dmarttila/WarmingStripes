@@ -11,12 +11,27 @@ import XCTest
 final class WarmingStripesTests: XCTestCase {
     var sut: Model!
     override func setUpWithError() throws {
-        sut = Model()
+        let testBundle = Bundle(for: type(of: self))
+        sut = Model(csvFileName: "mockData", bundle: testBundle)
         sut.temperatureScale = .celsius
     }
 
     override func tearDownWithError() throws {
         sut = nil
+    }
+
+    func testCSVLoading() {
+        let testBundle = Bundle(for: type(of: self))
+        guard let csvURL = testBundle.url(forResource: "mockData", withExtension: "csv") else {
+            XCTFail("CSV file not found in test bundle")
+            return
+        }
+        do {
+            let csvData = try Data(contentsOf: csvURL)
+            // Use the CSV data in your test
+        } catch {
+            XCTFail("Error loading CSV file: \(error)")
+        }
     }
 
     func testBundleDataLoad() throws {

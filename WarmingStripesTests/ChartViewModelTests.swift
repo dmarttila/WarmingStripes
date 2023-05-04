@@ -13,7 +13,8 @@ final class ChartViewModelTests: XCTestCase {
     var model: Model!
 
     override func setUpWithError() throws {
-        model = Model()
+        let testBundle = Bundle(for: type(of: self))
+        model = Model(csvFileName: "mockData", bundle: testBundle)
         sut = ChartViewModel(model: model)
     }
 

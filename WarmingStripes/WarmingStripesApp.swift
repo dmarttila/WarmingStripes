@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct WarmingStripesApp: App {
 
-    @StateObject var model = Model()
+    @StateObject var model = Model(csvFileName: Model.globalTemperatureAnomalies)
 
     var body: some Scene {
         WindowGroup {

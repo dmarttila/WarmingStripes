@@ -28,6 +28,7 @@
 		B4B81A8A2861E5A700F9E2EC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4B81A892861E5A700F9E2EC /* Preview Assets.xcassets */; };
 		B4C25B362863341700EE54FC /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C25B352863341700EE54FC /* Model.swift */; };
 		B4D7F0DD28A7ED5300EF645E /* HapticsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D7F0DC28A7ED5300EF645E /* HapticsProtocol.swift */; };
+		B4E293242A03E5DF0094B83E /* mockData.csv in Resources */ = {isa = PBXBuildFile; fileRef = B4E293232A03E5DF0094B83E /* mockData.csv */; };
 		B4E7FE1928A7E7390032159E /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E7FE1828A7E7390032159E /* Modifiers.swift */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +67,7 @@
 		B4B81A892861E5A700F9E2EC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B4C25B352863341700EE54FC /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		B4D7F0DC28A7ED5300EF645E /* HapticsProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HapticsProtocol.swift; sourceTree = "<group>"; };
+		B4E293232A03E5DF0094B83E /* mockData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mockData.csv; sourceTree = "<group>"; };
 		B4E7FE1828A7E7390032159E /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -116,6 +118,7 @@
 			children = (
 				B44D921829FEDA6B00A7EA92 /* WarmingStripesTests.swift */,
 				B44D921F29FEEFCD00A7EA92 /* ChartViewModelTests.swift */,
+				B4E293232A03E5DF0094B83E /* mockData.csv */,
 			);
 			path = WarmingStripesTests;
 			sourceTree = "<group>";
@@ -264,6 +267,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4E293242A03E5DF0094B83E /* mockData.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
