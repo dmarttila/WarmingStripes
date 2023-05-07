@@ -16,7 +16,7 @@ struct AboutAppQA {
         ),
 
         QuestionAnswer(
-            question: "Who came up with the original idea?",
+            question: "Who came up with the idea?",
             answer:
             """
             [Ed Hawkins](http://www.met.reading.ac.uk/~ed/home/index.php). The orignal website is [here](https://showyourstripes.info/l/globe). You can support Ed Hawkins's environemntal work [here](https://showyourstripes.info/support).

@@ -125,6 +125,7 @@ struct ChartPlotView: View {
                             .background(viewModel.rolloverBackground)
                             .cornerRadius(viewModel.rolloverCornerRadius)
                             .offset(viewModel.chartValueIndicatorOffset)
+                            .font(.subheadline)
                     }
                 }
             }
