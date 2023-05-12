@@ -18,7 +18,7 @@ struct ContentView: View, DeviceInfo {
             PreferencesButton(showPreferences: $showPreferences)
                 .offset(x: -10, y: -40)
                 .sheet(isPresented: $showPreferences) {
-                    PreferencesView()
+                    PreferencesView(model: model)
                 }
         }
         // SE and iPhone8 need some padding

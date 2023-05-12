@@ -19,12 +19,12 @@ struct AboutAppQA {
             question: "Who came up with the idea?",
             answer:
             """
-            [Ed Hawkins](http://www.met.reading.ac.uk/~ed/home/index.php). The orignal website is [here](https://showyourstripes.info/l/globe). You can support Ed Hawkins's environemntal work [here](https://showyourstripes.info/support).
+            [Ed Hawkins](http://www.met.reading.ac.uk/~ed/home/index.php). The orignal website is [here](https://showyourstripes.info/l/globe). You can support Ed Hawkins's environmental work [here](https://showyourstripes.info/support).
             """
         ),
         QuestionAnswer(
             question: "Does this app add any features?",
-            answer: "It supports the fahrenheit temperature scale and if you tap the charts, a rollover is displayed showing the year and anomaly value."
+            answer: "It supports the Fahrenheit temperature scale and if you tap the charts, a rollover is displayed showing the year and anomaly value."
         ),
         QuestionAnswer(
             question: "Where is the data from?",
