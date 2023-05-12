@@ -36,6 +36,10 @@ struct AboutAppQA {
         QuestionAnswer(
             question: "Is there a support page?",
             answer: "[Yes](https://www.forestandthetrees.com/climate-warming-stripes/)."
+        ),
+        QuestionAnswer(
+            question: "Do you have other apps?",
+            answer: "[Yes](https://apps.apple.com/tt/developer/douglas-marttila/id1596329457)."
         )
     ]
 }
