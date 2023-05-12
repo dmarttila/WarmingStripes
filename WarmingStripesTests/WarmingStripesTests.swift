@@ -35,7 +35,7 @@ final class WarmingStripesTests: XCTestCase {
     }
 
     func testBundleDataLoad() throws {
-        let anomalyCount = 173
+        let anomalyCount = 174
         let minAnomaly = -0.5975614
         let maxAnomaly = 0.93292713
         var tempAbbreviation = "°C"
@@ -59,7 +59,7 @@ final class WarmingStripesTests: XCTestCase {
         let startDate = Date(year: 1850, month: 1, day: 1)
         XCTAssertEqual(startDate, sut.startDate)
 
-        let endDate = Date(year: 2022, month: 1, day: 1)
+        let endDate = Date(year: 2023, month: 1, day: 1)
         XCTAssertEqual(endDate, sut.endDate)
     }
 

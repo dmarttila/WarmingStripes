@@ -42,7 +42,7 @@ final class ChartViewModelTests: XCTestCase {
         XCTAssertEqual(sut.titleText, "")
 
         sut.chartState = .labelledStripes
-        XCTAssertEqual(sut.titleText, "Global temperature change (1850 - 2022)")
+        XCTAssertEqual(sut.titleText, "Global temperature change (1850 - 2023)")
 
         sut.chartState = .bars
         model.temperatureScale = .fahrenheit
@@ -74,7 +74,7 @@ final class ChartViewModelTests: XCTestCase {
     }
 
     func testEndYear() {
-        let expectedYear = "2022"
+        let expectedYear = "2023"
         XCTAssertEqual(sut.endYear, expectedYear)
     }
 
@@ -195,7 +195,7 @@ final class ChartViewModelTests: XCTestCase {
         XCTAssertEqual(sut.xAxisYears, [1860, 1890, 1920, 1950, 1980, 2010])
 
         sut.chartState = .barsWithScale
-        XCTAssertEqual(sut.xAxisYears, [1850, 1900, 1950, 2000, 2022])
+        XCTAssertEqual(sut.xAxisYears, [1850, 1900, 1950, 2000, 2023])
     }
 
     // getXLoc and getYearLabelXLoc don't seem testable because they uses ChartProxy and GeometryProxy and they don't appear mockable

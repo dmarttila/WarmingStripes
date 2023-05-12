@@ -39,6 +39,9 @@ extension Date {
     var yearString: String {
         DateFormatter.yearFormatter.string(from: self)
     }
+    var year: Int {
+        Calendar.current.component(.year, from: self)
+    }
 }
 
 extension DateFormatter {

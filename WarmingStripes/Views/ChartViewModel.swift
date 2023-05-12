@@ -117,7 +117,7 @@ class ChartViewModel: ObservableObject, Haptics, DeviceInfo {
     }
     // TODO: make this dynamic
     var xAxisYears: [Int] {
-        isBarsWithScale ? [1850, 1900, 1950, 2000, 2022] :
+        isBarsWithScale ? [1850, 1900, 1950, 2000, model.endDate.year] :
         Array(stride(from: 1860, through: 2010, by: 30))
     }
     let yearLabelWidth: CGFloat = 300
