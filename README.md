@@ -1,5 +1,5 @@
 # Climate Warming Stripes
-You can [download the app here]([url](https://apps.apple.com/us/app/climate-warming-stripes/id6443764171)).
+You can [download the app here](https://apps.apple.com/us/app/climate-warming-stripes/id6443764171).
 Climate Warming Stripes is an iOS version of [Warming Stripes](https://showyourstripes.info/l/globe). The original Warming Stripes which was created by [Ed Hawkins](http://www.met.reading.ac.uk/~ed/home/index.php). 
 You can support Ed Hawkins's environemntal work [here](https://showyourstripes.info/support).
 
